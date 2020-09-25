@@ -1,7 +1,7 @@
 <ion-grid>
   <ion-row>
     <ion-col size-xl="2"  size-lg="3" size-md="4"  size="6" *ngFor="let movie of discoveredMovies">
-      <ion-card (click)="showDetails(movie)">
+      <ion-card (click)="showDetails(movie)" class="clickable">
         <ion-card-content>
           <ion-img [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="poster image"></ion-img>
 

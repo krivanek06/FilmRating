@@ -22,7 +22,7 @@ export class DetailsComponent implements OnInit {
       switchMap((data: any) => this.filmDataService.getMovieDetails(data.params.id))
     );
 
-    this.filmDetails$.subscribe(x => console.log(x));
+   // this.filmDetails$.subscribe(x => console.log(x));
   }
 
 }

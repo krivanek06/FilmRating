@@ -1,0 +1,19 @@
+:host{
+  .authentication-container{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+  }
+  ion-content{
+    --background: #08092a;
+  }
+
+  @media (max-width: 600px) {
+    .authentication-container{
+      width: 100%;
+    }
+  }
+}

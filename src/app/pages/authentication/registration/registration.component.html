@@ -1,0 +1,24 @@
+<form [formGroup]="registrationForm" (ngSubmit)="register()">
+
+  <ion-list>
+    <ion-item>
+      <ion-icon name="person" slot="start" class="ion-margin-end"></ion-icon>
+      <ion-input formControlName="email" type="text" placeholder="email"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-icon name="lock-closed" class="ion-margin-end"></ion-icon>
+      <ion-input formControlName="password1" type="password" placeholder="password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="lock-closed" class="ion-margin-end"></ion-icon>
+      <ion-input formControlName="password2" type="password" placeholder="repeat password"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-button color="warning" shape="full" expand="block" type="submit">Register</ion-button>
+
+</form>

@@ -1,1 +1,47 @@
-<p>header works!</p>
+<ion-header>
+
+  <ion-item>
+    <!-- search -->
+    <ion-label class="search-container">
+      <ion-searchbar
+        [debounce]="500"
+        (ionChange)="searchForMovie($event)">
+      </ion-searchbar>
+    </ion-label>
+
+    <!-- username & bell icon -->
+    <ng-container *ngIf="user$ | async as user; else showLoginButton">
+      <ion-label class="ion-text-end content-fit ion-hide-sm-down use-name-container ion-margin-end" position="fixed">
+        {{ user.displayName }}
+      </ion-label>
+      <ion-label class="ion-text-end content-fit icon-label" position="fixed">
+        <ion-icon name="notifications" class="divider-space clickable"></ion-icon>
+      </ion-label>
+
+      <ion-label class="ion-text-end content-fit icon-label" position="fixed">
+        <ion-icon name="log-out-outline" class="divider-space clickable" (click)="signOut()"></ion-icon>
+      </ion-label>
+
+
+    </ng-container>
+
+    <!-- authentication button -->
+    <ng-template #showLoginButton>
+      <ion-button shape="round" fill="outline" class="custom-buttons" (click)="navigateLogin('login')">Login</ion-button>
+      <ion-button class="custom-buttons ion-hide-sm-down" (click)="navigateLogin('registration')">Register</ion-button>
+    </ng-template>
+
+
+  </ion-item>
+
+
+  <!-- search result
+  <ion-toolbar *ngIf="searchStocks$ | async as searchStocks">
+    <ion-item *ngFor="let data of searchStocks" class="ion-padding-start clickable"
+              (click)="showSearchSymbolGraph({symbol: data.symbol, name: data.displayName})">
+      <ion-label>
+        {{ data.displayName }}
+      </ion-label>
+    </ion-item>
+  </ion-toolbar>-->
+</ion-header>
