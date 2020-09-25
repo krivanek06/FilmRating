@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {Actor, CastWrapper, DiscoveredMovie, DiscoveredMoviesWrapper, GenreTypes, GenreTypesWrapper, MovieDetails} from './film-data.model';
-import {map, tap} from 'rxjs/operators';
+import {map, take, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +52,9 @@ export class FilmDataService {
   getTrendingMovies(): Observable<DiscoveredMovie[]> {
     const params = new HttpParams().set('api_key', environment.theMovieDbAPI);
     return this.http.get<DiscoveredMoviesWrapper>('https://api.themoviedb.org/3/trending/movie/day', {params})
-      .pipe(map(res => res.results));
+      .pipe(
+        map(res => res.results.slice(0, 12))
+      );
   }
 
   // TODO - used by Robo
@@ -65,7 +67,9 @@ export class FilmDataService {
       .set('sort_by', 'popularity.desc')
       .set('language', 'en-US');
     return this.http.get<DiscoveredMoviesWrapper>('https://api.themoviedb.org/3/movie/upcoming', {params})
-      .pipe(map(res => res.results));
+      .pipe(
+        map(res => res.results.slice(0, 12))
+      );
   }
 
   // TODO - will be used by Eduard
