@@ -8,7 +8,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import {RouterModule} from '@angular/router';
 import {AppMaterialModule} from './appMaterial.module';
-import {FilmCardComponent} from './components/film-card/film-card.component';
+import {FilmCardsComponent} from './components/film-cards/film-cards.component';
 import {HeaderComponent} from './components/header/header.component';
 import {NgCircleProgressModule} from 'ng-circle-progress';
 import {IonicModule} from '@ionic/angular';
@@ -16,7 +16,7 @@ import {IonicModule} from '@ionic/angular';
 
 @NgModule({
   declarations: [
-    FilmCardComponent,
+    FilmCardsComponent,
     HeaderComponent
   ],
   imports: [
@@ -62,7 +62,7 @@ import {IonicModule} from '@ionic/angular';
     AngularFireStorageModule,
     AppMaterialModule,
     IonicModule,
-    FilmCardComponent,
+    FilmCardsComponent,
     HeaderComponent
   ]
 })

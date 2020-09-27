@@ -3,11 +3,11 @@ import {DiscoveredMovie} from '../../../api/film-data.model';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-film-card',
-  templateUrl: './film-card.component.html',
-  styleUrls: ['./film-card.component.scss']
+  selector: 'app-film-cards',
+  templateUrl: './film-cards.component.html',
+  styleUrls: ['./film-cards.component.scss']
 })
-export class FilmCardComponent implements OnInit {
+export class FilmCardsComponent implements OnInit {
   @Input() discoveredMovies: DiscoveredMovie[];
 
   constructor(private route: Router) {
