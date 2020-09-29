@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateLogin(type: string) {
-    this.router.navigate([`login/${type}`]);
+    this.router.navigate([`authentication/${type}`]);
   }
 
   signOut() {

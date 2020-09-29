@@ -4,6 +4,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {IUser, LoginIUser, RegisterIUser} from '../models/IUser.model';
 import {auth} from 'firebase/app';
 import UserCredential = firebase.auth.UserCredential;
+import {AngularFirestore} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class AuthService {
   private readonly USER_KEY = 'USER_KEY';
   private userSubject$: BehaviorSubject<IUser> = new BehaviorSubject<IUser>(null);
 
-  constructor(private afAuth: AngularFireAuth) {
+  constructor(private afAuth: AngularFireAuth,
+              private firestore: AngularFirestore) {
 
     const user = JSON.parse(localStorage.getItem(this.USER_KEY)); // check if already logged in
     this.userSubject$.next(user);
@@ -45,15 +47,23 @@ export class AuthService {
     this.userSubject$.next(null);
   }
 
-  private formatAndSaveUser(credential: UserCredential) {
-    const formattedUser = {
-      displayName: credential.user.email.split('@')[0],
-      uid: credential.user.uid,
-      email: credential.user.email
-    };
+  private async formatAndSaveUser(credential: UserCredential) {
+    let user: IUser;
 
-    this.userSubject$.next(formattedUser);
-    localStorage.setItem(this.USER_KEY, JSON.stringify(formattedUser));
+    if (credential.additionalUserInfo.isNewUser) {
+      user = {
+        displayName: credential.user.email.split('@')[0],
+        uid: credential.user.uid,
+        email: credential.user.email
+      };
+      await this.firestore.collection('users').doc(credential.user.uid).set(user);
+    } else {
+      const data = await this.firestore.collection('users').doc(credential.user.uid).get().toPromise();
+      user = data.data() as IUser;
+    }
+
+    this.userSubject$.next(user);
+    localStorage.setItem(this.USER_KEY, JSON.stringify(user));
   }
 
 

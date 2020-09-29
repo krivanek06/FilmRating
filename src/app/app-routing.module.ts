@@ -21,7 +21,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule)
   },
   {
-    path: 'login/:type',
+    path: 'authentication/:type',
     loadChildren: () => import('./pages/authentication/authentication.module').then(m => m.AuthenticationModule)
   },
   {
