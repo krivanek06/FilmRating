@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.user$ = this.auth.getUser();
-    this.user$.subscribe(console.log)
   }
 
   searchForMovie(data: CustomEvent) {

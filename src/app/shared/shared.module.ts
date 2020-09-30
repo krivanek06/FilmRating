@@ -12,12 +12,15 @@ import {FilmCardsComponent} from './components/film-cards/film-cards.component';
 import {HeaderComponent} from './components/header/header.component';
 import {NgCircleProgressModule} from 'ng-circle-progress';
 import {IonicModule} from '@ionic/angular';
+import {RangeRatingComponent} from './components/range-rating/range-rating.component';
+import {MentionModule} from 'angular-mentions';
 
 
 @NgModule({
   declarations: [
     FilmCardsComponent,
-    HeaderComponent
+    HeaderComponent,
+    RangeRatingComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +28,7 @@ import {IonicModule} from '@ionic/angular';
     HttpClientModule,
     FormsModule,
     RouterModule,
+    MentionModule,
     AngularFireModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
@@ -56,6 +60,7 @@ import {IonicModule} from '@ionic/angular';
     HttpClientModule,
     FormsModule,
     RouterModule,
+    MentionModule,
     AngularFireModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
@@ -63,7 +68,8 @@ import {IonicModule} from '@ionic/angular';
     AppMaterialModule,
     IonicModule,
     FilmCardsComponent,
-    HeaderComponent
+    HeaderComponent,
+    RangeRatingComponent
   ]
 })
 export class SharedModule { }

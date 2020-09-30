@@ -1,0 +1,13 @@
+<ion-list>
+  <ion-item>
+    <ion-label>
+      <div>
+        <div class="range-header">{{ name }}</div>
+        <ion-range min="0" max="100" step="1" pin="true" [(ngModel)]="value">
+          <ion-icon style="color: red" slot="start" name="caret-down-outline"></ion-icon>
+          <ion-icon  style="color: green"  slot="end" name="caret-up-outline"></ion-icon>
+        </ion-range>
+      </div>
+    </ion-label>
+  </ion-item>
+</ion-list>

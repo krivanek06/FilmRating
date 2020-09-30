@@ -1,0 +1,110 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle class="ion-padding-top ion-padding-horizontal">
+      <ion-label> {{ comment.person }} </ion-label>
+      <ion-label class="ion-float-end" style="display: flex">
+        <ion-text class="ion-margin-end">{{ comment.timestamp | date: 'dd.MM.yyyy HH:mm:ss a'}}</ion-text>
+        <!-- reply on comment
+        <ion-icon
+          color="primary"
+          name="chatbubble-ellipses-outline"
+          class="clickable"
+          style="margin-right: 8px"
+          matTooltipPosition="right"
+          matTooltip="Replay"
+          matTooltipClass="custom-mat-tooltip"
+          matTooltipShowDelay="100"
+          (click)="replay()">
+        </ion-icon> -->
+        <!-- edit comment icon -->
+        <ion-icon
+          color='warning'
+          name="pencil-outline"
+          class="clickable"
+          style="margin-right: 8px"
+          matTooltipPosition="right"
+          matTooltip="Edit"
+          matTooltipClass="custom-mat-tooltip"
+          matTooltipShowDelay="100"
+          (click)="toggleEditComment()">
+        </ion-icon>
+        <!-- delete comment icon -->
+        <ion-icon
+          color='danger'
+          name="trash-bin-outline"
+          class="clickable"
+          matTooltipPosition="right"
+          matTooltip="Delete"
+          matTooltipClass="custom-mat-tooltip"
+          matTooltipShowDelay="100"
+          (click)="deleteComment()">
+        </ion-icon>
+      </ion-label>
+    </ion-card-subtitle>
+  </ion-card-header>
+
+  <!-- comment read only format -->
+  <ion-card-content *ngIf="!editing">
+    <ion-text class="wrap-white-space "> {{ comment.comment }} </ion-text>
+    <ion-text>
+      <div style="display: flex; float: right">
+        <!-- like -->
+        <div class="ion-margin-end" style="display: inline-flex">
+          <ion-text
+            matTooltipPosition="right"
+            [matTooltip]="comment.likes.join('\r\n')"
+            matTooltipClass="custom-mat-tooltip"
+            matTooltipShowDelay="100">
+            {{ comment?.likes.length }}
+          </ion-text>
+          <ion-icon
+            name="thumbs-up-outline"
+            class="clickable like-icons"
+            matTooltipPosition="right"
+            matTooltip="Like"
+            matTooltipClass="custom-mat-tooltip"
+            matTooltipShowDelay="100"
+            (click)="likeComment()"
+            [ngClass]="{
+              'positive': comment.likes.includes(authenticatedUser.displayName)
+            }">
+          </ion-icon>
+        </div>
+
+        <!-- dislike -->
+        <div style="display: flex">
+          <ion-text
+            matTooltipPosition="right"
+            [matTooltip]="comment.dislikes.join('\r\n')"
+            matTooltipClass="custom-mat-tooltip"
+            matTooltipShowDelay="100">
+            {{ comment?.dislikes.length }}
+          </ion-text>
+          <ion-icon
+            name="thumbs-down-outline"
+            class="clickable like-icons"
+            matTooltipPosition="right"
+            matTooltip="Dislike"
+            matTooltipClass="custom-mat-tooltip"
+            matTooltipShowDelay="100"
+            (click)="dislikeComment()"
+            [ngClass]="{
+              'negative': comment.dislikes.includes(authenticatedUser.displayName)
+            }">
+          </ion-icon>
+        </div>
+      </div>
+    </ion-text>
+  </ion-card-content>
+
+  <!-- editing comment -->
+  <ion-card-content *ngIf="editing">
+    <app-comment-form
+      [comment]="comment.comment"
+      [mentionPeople]="mentionPeople"
+      (addComment)="editComment($event)"
+      (searchPeopleByUsername)="searchUserByUsername($event)"></app-comment-form>
+  </ion-card-content>
+</ion-card>
+
+

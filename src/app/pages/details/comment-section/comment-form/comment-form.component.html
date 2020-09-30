@@ -1,0 +1,17 @@
+<mat-form-field>
+  <mat-label>Leave a comment</mat-label>
+  <textarea matInput
+            placeholder="Enter your comment here..."
+            [(ngModel)]="comment"
+            [mention]="mentionPeople"
+            (searchTerm)="searchUserByUsername($event)"
+            [mentionConfig]="{
+                maxItems: 10,
+                labelKey: 'name',
+                dropUp: true,
+                allowSpace: true,
+                triggerChar: '@'
+              }"></textarea>
+</mat-form-field>
+
+<ion-button (click)="emitAddComment()" class="ion-float-end ion-margin-vertical">Add comment</ion-button>

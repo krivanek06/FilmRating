@@ -1,0 +1,22 @@
+<app-comment-card
+  [comment]="comment"
+  [authenticatedUser]="authenticatedUser"
+  [mentionPeople]="mentionPeople"
+  (searchPeopleByUsername)="searchUserByUsername($event)"
+  (editCommentEmitter)="editComment($event)"
+  (deleteCommentEmitter)="deleteComment()"
+  (likeCommentEmitter)="likeComment()"
+  (replayCommentEmitter)="replayToggle()"
+  (dislikeCommentEmitter)="dislikeComment()">
+</app-comment-card>
+
+<!-- add subcomment on comment
+<div style="display: flow-root; margin-top: 10px;" *ngIf="replayOnComment">
+  <div class="ion-float-end">
+    <app-comment-form
+      [mentionPeople]="mentionPeople"
+      (addComment)="addSubComment($event)"
+      (searchPeopleByUsername)="searchUserByUsername($event)">
+    </app-comment-form>
+  </div>
+</div>-->

@@ -11,7 +11,7 @@ import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     CommonModule,

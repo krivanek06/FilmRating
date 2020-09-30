@@ -1,0 +1,42 @@
+<!-- display comments -->
+<div class="ion-padding-vertical">
+  <div *ngFor="let comment of comments | commentSorting" class="ion-padding-vertical">
+    <app-comment-cards
+      [comment]="comment"
+      [authenticatedUser]="authenticatedUser"
+      [mentionPeople]="searchedUsers$| async"
+      (searchPeopleByUsername)="searchPeopleByUsername($event)"
+      (editCommentEmitter)="editComment($event, comment)"
+      (deleteCommentEmitter)="deleteComment(comment)"
+      (likeCommentEmitter)="likeOrDislikeCommentOnMovie(comment, true)"
+      (dislikeCommentEmitter)="likeOrDislikeCommentOnMovie(comment, false)">
+    </app-comment-cards>
+  </div>
+</div>
+
+<!-- select another category options -->
+<ion-item-group>
+  <ion-item>
+    <ion-label>Select more options</ion-label>
+    <ion-select
+      class="custom-options"
+      multiple="true"
+      placeholder="Select categories"
+      (ionChange)="getValuesFromSelector($event)"
+      selectedText=" "
+      [value]="selectedCategories">
+      <ion-select-option *ngFor="let name of genreTypeRatingAll" [value]="name">{{ name }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+
+  <!-- range selector required & chosen by user -->
+  <app-range-rating *ngFor="let name of selectedCategories" [name]="name"></app-range-rating>
+</ion-item-group>
+
+<!-- comment form -->
+<app-comment-form
+  [mentionPeople]="searchedUsers$| async"
+  (addComment)="addComment($event)"
+  (searchPeopleByUsername)="searchPeopleByUsername($event)">
+</app-comment-form>

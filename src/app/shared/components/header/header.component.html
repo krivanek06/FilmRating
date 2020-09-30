@@ -18,9 +18,6 @@
         <ion-icon name="notifications" class="divider-space clickable"></ion-icon>
       </ion-label>
 
-      <!--<ion-label class="ion-text-end content-fit icon-label" position="fixed">
-        <ion-icon name="log-out-outline" class="divider-space clickable" (click)="signOut()"></ion-icon>
-      </ion-label>-->
       <ion-button color='danger' shape="round" fill="outline" class="custom-buttons" (click)="signOut()">Logout</ion-button>
 
     </ng-container>
@@ -33,15 +30,4 @@
 
 
   </ion-item>
-
-
-  <!-- search result
-  <ion-toolbar *ngIf="searchStocks$ | async as searchStocks">
-    <ion-item *ngFor="let data of searchStocks" class="ion-padding-start clickable"
-              (click)="showSearchSymbolGraph({symbol: data.symbol, name: data.displayName})">
-      <ion-label>
-        {{ data.displayName }}
-      </ion-label>
-    </ion-item>
-  </ion-toolbar>-->
 </ion-header>

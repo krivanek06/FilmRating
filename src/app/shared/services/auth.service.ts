@@ -20,6 +20,10 @@ export class AuthService {
     this.userSubject$.next(user);
   }
 
+  get IUser(): IUser {
+    return this.userSubject$.getValue();
+  }
+
   getUser(): Observable<IUser> {
     return this.userSubject$.asObservable();
   }
