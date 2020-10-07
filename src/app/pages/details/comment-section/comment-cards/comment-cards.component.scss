@@ -1,7 +1,10 @@
 @import "../../../../shared/style/main";
 
-:host{
-
+:host {
+  .review-comment {
+    display: flow-root;
+    margin-top: 4px;
+  }
 
 }
 

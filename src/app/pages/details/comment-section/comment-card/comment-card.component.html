@@ -4,8 +4,9 @@
       <ion-label> {{ comment.person }} </ion-label>
       <ion-label class="ion-float-end" style="display: flex">
         <ion-text class="ion-margin-end">{{ comment.timestamp | date: 'dd.MM.yyyy HH:mm:ss a'}}</ion-text>
-        <!-- reply on comment
+        <!-- reply on comment -->
         <ion-icon
+          *ngIf="isReview"
           color="primary"
           name="chatbubble-ellipses-outline"
           class="clickable"
@@ -15,7 +16,7 @@
           matTooltipClass="custom-mat-tooltip"
           matTooltipShowDelay="100"
           (click)="replay()">
-        </ion-icon> -->
+        </ion-icon>
         <!-- edit comment icon -->
         <ion-icon
           color='warning'

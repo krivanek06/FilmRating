@@ -1,15 +1,20 @@
-<!-- display comments -->
+<!-- display reviews with comments -->
 <div class="ion-padding-vertical">
-  <div *ngFor="let comment of comments | commentSorting" class="ion-padding-vertical">
+  <div *ngFor="let review of reviews | commentSorting" class="ion-padding-vertical">
     <app-comment-cards
-      [comment]="comment"
+      [review]="review"
       [authenticatedUser]="authenticatedUser"
       [mentionPeople]="searchedUsers$| async"
       (searchPeopleByUsername)="searchPeopleByUsername($event)"
-      (editCommentEmitter)="editComment($event, comment)"
-      (deleteCommentEmitter)="deleteComment(comment)"
-      (likeCommentEmitter)="likeOrDislikeCommentOnMovie(comment, true)"
-      (dislikeCommentEmitter)="likeOrDislikeCommentOnMovie(comment, false)">
+      (addComment)="addCommentOnReview($event, review)"
+      (editCommentEmitter)="editComment($event, review)"
+      (likeCommentEmitter)="likeOrDislikeComment($event, review, true)"
+      (dislikeCommentEmitter)="likeOrDislikeComment($event, review, false)"
+      (deleteCommentEmitter)="deleteComment($event, review)"
+      (editReviewEmitter)="editReview($event, review)"
+      (deleteReviewEmitter)="deleteReview(review)"
+      (likeReviewEmitter)="likeOrDislikeReview(review, true)"
+      (dislikeReviewEmitter)="likeOrDislikeReview(review, false)">
     </app-comment-cards>
   </div>
 </div>
@@ -29,14 +34,13 @@
     </ion-select>
   </ion-item>
 
-
   <!-- range selector required & chosen by user -->
   <app-range-rating *ngFor="let name of selectedCategories" [name]="name"></app-range-rating>
 </ion-item-group>
 
-<!-- comment form -->
+<!-- review form -->
 <app-comment-form
   [mentionPeople]="searchedUsers$| async"
-  (addComment)="addComment($event)"
+  (addComment)="addReview($event)"
   (searchPeopleByUsername)="searchPeopleByUsername($event)">
 </app-comment-form>

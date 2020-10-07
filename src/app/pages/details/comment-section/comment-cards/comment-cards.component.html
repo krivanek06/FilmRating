@@ -1,22 +1,42 @@
+<!-- review -->
 <app-comment-card
-  [comment]="comment"
+  [comment]="review"
   [authenticatedUser]="authenticatedUser"
   [mentionPeople]="mentionPeople"
+  [isReview]="true"
   (searchPeopleByUsername)="searchUserByUsername($event)"
-  (editCommentEmitter)="editComment($event)"
-  (deleteCommentEmitter)="deleteComment()"
-  (likeCommentEmitter)="likeComment()"
+  (editCommentEmitter)="editReview($event)"
+  (deleteCommentEmitter)="deleteReview()"
+  (likeCommentEmitter)="likeReview()"
   (replayCommentEmitter)="replayToggle()"
-  (dislikeCommentEmitter)="dislikeComment()">
+  (dislikeCommentEmitter)="dislikeReview()">
 </app-comment-card>
 
-<!-- add subcomment on comment
-<div style="display: flow-root; margin-top: 10px;" *ngIf="replayOnComment">
-  <div class="ion-float-end">
+<!-- review comments -->
+<div class="review-comment" *ngFor="let comment of review.comments">
+  <div class="ion-float-end" style="width: 80%">
+    <app-comment-card
+      [comment]="comment"
+      [authenticatedUser]="authenticatedUser"
+      [mentionPeople]="mentionPeople"
+      [isReview]="false"
+      (searchPeopleByUsername)="searchUserByUsername($event)"
+      (deleteCommentEmitter)="deleteComment(comment)"
+      (editCommentEmitter)="editComment($event, comment)"
+      (dislikeCommentEmitter)="dislikeComment(comment)"
+      (likeCommentEmitter)="likeComment(comment)"
+    >
+    </app-comment-card>
+  </div>
+</div>
+
+<!-- add comment on review -->
+<div class="review-comment"  *ngIf="replayOnComment">
+  <div class="ion-float-end" style="width: 80%">
     <app-comment-form
       [mentionPeople]="mentionPeople"
       (addComment)="addSubComment($event)"
       (searchPeopleByUsername)="searchUserByUsername($event)">
     </app-comment-form>
   </div>
-</div>-->
+</div>

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FirebaseMovieDetailComment} from '../models/comment-section.model';
+import {FirebaseMovieDetailComment, FirebaseMovieDetailReview} from '../models/comment-section.model';
 import {IUser} from '../../../../shared/models/IUser.model';
 
 @Component({
@@ -8,13 +8,24 @@ import {IUser} from '../../../../shared/models/IUser.model';
   styleUrls: ['./comment-cards.component.scss']
 })
 export class CommentCardsComponent implements OnInit {
-  @Output() likeCommentEmitter: EventEmitter<any> = new EventEmitter<any>();
-  @Output() dislikeCommentEmitter: EventEmitter<any> = new EventEmitter<any>();
-  @Output() editCommentEmitter: EventEmitter<string> = new EventEmitter<string>();
-  @Output() deleteCommentEmitter: EventEmitter<any> = new EventEmitter<any>();
+  // review
+  @Output() likeReviewEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output() dislikeReviewEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output() editReviewEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() deleteReviewEmitter: EventEmitter<any> = new EventEmitter<any>();
+
+  // comment
+  @Output() addComment: EventEmitter<string> = new EventEmitter<string>();
+  @Output() likeCommentEmitter: EventEmitter<FirebaseMovieDetailComment> = new EventEmitter<any>();
+  @Output() dislikeCommentEmitter: EventEmitter<FirebaseMovieDetailComment> = new EventEmitter<FirebaseMovieDetailComment>();
+  @Output() editCommentEmitter: EventEmitter<{oldComment: FirebaseMovieDetailComment, newComment: string}> = new EventEmitter<{oldComment: FirebaseMovieDetailComment, newComment: string}>();
+  @Output() deleteCommentEmitter: EventEmitter<FirebaseMovieDetailComment> = new EventEmitter<FirebaseMovieDetailComment>();
+
+  // search
   @Output() searchPeopleByUsername: EventEmitter<string> = new EventEmitter<string>();
 
-  @Input() comment: FirebaseMovieDetailComment;
+  // inputs
+  @Input() review: FirebaseMovieDetailReview;
   @Input() authenticatedUser: IUser;
   @Input() mentionPeople: string[];
 
@@ -27,20 +38,20 @@ export class CommentCardsComponent implements OnInit {
   }
 
 
-  likeComment() {
-    this.likeCommentEmitter.emit();
+  likeReview() {
+    this.likeReviewEmitter.emit();
   }
 
-  dislikeComment() {
-    this.dislikeCommentEmitter.emit();
+  dislikeReview() {
+    this.dislikeReviewEmitter.emit();
   }
 
-  editComment(editedComment: string) {
-    this.editCommentEmitter.emit(editedComment);
+  editReview(editedComment: string) {
+    this.editReviewEmitter.emit(editedComment);
   }
 
-  deleteComment() {
-    this.deleteCommentEmitter.emit();
+  deleteReview() {
+    this.deleteReviewEmitter.emit();
   }
 
   replayToggle() {
@@ -51,4 +62,23 @@ export class CommentCardsComponent implements OnInit {
     this.searchPeopleByUsername.emit(name);
   }
 
+  addSubComment(comment: string) {
+    this.addComment.emit(comment);
+  }
+
+  deleteComment(comment: FirebaseMovieDetailComment) {
+    this.deleteCommentEmitter.emit(comment);
+  }
+
+  editComment(editedComment: string, comment: FirebaseMovieDetailComment) {
+    this.editCommentEmitter.emit({oldComment: comment, newComment: editedComment});
+  }
+
+  dislikeComment(comment: FirebaseMovieDetailComment) {
+    this.dislikeCommentEmitter.emit(comment);
+  }
+
+  likeComment(comment: FirebaseMovieDetailComment) {
+    this.likeCommentEmitter.emit(comment);
+  }
 }

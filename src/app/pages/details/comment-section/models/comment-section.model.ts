@@ -1,19 +1,25 @@
 export interface FirebaseMovieDetails {
-  comments?: FirebaseMovieDetailComment[];
+  id: string;
 }
 
 export interface FirebaseMovieDetailComment {
-  id: string;
+  id?: string;
   comment: string;
   person: string;
   timestamp: number;
-  ratings?: FirebaseMovieDetailRating[];
   likes?: string[];
   dislikes?: string[];
-  subComments?: FirebaseMovieDetailComment[];
+}
+
+export interface FirebaseMovieDetailReview extends  FirebaseMovieDetailComment{
+  ratings?: FirebaseMovieDetailRating[];
+  comments?: FirebaseMovieDetailComment[];
 }
 
 export interface FirebaseMovieDetailRating {
   rate: number;
   type: string;
 }
+
+
+

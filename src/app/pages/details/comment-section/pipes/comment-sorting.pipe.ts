@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {FirebaseMovieDetailComment} from '../models/comment-section.model';
+import {FirebaseMovieDetailReview} from '../models/comment-section.model';
 
 @Pipe({
   name: 'commentSorting'
 })
 export class CommentSortingPipe implements PipeTransform {
 
-  transform(comments: FirebaseMovieDetailComment[]): unknown {
+  transform(comments: FirebaseMovieDetailReview[]): unknown {
     return comments.sort((a, b) => a.timestamp - b.timestamp);
   }
 

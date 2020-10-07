@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FirebaseMovieDetailComment} from '../models/comment-section.model';
+import {FirebaseMovieDetailComment, FirebaseMovieDetailReview} from '../models/comment-section.model';
 import {IUser} from '../../../../shared/models/IUser.model';
 
 @Component({
@@ -16,6 +16,7 @@ export class CommentCardComponent implements OnInit {
   @Output() searchPeopleByUsername: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() comment: FirebaseMovieDetailComment;
+  @Input() isReview: boolean;
   @Input() authenticatedUser: IUser;
   @Input() mentionPeople: string[];
 
@@ -40,6 +41,7 @@ export class CommentCardComponent implements OnInit {
   }
 
   editComment(editedComment: string) {
+    this.toggleEditComment();
     this.editCommentEmitter.emit(editedComment);
   }
 

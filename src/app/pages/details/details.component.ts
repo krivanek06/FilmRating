@@ -5,7 +5,7 @@ import {switchMap, takeUntil, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {MovieDetails} from '../../api/film-data.model';
 import {MovieDetailsService} from './services/movie-details.service';
-import {FirebaseMovieDetails} from './comment-section/models/comment-section.model';
+import {FirebaseMovieDetailReview, FirebaseMovieDetails} from './comment-section/models/comment-section.model';
 import {ComponentBaseComponent} from '../../shared/components/component-base/component-base.component';
 
 @Component({
@@ -17,6 +17,7 @@ export class DetailsComponent extends ComponentBaseComponent implements OnInit {
   movieId: string;
   filmDetails$: Observable<MovieDetails>;
   firebaseMovieDetails$: Observable<FirebaseMovieDetails>;
+  firebaseMovieReviews$: Observable<FirebaseMovieDetailReview[]>;
 
   constructor(private filmDataService: FilmDataService,
               private movieDetailsService: MovieDetailsService,
@@ -32,6 +33,7 @@ export class DetailsComponent extends ComponentBaseComponent implements OnInit {
       this.movieId = data.params.id;
       this.filmDetails$ = this.filmDataService.getMovieDetails(data.params.id);
       this.firebaseMovieDetails$ = this.movieDetailsService.getMovieDetails(data.params.id);
+      this.firebaseMovieReviews$ = this.movieDetailsService.geReviewsForMovie(data.params.id);
     });
   }
 

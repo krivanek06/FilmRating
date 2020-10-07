@@ -4,16 +4,16 @@
 
 
   <!-- TODO show later -->
-  <!--<div class="page-container">
-    <div class="comment-container" *ngIf="filmDetails$ | async as f">
-      <ng-container *ngIf="firebaseMovieDetails$ | async as fireb">
+  <div class="page-container">
+    <div class="comment-container" *ngIf="filmDetails$ | async as filmDetails">
+      <ng-container *ngIf="firebaseMovieReviews$ | async as reviews">
         <app-comment-section
           [movieId]="movieId"
-          [genreTypes]="f.genres"
-          [comments]="fireb.comments">
+          [genreTypes]="filmDetails.genres"
+          [reviews]="reviews">
         </app-comment-section>
       </ng-container>
     </div>
-  </div>-->
+  </div>
 
 </ion-content>

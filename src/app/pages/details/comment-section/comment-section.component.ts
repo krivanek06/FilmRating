@@ -3,12 +3,18 @@ import {GenreTypes} from '../../../api/film-data.model';
 import {genreTypeRatingAll, requiredGenreTypeRating} from './models/comment-genres.data';
 import {RangeRatingComponent} from '../../../shared/components/range-rating/range-rating.component';
 import {MovieDetailsService} from '../services/movie-details.service';
-import {FirebaseMovieDetailComment, FirebaseMovieDetailRating, FirebaseMovieDetails} from './models/comment-section.model';
+import {
+  FirebaseMovieDetailReview,
+  FirebaseMovieDetailRating,
+  FirebaseMovieDetails,
+  FirebaseMovieDetailComment
+} from './models/comment-section.model';
 import {AuthService} from '../../../shared/services/auth.service';
 import {IUser} from '../../../shared/models/IUser.model';
 import {SearchFirebaseService} from '../../../shared/services/search-firebase.service';
 import {Observable} from 'rxjs';
 import {IonicDialogService} from '../../../shared/services/ionic-dialog.service';
+import {MovieReviewService} from '../services/movie-review.service';
 
 @Component({
   selector: 'app-comment-section',
@@ -18,7 +24,7 @@ import {IonicDialogService} from '../../../shared/services/ionic-dialog.service'
 export class CommentSectionComponent implements OnInit {
   @Input() movieId: string;
   @Input() genreTypes: GenreTypes[] = [];
-  @Input() comments: FirebaseMovieDetailComment[] = [];
+  @Input() reviews: FirebaseMovieDetailReview[] = [];
 
   @ViewChildren(RangeRatingComponent) rangeSelectors: QueryList<RangeRatingComponent>;
 
@@ -31,7 +37,7 @@ export class CommentSectionComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private searchFirebase: SearchFirebaseService,
-              private movieDetailsService: MovieDetailsService,
+              private movieReviewService: MovieReviewService,
               private ionicDialog: IonicDialogService) {
   }
 
@@ -41,33 +47,57 @@ export class CommentSectionComponent implements OnInit {
     this.authenticatedUser = this.authService.IUser;
   }
 
-  addComment(comment: string) {
+  async addReview(review: string) {
     const ratings: FirebaseMovieDetailRating[] = this.rangeSelectors.map(x => {
       return {rate: x.value, type: x.name};
     });
     this.rangeSelectors.forEach(x => x.clearValue());
-    this.movieDetailsService.addCommentForMovie(this.movieId, ratings, comment);
+    await this.movieReviewService.addReviewForMovie(this.movieId, ratings, review);
+    await this.ionicDialog.presentToast(`Review was successfully added`);
   }
 
-  editComment(newCommentText: string, comment: FirebaseMovieDetailComment) {
-    this.movieDetailsService.removeComment(this.movieId, comment);
-    this.movieDetailsService.persisComment(this.movieId, {...comment, comment: newCommentText});
+  async editReview(editedReview: string, review: FirebaseMovieDetailReview) {
+    this.movieReviewService.editReview(this.movieId, review.id, editedReview);
+    await this.ionicDialog.presentToast(`Review was successfully edited`);
   }
 
-  async deleteComment(comment: FirebaseMovieDetailComment) {
-    const answer = await this.ionicDialog.presentAlertConfirm(`Do you really want to delete this comment ?`);
+  async deleteReview(review: FirebaseMovieDetailReview) {
+    const answer = await this.ionicDialog.presentAlertConfirm(`Do you really want to delete this review ?`);
     if (answer) {
-      await this.movieDetailsService.removeComment(this.movieId, comment);
-      await this.ionicDialog.presentToast('Comment was deleted successfully');
+      await this.movieReviewService.removeReview(this.movieId, review.id);
+      await this.ionicDialog.presentToast('Review was deleted successfully');
     }
   }
 
-  likeOrDislikeCommentOnMovie(comment: FirebaseMovieDetailComment, likeComment: boolean) {
-    this.movieDetailsService.likeOrDislikeCommentOnMovie(this.movieId, comment, this.authenticatedUser, likeComment);
+  likeOrDislikeReview(review: FirebaseMovieDetailReview, likeComment: boolean) {
+    this.movieReviewService.likeOrDislikeReview(this.movieId, review, this.authenticatedUser, likeComment);
   }
 
   searchPeopleByUsername(usernamePrefix: string) {
     this.searchedUsers$ = this.searchFirebase.getUsernameStartWithPrefix(usernamePrefix);
+  }
+
+  async addCommentOnReview(comment: string, review: FirebaseMovieDetailReview) {
+    await this.movieReviewService.addCommentForReview(this.movieId, review.id, comment);
+    await this.ionicDialog.presentToast('Comment was added successfully');
+  }
+
+  async editComment(data: { oldComment: FirebaseMovieDetailComment, newComment: string }, review: FirebaseMovieDetailReview) {
+    await this.movieReviewService.removeCommentFromReview(this.movieId, review.id, data.oldComment);
+    await this.movieReviewService.persisCommentForReview(this.movieId, review.id, {...data.oldComment, comment: data.newComment});
+    await this.ionicDialog.presentToast('Comment was edited successfully');
+  }
+
+  likeOrDislikeComment(comment: FirebaseMovieDetailComment, review: FirebaseMovieDetailReview, likeComment: boolean) {
+    this.movieReviewService.likeOrDislikeCommentOnReview(this.movieId, review.id, comment, this.authenticatedUser, likeComment);
+  }
+
+  async deleteComment(comment: FirebaseMovieDetailComment, review: FirebaseMovieDetailReview) {
+    const answer = await this.ionicDialog.presentAlertConfirm(`Do you really want to delete this comment ?`);
+    if (answer) {
+      await this.movieReviewService.removeCommentFromReview(this.movieId, review.id, comment);
+      await this.ionicDialog.presentToast('Comment was deleted successfully');
+    }
   }
 
   getValuesFromSelector(event: CustomEvent) {
@@ -97,6 +127,4 @@ export class CommentSectionComponent implements OnInit {
       };
     }
   }
-
-
 }
