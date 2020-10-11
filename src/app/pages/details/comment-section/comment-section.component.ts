@@ -15,6 +15,8 @@ import {SearchFirebaseService} from '../../../shared/services/search-firebase.se
 import {Observable} from 'rxjs';
 import {IonicDialogService} from '../../../shared/services/ionic-dialog.service';
 import {MovieReviewService} from '../services/movie-review.service';
+import {UserManagementService} from '../../../shared/services/user-management.service';
+import {UserNotificationConstructorService} from '../../../shared/utils/user-notification-constructor.service';
 
 @Component({
   selector: 'app-comment-section',
@@ -23,6 +25,7 @@ import {MovieReviewService} from '../services/movie-review.service';
 })
 export class CommentSectionComponent implements OnInit {
   @Input() movieId: string;
+  @Input() movieName: string;
   @Input() genreTypes: GenreTypes[] = [];
   @Input() reviews: FirebaseMovieDetailReview[] = [];
 
@@ -38,6 +41,7 @@ export class CommentSectionComponent implements OnInit {
   constructor(private authService: AuthService,
               private searchFirebase: SearchFirebaseService,
               private movieReviewService: MovieReviewService,
+              private userManagementService: UserManagementService,
               private ionicDialog: IonicDialogService) {
   }
 
@@ -54,6 +58,7 @@ export class CommentSectionComponent implements OnInit {
     this.rangeSelectors.forEach(x => x.clearValue());
     await this.movieReviewService.addReviewForMovie(this.movieId, ratings, review);
     await this.ionicDialog.presentToast(`Review was successfully added`);
+    await this.userManagementService.sendNotification(this.authService.IUser.uid, UserNotificationConstructorService.constructIAddedReviewAction(this.movieName));
   }
 
   async editReview(editedReview: string, review: FirebaseMovieDetailReview) {

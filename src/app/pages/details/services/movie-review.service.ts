@@ -113,7 +113,6 @@ export class MovieReviewService {
   }
 
   removeCommentFromReview(movieId: string, reviewId: string, comment: FirebaseMovieDetailComment): Promise<void> {
-    console.log(movieId, reviewId, comment)
     return this.angularFirestore.collection(this.MOVIE_DETAILS_COLLECTION)
       .doc(movieId)
       .collection(this.MOVIE_REVIEW_COLLECTION)

@@ -2,10 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {FirebaseMovieDetailReview, FirebaseMovieDetailRating, FirebaseMovieDetails} from '../comment-section/models/comment-section.model';
 import {Observable} from 'rxjs';
-import {firestore} from 'firebase/app';
-import {IUser} from '../../../shared/models/IUser.model';
 import {AuthService} from '../../../shared/services/auth.service';
-import {MovieDetailConstructor} from '../comment-section/utils/CommentConstrctor';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -15,8 +12,7 @@ export class MovieDetailsService {
   MOVIE_DETAILS_COLLECTION = 'movie_details';
   MOVIE_REVIEW_COLLECTION = 'movie_review';
 
-  constructor(private angularFirestore: AngularFirestore,
-              private authService: AuthService) {
+  constructor(private angularFirestore: AngularFirestore) {
   }
 
   getMovieDetails(movieId: string): Observable<FirebaseMovieDetails> {

@@ -41,7 +41,7 @@ export class AuthenticationContainerComponent extends ComponentBaseComponent imp
   async normalLogin(data: LoginIUser) {
     try {
       await this.authService.normalLogin(data);
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['menu/dashboard']);
     } catch (e) {
       this.loginComp.loginForm.reset();
       this.ionicDialogService.presentToast(e.message);
@@ -51,7 +51,7 @@ export class AuthenticationContainerComponent extends ComponentBaseComponent imp
   async registration(registerIUser: RegisterIUser) {
     try {
       await this.authService.normalRegistration(registerIUser);
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['menu/dashboard']);
     } catch (e) {
       this.registrationComp.registrationForm.reset();
       this.ionicDialogService.presentToast(e.message);
@@ -60,7 +60,7 @@ export class AuthenticationContainerComponent extends ComponentBaseComponent imp
 
   async signInWithGoogle() {
     await this.authService.googleSignIn();
-    await this.router.navigate(['/dashboard']);
+    await this.router.navigate(['menu/dashboard']);
 
   }
 

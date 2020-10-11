@@ -40,14 +40,30 @@
     padding-right: 16px;
   }
 
+  #dot {
+    height: 22px;
+    width: 22px;
+    background-color: #bb0005;
+    color: white;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    text-align: -webkit-center;
+    font-weight: bold;
+    font-size: 15px;
+    left: 25px;
+    top: 7px;
+  }
+
   @media (max-width: 600px) {
     .custom-buttons{
       font-size: 14px;
       padding-right: 0;
+      margin-left: 10px;
     }
     .icon-label{
-      min-width: 40px;
-      max-width: 40px;
+      min-width: 50px;
+      max-width: 50px;
     }
     .search-container{
       margin-left: 0;

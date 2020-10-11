@@ -58,7 +58,12 @@ export class AuthService {
       user = {
         displayName: credential.user.email.split('@')[0],
         uid: credential.user.uid,
-        email: credential.user.email
+        email: credential.user.email,
+        photoUrl: credential.user.photoURL,
+        notifications: [],
+        usersFollowI: [],
+        usersFollowMe: [],
+        points: 0
       };
       await this.firestore.collection('users').doc(credential.user.uid).set(user);
     } else {

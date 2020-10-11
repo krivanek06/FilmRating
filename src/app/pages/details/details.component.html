@@ -1,19 +1,14 @@
-<app-header></app-header>
-<ion-content class="ion-padding">
 
 
-
-  <!-- TODO show later -->
   <div class="page-container">
     <div class="comment-container" *ngIf="filmDetails$ | async as filmDetails">
       <ng-container *ngIf="firebaseMovieReviews$ | async as reviews">
         <app-comment-section
           [movieId]="movieId"
+          [movieName]="filmDetails.title"
           [genreTypes]="filmDetails.genres"
           [reviews]="reviews">
         </app-comment-section>
       </ng-container>
     </div>
   </div>
-
-</ion-content>

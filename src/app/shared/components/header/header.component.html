@@ -14,8 +14,19 @@
       <ion-label class="ion-text-end content-fit ion-hide-sm-down use-name-container ion-margin-end" position="fixed">
         {{ user.displayName }}
       </ion-label>
-      <ion-label class="ion-text-end content-fit icon-label" position="fixed">
-        <ion-icon name="notifications" class="divider-space clickable"></ion-icon>
+      <ion-label class="ion-text-end content-fit icon-label clickable"
+                 position="fixed"
+                 matTooltipPosition="right"
+                 matTooltip="Notifications"
+                 matTooltipClass="custom-mat-tooltip"
+                 matTooltipShowDelay="100"
+                 style="position: relative">
+        <ion-icon name="notifications"
+                  class="divider-space"
+                  (click)="redirectToProfile()"></ion-icon>
+        <span id="dot" *ngIf="unreadNotifications$ | async as unreadNotifications">
+          {{ unreadNotifications }}
+        </span>
       </ion-label>
 
       <ion-button color='danger' shape="round" fill="outline" class="custom-buttons" (click)="signOut()">Logout</ion-button>

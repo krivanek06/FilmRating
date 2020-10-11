@@ -5,20 +5,12 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'menu',
     pathMatch: 'full'
   },
   {
-    path: 'dashboard',
-    loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule)
-  },
-  {
-    path: 'details/:id',
-    loadChildren: () => import('./pages/details/details.module').then(m => m.DetailsModule)
-  },
-  {
-    path: 'search',
-    loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule)
+    path: 'menu',
+    loadChildren: () => import('./pages/menu/menu.module').then(m => m.MenuModule)
   },
   {
     path: 'authentication/:type',
@@ -26,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: 'menu'
   },
 ];
 
