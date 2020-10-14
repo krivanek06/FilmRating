@@ -1,12 +1,15 @@
-export interface IUser {
+export interface IUserPartialData {
   uid: string;
+  displayName: string;
+}
+
+export interface IUser extends IUserPartialData{
   email: string;
-  displayName?: string;
   photoUrl: string;
-  points?: number;
+  points: number;
   notifications: IUserNotification[];
-  usersFollowMe: string[];
-  usersFollowI: string[];
+  usersFollowMe: IUserPartialData[];
+  usersFollowI: IUserPartialData[];
 }
 
 export interface LoginIUser {
@@ -25,6 +28,7 @@ export interface IUserNotification {
   read: boolean;
   timestamp: number;
   type: IUserNotificationType;
+  movieId?: string;
 }
 
 export enum IUserNotificationType {

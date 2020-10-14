@@ -5,7 +5,10 @@ export class MovieDetailConstructor {
   static ConstructReview(user: IUser, comment: string, ratings?: FirebaseMovieDetailRating[]): FirebaseMovieDetailReview {
     const review: FirebaseMovieDetailReview = {
       comment,
-      person: user.displayName,
+      person: {
+        uid: user.uid,
+        displayName: user.displayName
+      },
       ratings,
       timestamp: new Date().getTime(),
       likes: [],
@@ -19,13 +22,27 @@ export class MovieDetailConstructor {
     const constructedComment: FirebaseMovieDetailComment = {
       id: `${Date.now()}_${user.uid}`,
       comment,
-      person: user.displayName,
+      person: {
+        uid: user.uid,
+        displayName: user.displayName
+      },
       timestamp: new Date().getTime(),
       likes: [],
       dislikes: []
     };
     return constructedComment;
   }
+
+  /**
+   * if message = 'Ahoj @Tomas123 ako sa mas' , then return ['Tomas123']
+   */
+  static findAllUsernameInString(message: string): string[] {
+    return message.split(' ')
+      .filter(messagePart => messagePart.startsWith('@'))
+      .map(res => res.substr(1));
+  }
+
+
 }
 
 

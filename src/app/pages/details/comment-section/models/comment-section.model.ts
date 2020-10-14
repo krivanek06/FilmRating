@@ -1,3 +1,5 @@
+import {IUserPartialData} from '../../../../shared/models/IUser.model';
+
 export interface FirebaseMovieDetails {
   id: string;
 }
@@ -5,7 +7,7 @@ export interface FirebaseMovieDetails {
 export interface FirebaseMovieDetailComment {
   id?: string;
   comment: string;
-  person: string;
+  person: IUserPartialData;
   timestamp: number;
   likes?: string[];
   dislikes?: string[];

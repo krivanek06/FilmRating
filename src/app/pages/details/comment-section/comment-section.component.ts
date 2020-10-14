@@ -11,19 +11,21 @@ import {
 } from './models/comment-section.model';
 import {AuthService} from '../../../shared/services/auth.service';
 import {IUser} from '../../../shared/models/IUser.model';
-import {SearchFirebaseService} from '../../../shared/services/search-firebase.service';
-import {Observable} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {IonicDialogService} from '../../../shared/services/ionic-dialog.service';
 import {MovieReviewService} from '../services/movie-review.service';
 import {UserManagementService} from '../../../shared/services/user-management.service';
-import {UserNotificationConstructorService} from '../../../shared/utils/user-notification-constructor.service';
+import {NotificationConstructorService} from '../../../shared/utils/notification-constructor.service';
+import {MovieDetailConstructor} from './utils/CommentConstrctor';
+import {concatAll, concatMap, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {ComponentBaseComponent} from '../../../shared/components/component-base/component-base.component';
 
 @Component({
   selector: 'app-comment-section',
   templateUrl: './comment-section.component.html',
   styleUrls: ['./comment-section.component.scss']
 })
-export class CommentSectionComponent implements OnInit {
+export class CommentSectionComponent extends ComponentBaseComponent implements OnInit {
   @Input() movieId: string;
   @Input() movieName: string;
   @Input() genreTypes: GenreTypes[] = [];
@@ -39,15 +41,15 @@ export class CommentSectionComponent implements OnInit {
   genreTypeRatingAll = genreTypeRatingAll;
 
   constructor(private authService: AuthService,
-              private searchFirebase: SearchFirebaseService,
               private movieReviewService: MovieReviewService,
               private userManagementService: UserManagementService,
               private ionicDialog: IonicDialogService) {
+    super();
   }
 
   ngOnInit(): void {
     this.applyCustomClassToPopOver();
-    this.initRequiredCategories();
+    this.initRequiredCategorieToRateFilm();
     this.authenticatedUser = this.authService.IUser;
   }
 
@@ -58,7 +60,18 @@ export class CommentSectionComponent implements OnInit {
     this.rangeSelectors.forEach(x => x.clearValue());
     await this.movieReviewService.addReviewForMovie(this.movieId, ratings, review);
     await this.ionicDialog.presentToast(`Review was successfully added`);
-    await this.userManagementService.sendNotification(this.authService.IUser.uid, UserNotificationConstructorService.constructIAddedReviewAction(this.movieName));
+    await this.userManagementService.sendNotification(this.authService.IUser.uid, NotificationConstructorService.constructIAddedReviewAction(this.movieName, this.movieId));
+
+    const notificationMentionedName = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
+    const notificationAddedReview = NotificationConstructorService.constructSomebodyAddedReviewAction(this.authService.IUser.displayName, this.movieName, this.movieId);
+    const promises = MovieDetailConstructor.findAllUsernameInString(review).map(async name => await this.userManagementService.getIUserByUsername(name));
+
+    const mentionedUsersInText = (await Promise.all(promises)).filter(x => !!x);
+
+    forkJoin(
+      mentionedUsersInText.map(user => this.userManagementService.sendNotification(user.uid, notificationMentionedName)),
+      this.authService.IUser.usersFollowMe.map(user => this.userManagementService.sendNotification(user.uid, notificationAddedReview))
+    ).pipe(takeUntil(this.destroy$)).subscribe();
   }
 
   async editReview(editedReview: string, review: FirebaseMovieDetailReview) {
@@ -79,12 +92,26 @@ export class CommentSectionComponent implements OnInit {
   }
 
   searchPeopleByUsername(usernamePrefix: string) {
-    this.searchedUsers$ = this.searchFirebase.getUsernameStartWithPrefix(usernamePrefix);
+    this.searchedUsers$ = this.userManagementService.getUsernameStartWithPrefix(usernamePrefix);
   }
 
   async addCommentOnReview(comment: string, review: FirebaseMovieDetailReview) {
     await this.movieReviewService.addCommentForReview(this.movieId, review.id, comment);
     await this.ionicDialog.presentToast('Comment was added successfully');
+    await this.userManagementService.sendNotification(this.authService.IUser.uid, NotificationConstructorService.constructIAddedCommentOnReviewAction(review.person.displayName, this.movieName, this.movieId));
+    await this.userManagementService.sendNotification(review.person.uid, NotificationConstructorService.constructSomebodyAddedCommentOnReviewAction(this.authService.IUser.displayName, this.movieName, this.movieId));
+
+
+    // notify mentioned users in comment or users who follow me
+    const notificationMentionedName = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
+    const notificationAddedComment = NotificationConstructorService.constructSomebodyIFollowAddedCommentOnReviewAction(this.authService.IUser.displayName, review.person.displayName, this.movieName, this.movieId);
+    const promises = MovieDetailConstructor.findAllUsernameInString(comment).map(async name => await this.userManagementService.getIUserByUsername(name));
+
+    const mentionedUsersInText = (await Promise.all(promises)).filter(x => !!x);
+    forkJoin(
+      mentionedUsersInText.map(user => this.userManagementService.sendNotification(user.uid, notificationMentionedName)),
+      this.authService.IUser.usersFollowMe.map(user => this.userManagementService.sendNotification(user.uid, notificationAddedComment))
+    ).pipe(takeUntil(this.destroy$)).subscribe();
   }
 
   async editComment(data: { oldComment: FirebaseMovieDetailComment, newComment: string }, review: FirebaseMovieDetailReview) {
@@ -115,7 +142,7 @@ export class CommentSectionComponent implements OnInit {
     this.selectedCategories = [...unique, ...this.requiredCategories];
   }
 
-  private initRequiredCategories(): void {
+  private initRequiredCategorieToRateFilm(): void {
     const genderSpecificRating = [].concat.apply([], this.genreTypes.map(type => requiredGenreTypeRating[type.name]).filter((data: string[]) => data.length > 0));
     this.requiredCategories = [...genderSpecificRating, ...requiredGenreTypeRating.Required];
     this.selectedCategories = [...this.requiredCategories];

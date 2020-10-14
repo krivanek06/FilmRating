@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, pipe} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {IUser, LoginIUser, RegisterIUser} from '../models/IUser.model';
 import {auth} from 'firebase/app';
@@ -16,8 +16,11 @@ export class AuthService {
   constructor(private afAuth: AngularFireAuth,
               private firestore: AngularFirestore) {
 
-    const user = JSON.parse(localStorage.getItem(this.USER_KEY)); // check if already logged in
-    this.userSubject$.next(user);
+    const user = JSON.parse(localStorage.getItem(this.USER_KEY)) as IUser; // check if already logged in
+    if (!!user) {
+      this.getUserFromFirestore(user.uid);
+    }
+
   }
 
   get IUser(): IUser {
@@ -66,13 +69,18 @@ export class AuthService {
         points: 0
       };
       await this.firestore.collection('users').doc(credential.user.uid).set(user);
-    } else {
-      const data = await this.firestore.collection('users').doc(credential.user.uid).get().toPromise();
-      user = data.data() as IUser;
     }
 
-    this.userSubject$.next(user);
-    localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    this.getUserFromFirestore(credential.user.uid);
+  }
+
+  private getUserFromFirestore(uid: string) {
+    this.firestore.collection<IUser>('users').doc(uid).valueChanges()
+      .subscribe((savedUser: IUser) => {
+        console.log('savedUser', savedUser);
+        localStorage.setItem(this.USER_KEY, JSON.stringify(savedUser));
+        this.userSubject$.next(savedUser);
+      });
   }
 
 

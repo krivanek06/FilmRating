@@ -1,7 +1,7 @@
 <ion-card>
   <ion-card-header>
     <ion-card-subtitle class="ion-padding-top ion-padding-horizontal">
-      <ion-label> {{ comment.person }} </ion-label>
+      <ion-label> {{ comment.person.displayName }} </ion-label>
       <ion-label class="ion-float-end" style="display: flex">
         <ion-text class="ion-margin-end">{{ comment.timestamp | date: 'dd.MM.yyyy HH:mm:ss a'}}</ion-text>
         <!-- reply on comment -->
@@ -19,6 +19,7 @@
         </ion-icon>
         <!-- edit comment icon -->
         <ion-icon
+          *ngIf="authenticatedUser.uid === comment.person.uid"
           color='warning'
           name="pencil-outline"
           class="clickable"
@@ -31,6 +32,7 @@
         </ion-icon>
         <!-- delete comment icon -->
         <ion-icon
+          *ngIf="authenticatedUser.uid === comment.person.uid"
           color='danger'
           name="trash-bin-outline"
           class="clickable"
