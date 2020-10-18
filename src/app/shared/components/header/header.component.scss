@@ -1,6 +1,19 @@
 @import "../../style/main";
-:host{
+@import "../../../../theme/custom-variable";
 
+:host{
+  #loginButton{
+    --color: #{$gold-darker-1};
+    --border-color: #{$gold-darker-1};
+  }
+
+  #registrationButton{
+    --background: #{$gold-darker-1};
+  }
+  ion-avatar{
+    height: 32px;
+    width: 32px;
+  }
   .divider-space{
     font-size: 25px;
     padding-left: 15px;
@@ -21,9 +34,18 @@
     --padding-start: 0;
   }
 
+  .logo-img{
+    width: 150px;
+    height: 55px;
+  }
+
   .use-name-container{
     min-width: 200px;
     max-width: 200px;
+  }
+  .logo-container{
+    max-width: 170px;
+    min-width: 170px;
   }
 
   .search-container{

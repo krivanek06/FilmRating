@@ -1,10 +1,17 @@
-:host{
-  ion-label{
+@import "../../../../theme/custom-variable";
+
+:host {
+  ion-label {
     color: white;
   }
+
   .social-media-container {
     border-top: 1px solid #b0b0b0;
     margin-top: 25px;
+  }
+
+  ion-segment-button {
+    --color-checked: #{$gold}
   }
 
 }

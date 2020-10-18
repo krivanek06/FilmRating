@@ -1,3 +1,5 @@
+@import "./custom-variable";
+
 * {
   padding: 0;
   margin: 0;
@@ -225,5 +227,139 @@
     --ion-toolbar-background: #1f1f1f;
 
     --ion-tab-bar-background: #1f1f1f;
+  }
+}
+
+
+/* CUSTOM DARK SCHEME */
+
+:root {
+
+  ion-card {
+    padding: 2px 8px;
+
+    ion-card-header {
+      padding: 2px;
+    }
+
+    ion-card-content {
+      padding: 10px;
+
+      ion-list {
+        ion-item {
+          font-size: 15px;
+          --padding-start: 0;
+          --padding-end: 0;
+          --inner-padding-start: 0;
+          --inner-padding-end: 0;
+          --min-height: 30px;
+
+          ion-label {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+
+
+  .dark-theme {
+    ion-chip {
+      ion-label {
+        --color: #{$default-word};
+      }
+    }
+
+    ion-item {
+      --background: transparent;
+      --border-style: none;
+      --color: #{$default-word};
+    }
+
+
+    ion-content {
+      ion-list {
+        background: transparent;
+
+        ion-list-header {
+          ion-label {
+            --color: #{$default-word};
+          }
+        }
+
+        ion-item {
+          --color: #{$default-word};
+        }
+      }
+    }
+
+    ion-card {
+      --background: #{$background-card-review};
+      --color: #{$default-word};
+
+      ion-card-header {
+        --background-color: transparent;
+
+        ion-card-title {
+          --color: #{$gold};
+          font-weight: bold;
+        }
+
+        ion-card-subtitle {
+          --color: #{$default-word};
+        }
+      }
+
+      ion-card-content {
+        ion-list {
+          background: transparent;
+
+          ion-item {
+            --background: transparent;
+            --border-style: none;
+            --color: #{$default-word};
+          }
+        }
+      }
+    }
+
+    ion-header {
+      ion-toolbar {
+        /* --background: linear-gradient(180deg, rgb(1, 18, 49) 0%, rgb(1, 0, 60) 55%, rgb(3, 1, 75) 100%);*/
+        --background: #{$background} !important;
+        --color: #{$default-word} !important;
+      }
+
+      ion-item {
+        --background: #{$background};
+      }
+    }
+
+    ion-content {
+      --background: #{$background};
+      --color: #{$default-word};
+    }
+
+    ion-toolbar {
+      --background: transparent;
+    }
+
+
+    ion-menu {
+      --background: #{$background} !important;
+
+      ion-content {
+        --background: #{$background} !important;
+
+        ion-list {
+          background: #{$background} !important;
+        }
+
+        ion-item {
+          --background: #{$background} !important;
+          --color: #{$default-word} !important;
+        }
+      }
+    }
   }
 }

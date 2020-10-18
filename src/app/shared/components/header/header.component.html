@@ -1,6 +1,10 @@
 <ion-header>
 
   <ion-item>
+    <!-- logo -->
+    <ion-label class="logo-container ion-hide-sm-down">
+      <ion-img src="../../../assets/logo.png" alt="app-logo" class="logo-img "></ion-img>
+    </ion-label>
     <!-- search -->
     <ion-label class="search-container">
       <ion-searchbar
@@ -11,32 +15,52 @@
 
     <!-- username & bell icon -->
     <ng-container *ngIf="user$ | async as user; else showLoginButton">
-      <ion-label class="ion-text-end content-fit ion-hide-sm-down use-name-container ion-margin-end" position="fixed">
-        {{ user.displayName }}
-      </ion-label>
-      <ion-label class="ion-text-end content-fit icon-label clickable"
+      <!-- <ion-label class="ion-text-end content-fit ion-hide-sm-down use-name-container ion-margin-end" position="fixed">
+         {{ user.displayName }}
+       </ion-label> -->
+      <ion-chip class="ion-padding" (click)="redirectToProfile()">
+        <ion-avatar class="ion-margin-end">
+          <ion-img [src]="user?.photoUrl" alt="user image"></ion-img>
+        </ion-avatar>
+        <ion-label>{{ user.displayName }}</ion-label>
+
+        <span
+          matTooltipPosition="right"
+          matTooltip="Notifications"
+          matTooltipClass="custom-mat-tooltip"
+          matTooltipShowDelay="100"
+          style="position: relative">
+        <span id="dot" *ngIf="unreadNotifications$ | async as unreadNotifications">
+          {{ unreadNotifications }}
+        </span>
+
+        </span>
+      </ion-chip>
+      <!--<ion-label class="ion-text-end content-fit icon-label clickable"
                  position="fixed"
                  matTooltipPosition="right"
                  matTooltip="Notifications"
                  matTooltipClass="custom-mat-tooltip"
                  matTooltipShowDelay="100"
                  style="position: relative">
-        <ion-icon name="notifications"
-                  class="divider-space"
-                  (click)="redirectToProfile()"></ion-icon>
         <span id="dot" *ngIf="unreadNotifications$ | async as unreadNotifications">
           {{ unreadNotifications }}
         </span>
-      </ion-label>
+      </ion-label>-->
 
-      <ion-button color='danger' shape="round" fill="outline" class="custom-buttons" (click)="signOut()">Logout</ion-button>
+      <ion-button color='danger' shape="round" fill="outline" class="custom-buttons" (click)="signOut()">Logout
+      </ion-button>
 
     </ng-container>
 
     <!-- authentication button -->
     <ng-template #showLoginButton>
-      <ion-button shape="round" fill="outline" class="custom-buttons" (click)="navigateLogin('login')">Login</ion-button>
-      <ion-button class="custom-buttons ion-hide-sm-down" (click)="navigateLogin('registration')">Register</ion-button>
+      <ion-button id="loginButton" shape="round" fill="outline" class="custom-buttons" (click)="navigateLogin('login')">
+        Login
+      </ion-button>
+      <ion-button id='registrationButton' class="custom-buttons ion-hide-sm-down"
+                  (click)="navigateLogin('registration')">Register
+      </ion-button>
     </ng-template>
 
 

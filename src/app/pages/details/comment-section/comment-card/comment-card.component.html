@@ -5,43 +5,45 @@
       <ion-label class="ion-float-end" style="display: flex">
         <ion-text class="ion-margin-end">{{ comment.timestamp | date: 'dd.MM.yyyy HH:mm:ss a'}}</ion-text>
         <!-- reply on comment -->
-        <ion-icon
-          *ngIf="isReview"
-          color="primary"
-          name="chatbubble-ellipses-outline"
-          class="clickable"
-          style="margin-right: 8px"
-          matTooltipPosition="right"
-          matTooltip="Replay"
-          matTooltipClass="custom-mat-tooltip"
-          matTooltipShowDelay="100"
-          (click)="replay()">
-        </ion-icon>
-        <!-- edit comment icon -->
-        <ion-icon
-          *ngIf="authenticatedUser.uid === comment.person.uid"
-          color='warning'
-          name="pencil-outline"
-          class="clickable"
-          style="margin-right: 8px"
-          matTooltipPosition="right"
-          matTooltip="Edit"
-          matTooltipClass="custom-mat-tooltip"
-          matTooltipShowDelay="100"
-          (click)="toggleEditComment()">
-        </ion-icon>
-        <!-- delete comment icon -->
-        <ion-icon
-          *ngIf="authenticatedUser.uid === comment.person.uid"
-          color='danger'
-          name="trash-bin-outline"
-          class="clickable"
-          matTooltipPosition="right"
-          matTooltip="Delete"
-          matTooltipClass="custom-mat-tooltip"
-          matTooltipShowDelay="100"
-          (click)="deleteComment()">
-        </ion-icon>
+        <ng-container *ngIf="authenticatedUser">
+          <ion-icon
+            *ngIf="isReview"
+            color="primary"
+            name="chatbubble-ellipses-outline"
+            class="clickable"
+            style="margin-right: 8px"
+            matTooltipPosition="right"
+            matTooltip="Replay"
+            matTooltipClass="custom-mat-tooltip"
+            matTooltipShowDelay="100"
+            (click)="replay()">
+          </ion-icon>
+          <!-- edit comment icon -->
+          <ion-icon
+            *ngIf="authenticatedUser.uid === comment.person.uid"
+            color='warning'
+            name="pencil-outline"
+            class="clickable"
+            style="margin-right: 8px"
+            matTooltipPosition="right"
+            matTooltip="Edit"
+            matTooltipClass="custom-mat-tooltip"
+            matTooltipShowDelay="100"
+            (click)="toggleEditComment()">
+          </ion-icon>
+          <!-- delete comment icon -->
+          <ion-icon
+            *ngIf="authenticatedUser.uid === comment.person.uid"
+            color='danger'
+            name="trash-bin-outline"
+            class="clickable"
+            matTooltipPosition="right"
+            matTooltip="Delete"
+            matTooltipClass="custom-mat-tooltip"
+            matTooltipShowDelay="100"
+            (click)="deleteComment()">
+          </ion-icon>
+        </ng-container>
       </ion-label>
     </ion-card-subtitle>
   </ion-card-header>
@@ -49,7 +51,7 @@
   <!-- comment read only format -->
   <ion-card-content *ngIf="!editing">
     <ion-text class="wrap-white-space "> {{ comment.comment }} </ion-text>
-    <ion-text>
+    <ion-text *ngIf="authenticatedUser">
       <div style="display: flex; float: right">
         <!-- like -->
         <div class="ion-margin-end" style="display: inline-flex">

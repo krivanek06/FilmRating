@@ -1,14 +1,24 @@
-:host{
-  ion-list{
+@import "../../../../theme/custom-variable";
+
+:host {
+  ion-list {
     background: transparent;
   }
+
   ion-icon {
     color: white;
   }
-  ion-input{
+
+  ion-input {
     color: white;
   }
-  ion-item{
+
+  ion-item {
     --background: 'transparent';
   }
+
+  ion-button {
+    --background: #{$gold};
+  }
+
 }

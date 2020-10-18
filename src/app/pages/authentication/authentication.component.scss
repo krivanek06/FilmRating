@@ -1,3 +1,5 @@
+@import "../../../theme/custom-variable";
+
 :host{
   .authentication-container{
     position: absolute;
@@ -8,7 +10,7 @@
     width: 50%;
   }
   ion-content{
-    --background: #08092a;
+    --background: #{$background};
   }
 
   @media (max-width: 600px) {
