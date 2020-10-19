@@ -76,7 +76,7 @@ export class FilmDataService {
   /**
    * API - https://developers.themoviedb.org/3/search/search-movies
    */
-  searchMovieByName(namePrefix: string) {
+  searchMovieByName(namePrefix: string): Observable<DiscoveredMoviesWrapper> {
     const params = new HttpParams()
       .set('api_key', environment.theMovieDbAPI)
       .set('sort_by', 'popularity.desc')

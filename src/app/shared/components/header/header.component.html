@@ -5,9 +5,11 @@
     <ion-label class="logo-container ion-hide-sm-down">
       <ion-img src="../../../assets/logo.png" alt="app-logo" class="logo-img "></ion-img>
     </ion-label>
+
     <!-- search -->
-    <ion-label class="search-container">
+    <ion-label class="search-container ion-hide-sm-down">
       <ion-searchbar
+        #mySearchbar
         [debounce]="500"
         (ionChange)="searchForMovie($event)">
       </ion-searchbar>
@@ -15,9 +17,6 @@
 
     <!-- username & bell icon -->
     <ng-container *ngIf="user$ | async as user; else showLoginButton">
-      <!-- <ion-label class="ion-text-end content-fit ion-hide-sm-down use-name-container ion-margin-end" position="fixed">
-         {{ user.displayName }}
-       </ion-label> -->
       <ion-chip class="ion-padding" (click)="redirectToProfile()">
         <ion-avatar class="ion-margin-end">
           <ion-img [src]="user?.photoUrl" alt="user image"></ion-img>
@@ -36,21 +35,9 @@
 
         </span>
       </ion-chip>
-      <!--<ion-label class="ion-text-end content-fit icon-label clickable"
-                 position="fixed"
-                 matTooltipPosition="right"
-                 matTooltip="Notifications"
-                 matTooltipClass="custom-mat-tooltip"
-                 matTooltipShowDelay="100"
-                 style="position: relative">
-        <span id="dot" *ngIf="unreadNotifications$ | async as unreadNotifications">
-          {{ unreadNotifications }}
-        </span>
-      </ion-label>-->
-
-      <ion-button color='danger' shape="round" fill="outline" class="custom-buttons" (click)="signOut()">Logout
+      <ion-button color='danger' shape="round" fill="outline" class="custom-buttons" (click)="signOut()">
+        Logout
       </ion-button>
-
     </ng-container>
 
     <!-- authentication button -->
@@ -59,10 +46,36 @@
         Login
       </ion-button>
       <ion-button id='registrationButton' class="custom-buttons ion-hide-sm-down"
-                  (click)="navigateLogin('registration')">Register
+                  (click)="navigateLogin('registration')">
+        Register
       </ion-button>
     </ng-template>
-
-
   </ion-item>
+
+  <ion-item class="ion-hide-sm-up">
+    <ion-label class="search-container">
+      <ion-searchbar
+        #mySearchbar
+        [debounce]="500"
+        (ionChange)="searchForMovie($event)">
+      </ion-searchbar>
+    </ion-label>
+  </ion-item>
+
+  <!-- list max 5 results of search bar -->
+  <ng-container *ngIf="searchedMovies$ | async as searchedMovies">
+    <ion-item *ngFor="let movie of searchedMovies.results | slice:0:5;"
+              (click)="redirectToDetails(movie.id)"
+              class="search-result-item clickable">
+        <ion-label class="poster-image-container">
+          <ion-img [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="poster image" class="poster-image"></ion-img>
+        </ion-label>
+        <ion-label class="ion-padding-horizontal">
+          <div>{{ movie.title }}</div>
+          <div>{{ movie.release_date | date: 'dd.MM.yyyy'}}</div>
+        </ion-label>
+    </ion-item>
+  </ng-container>
+
 </ion-header>
+

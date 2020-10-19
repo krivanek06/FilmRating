@@ -17,6 +17,6 @@ export class FilmCardsComponent implements OnInit {
   }
 
   showDetails(movie: DiscoveredMovie) {
-    this.route.navigate([`/details/${movie.id}`]);
+    this.route.navigate([`menu/details/${movie.id}`]);
   }
 }

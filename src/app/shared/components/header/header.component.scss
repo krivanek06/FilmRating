@@ -10,6 +10,10 @@
   #registrationButton{
     --background: #{$gold-darker-1};
   }
+
+  ion-header{
+    background: #{$background-dark};
+  }
   ion-avatar{
     height: 32px;
     width: 32px;
@@ -32,6 +36,23 @@
 
   ion-item{
     --padding-start: 0;
+  }
+
+  .poster-image{
+    width: 50px;
+    height: 70px;
+  }
+
+  .poster-image-container{
+    min-width: 65px;
+    max-width: 65px;
+    padding-left: 16px;
+  }
+
+  .search-result-item{
+    padding-bottom: 3px;
+    padding-top: 3px;
+    background: #{$background};
   }
 
   .logo-img{
