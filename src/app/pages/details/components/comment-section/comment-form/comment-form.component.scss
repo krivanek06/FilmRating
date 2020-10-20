@@ -1,4 +1,4 @@
-@import "../../../../../theme/custom-variable";
+@import "../../../../../../theme/custom-variable";
 :host {
   mat-form-field {
     width: 100%;
@@ -11,6 +11,7 @@
 
   ion-button{
     --background: #{$gold-darker-1};
+    --color: #{$dark-word};
   }
 
 

@@ -3,8 +3,8 @@ import {
   FirebaseMovieDetailReview,
   FirebaseMovieDetailRating,
   FirebaseMovieDetailComment
-} from '../comment-section/models/comment-section.model';
-import {MovieDetailConstructor} from '../comment-section/utils/CommentConstrctor';
+} from '../components/comment-section/models/comment-section.model';
+import {MovieDetailConstructor} from '../components/comment-section/utils/CommentConstrctor';
 import {IUser} from '../../../shared/models/IUser.model';
 import {firestore} from 'firebase';
 import {AngularFirestore} from '@angular/fire/firestore';

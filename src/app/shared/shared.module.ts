@@ -14,13 +14,17 @@ import {NgCircleProgressModule} from 'ng-circle-progress';
 import {IonicModule} from '@ionic/angular';
 import {RangeRatingComponent} from './components/range-rating/range-rating.component';
 import {MentionModule} from 'angular-mentions';
+import {FilmPosterCardComponent} from './components/film-poster-card/film-poster-card.component';
+import {NumberFormatterPipe} from './pipes/numberFormatter.pipe';
 
 
 @NgModule({
   declarations: [
     FilmCardsComponent,
     HeaderComponent,
-    RangeRatingComponent
+    RangeRatingComponent,
+    FilmPosterCardComponent,
+    NumberFormatterPipe
   ],
   imports: [
     CommonModule,
@@ -69,7 +73,9 @@ import {MentionModule} from 'angular-mentions';
     IonicModule,
     FilmCardsComponent,
     HeaderComponent,
-    RangeRatingComponent
+    RangeRatingComponent,
+    FilmPosterCardComponent,
+    NumberFormatterPipe
   ]
 })
 export class SharedModule { }

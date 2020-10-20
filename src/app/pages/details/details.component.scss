@@ -1,4 +1,8 @@
 :host{
+  ion-col{
+    padding: 16px;
+  }
+
   .page-container{
     width: 100%;
     display: flex;
@@ -6,5 +10,15 @@
   }
   .comment-container{
     width: 600px;
+  }
+
+  .dividing-border{
+    border-right: 1px solid #666666;
+  }
+
+  @media (max-width: 600px) {
+    .dividing-border{
+      border-right: 0;
+    }
   }
 }

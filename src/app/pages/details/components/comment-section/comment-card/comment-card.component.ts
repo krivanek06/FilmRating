@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FirebaseMovieDetailComment, FirebaseMovieDetailReview} from '../models/comment-section.model';
-import {IUser} from '../../../../shared/models/IUser.model';
+import {IUser} from '../../../../../shared/models/IUser.model';
 
 @Component({
   selector: 'app-comment-card',

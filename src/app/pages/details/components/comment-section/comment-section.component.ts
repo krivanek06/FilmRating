@@ -1,24 +1,24 @@
 import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {GenreTypes} from '../../../api/film-data.model';
+import {GenreTypes} from '../../../../api/film-data.model';
 import {genreTypeRatingAll, requiredGenreTypeRating} from './models/comment-genres.data';
-import {RangeRatingComponent} from '../../../shared/components/range-rating/range-rating.component';
-import {MovieDetailsService} from '../services/movie-details.service';
+import {RangeRatingComponent} from '../../../../shared/components/range-rating/range-rating.component';
+import {MovieDetailsService} from '../../services/movie-details.service';
 import {
   FirebaseMovieDetailReview,
   FirebaseMovieDetailRating,
   FirebaseMovieDetails,
   FirebaseMovieDetailComment
 } from './models/comment-section.model';
-import {AuthService} from '../../../shared/services/auth.service';
-import {IUser} from '../../../shared/models/IUser.model';
+import {AuthService} from '../../../../shared/services/auth.service';
+import {IUser} from '../../../../shared/models/IUser.model';
 import {forkJoin, Observable} from 'rxjs';
-import {IonicDialogService} from '../../../shared/services/ionic-dialog.service';
-import {MovieReviewService} from '../services/movie-review.service';
-import {UserManagementService} from '../../../shared/services/user-management.service';
-import {NotificationConstructorService} from '../../../shared/utils/notification-constructor.service';
+import {IonicDialogService} from '../../../../shared/services/ionic-dialog.service';
+import {MovieReviewService} from '../../services/movie-review.service';
+import {UserManagementService} from '../../../../shared/services/user-management.service';
+import {NotificationConstructorService} from '../../../../shared/utils/notification-constructor.service';
 import {MovieDetailConstructor} from './utils/CommentConstrctor';
 import {concatAll, concatMap, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
-import {ComponentBaseComponent} from '../../../shared/components/component-base/component-base.component';
+import {ComponentBaseComponent} from '../../../../shared/components/component-base/component-base.component';
 
 @Component({
   selector: 'app-comment-section',
@@ -37,6 +37,7 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
   selectedCategories: string[] = []; // user may select another categories to rate
   requiredCategories: string[] = []; // user must rate these categories
   authenticatedUser: IUser;
+  showReviewForm = false;
 
   genreTypeRatingAll = genreTypeRatingAll;
 
@@ -72,6 +73,8 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
       mentionedUsersInText.map(user => this.userManagementService.sendNotification(user.uid, notificationMentionedName)),
       this.authService.IUser.usersFollowMe.map(user => this.userManagementService.sendNotification(user.uid, notificationAddedReview))
     ).pipe(takeUntil(this.destroy$)).subscribe();
+
+    this.toggleShowReview();
   }
 
   async editReview(editedReview: string, review: FirebaseMovieDetailReview) {
@@ -85,6 +88,10 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
       await this.movieReviewService.removeReview(this.movieId, review.id);
       await this.ionicDialog.presentToast('Review was deleted successfully');
     }
+  }
+
+  toggleShowReview(){
+    this.showReviewForm = !this.showReviewForm;
   }
 
   likeOrDislikeReview(review: FirebaseMovieDetailReview, likeComment: boolean) {

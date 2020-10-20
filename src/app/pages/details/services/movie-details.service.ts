@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {FirebaseMovieDetailReview, FirebaseMovieDetailRating, FirebaseMovieDetails} from '../comment-section/models/comment-section.model';
+import {FirebaseMovieDetailReview, FirebaseMovieDetailRating, FirebaseMovieDetails} from '../components/comment-section/models/comment-section.model';
 import {Observable} from 'rxjs';
 import {AuthService} from '../../../shared/services/auth.service';
 import {map} from 'rxjs/operators';

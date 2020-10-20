@@ -1,4 +1,4 @@
-import {IUserPartialData} from '../../../../shared/models/IUser.model';
+import {IUserPartialData} from '../../../../../shared/models/IUser.model';
 
 export interface FirebaseMovieDetails {
   id: string;

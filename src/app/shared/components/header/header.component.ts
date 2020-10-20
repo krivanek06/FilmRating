@@ -35,6 +35,8 @@ export class HeaderComponent implements OnInit {
         .filter(x => !x.read)
         .reduce((acc, one: IUserNotification) => acc + 1, 0))
     );
+
+    this.unreadNotifications$.subscribe(console.log)
   }
 
   searchForMovie(data: CustomEvent) {

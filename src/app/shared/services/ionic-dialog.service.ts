@@ -45,7 +45,7 @@ export class IonicDialogService {
     const toast = await this.toastController.create({
       header,
       duration: 2000,
-      color: 'dark',
+      cssClass: 'toast-scheme',
       position: 'bottom',
     });
     toast.present();

@@ -1,0 +1,25 @@
+@import "../../style/main";
+
+:host {
+  .progress-circle-container {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+  }
+
+  ion-card {
+    padding: 0;
+    border-radius: 5px;
+    margin-top: 2px;
+    display: flex;
+    width: 300px;
+
+    ion-img {
+      border-radius: 5px;
+    }
+
+    ion-card-content {
+      padding: 0;
+    }
+  }
+}

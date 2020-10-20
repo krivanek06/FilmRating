@@ -1,0 +1,38 @@
+@import "../../../../../shared/style/main";
+@import "../../../../../../theme/custom-variable";
+
+:host {
+  .like-number {
+    font-size: 17px;
+    margin-right: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  ion-icon {
+    font-size: 22px;
+    z-index: 100;
+  }
+
+  ion-card-content {
+    padding: 12px !important;
+  }
+
+  .comment-background {
+    background: #e88b00;
+    color: #{$dark-word};
+  }
+
+  .likes {
+    margin-right: 6px;
+    font-size: 18px;
+  }
+}
+
+
+::ng-deep .custom-mat-tooltip {
+  background-color: #818181;
+  font-size: 16px;
+  padding: 5px;
+  white-space: pre-line;
+}

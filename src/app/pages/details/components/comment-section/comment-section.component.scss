@@ -1,0 +1,16 @@
+@import "../../../../shared/style/main";
+@import "../../../../../theme/custom-variable";
+
+:host {
+  .review-button {
+    width: 265px;
+    height: 60px;
+    //--background: #{$gold};
+    --background: #{$background-card-review};
+  }
+
+  .dividing-border {
+    border-top: 1px solid #666666;
+    margin-top: 50px;
+  }
+}

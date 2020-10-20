@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-item>
+  <ion-item class="header-info-container">
     <!-- logo -->
     <ion-label class="logo-container ion-hide-sm-down">
       <ion-img src="../../../assets/logo.png" alt="app-logo" class="logo-img "></ion-img>
@@ -15,25 +15,26 @@
       </ion-searchbar>
     </ion-label>
 
-    <!-- username & bell icon -->
+
     <ng-container *ngIf="user$ | async as user; else showLoginButton">
+      <!-- notifications -->
+       <span
+         matTooltipPosition="right"
+         matTooltip="Notifications"
+         matTooltipClass="custom-mat-tooltip"
+         matTooltipShowDelay="100"
+         style="position: relative">
+        <span class="dot" *ngIf="unreadNotifications$ | async as unreadNotifications">
+          {{ unreadNotifications }}
+        </span>
+
+        </span>
+      <!-- user chip -->
       <ion-chip class="ion-padding" (click)="redirectToProfile()">
         <ion-avatar class="ion-margin-end">
           <ion-img [src]="user?.photoUrl" alt="user image"></ion-img>
         </ion-avatar>
         <ion-label>{{ user.displayName }}</ion-label>
-
-        <span
-          matTooltipPosition="right"
-          matTooltip="Notifications"
-          matTooltipClass="custom-mat-tooltip"
-          matTooltipShowDelay="100"
-          style="position: relative">
-        <span id="dot" *ngIf="unreadNotifications$ | async as unreadNotifications">
-          {{ unreadNotifications }}
-        </span>
-
-        </span>
       </ion-chip>
       <ion-button color='danger' shape="round" fill="outline" class="custom-buttons" (click)="signOut()">
         Logout
@@ -52,7 +53,7 @@
     </ng-template>
   </ion-item>
 
-  <ion-item class="ion-hide-sm-up">
+  <ion-item class="ion-hide-sm-up" style="float: right; width: 100%;">
     <ion-label class="search-container">
       <ion-searchbar
         #mySearchbar

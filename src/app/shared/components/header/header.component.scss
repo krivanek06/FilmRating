@@ -1,31 +1,33 @@
 @import "../../style/main";
 @import "../../../../theme/custom-variable";
 
-:host{
-  #loginButton{
+:host {
+  #loginButton {
     --color: #{$gold-darker-1};
     --border-color: #{$gold-darker-1};
   }
 
-  #registrationButton{
+  #registrationButton {
     --background: #{$gold-darker-1};
   }
 
-  ion-header{
+  ion-header {
     background: #{$background-dark};
   }
-  ion-avatar{
+
+  ion-avatar {
     height: 32px;
     width: 32px;
   }
-  .divider-space{
+
+  .divider-space {
     font-size: 25px;
     padding-left: 15px;
     padding-right: 20px;
     border-left: 1px solid #6e6e6e;
   }
 
-  ion-searchbar{
+  ion-searchbar {
     --background: transparent;
     --color: #959595;
     --box-shadow: none;
@@ -34,56 +36,57 @@
     padding: 0;
   }
 
-  ion-item{
+  ion-item {
     --padding-start: 0;
   }
 
-  .poster-image{
+  .poster-image {
     width: 50px;
     height: 70px;
   }
 
-  .poster-image-container{
+  .poster-image-container {
     min-width: 65px;
     max-width: 65px;
     padding-left: 16px;
   }
 
-  .search-result-item{
+  .search-result-item {
     padding-bottom: 3px;
     padding-top: 3px;
     background: #{$background};
   }
 
-  .logo-img{
+  .logo-img {
     width: 150px;
     height: 55px;
   }
 
-  .use-name-container{
+  .use-name-container {
     min-width: 200px;
     max-width: 200px;
   }
-  .logo-container{
+
+  .logo-container {
     max-width: 170px;
     min-width: 170px;
   }
 
-  .search-container{
+  .search-container {
     margin-left: 16px;
   }
 
-  .icon-label{
+  .icon-label {
     min-width: 60px;
     max-width: 60px;
   }
 
-  .custom-buttons{
+  .custom-buttons {
     font-size: 18px;
     padding-right: 16px;
   }
 
-  #dot {
+  .dot {
     height: 22px;
     width: 22px;
     background-color: #bb0005;
@@ -93,28 +96,43 @@
     position: absolute;
     text-align: -webkit-center;
     font-weight: bold;
-    font-size: 15px;
-    left: 25px;
-    top: 7px;
+    font-size: 16px;
+    left: 5px;
+    /* top: 7px; */
+    z-index: 100;
   }
 
-  @media (max-width: 600px) {
-    .custom-buttons{
+  @media (max-width: 1000px) {
+    .logo-container {
+      max-width: 145px;
+      min-width: 145px;
+    }
+    .search-container {
+      margin-left: 0;
+    }
+  }
+
+
+  @media (max-width: 576px) {
+    .custom-buttons {
       font-size: 14px;
       padding-right: 0;
       margin-left: 10px;
     }
-    .icon-label{
+    .icon-label {
       min-width: 50px;
       max-width: 50px;
     }
-    .search-container{
+    .search-container {
       margin-left: 0;
     }
-    .divider-space{
+    .divider-space {
       font-size: 23px;
       padding-left: 6px;
       margin-left: 0;
+    }
+    .header-info-container {
+      float: right;
     }
   }
 

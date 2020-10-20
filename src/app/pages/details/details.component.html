@@ -1,14 +1,24 @@
-
-
-  <div class="page-container">
-    <div class="comment-container" *ngIf="filmDetails$ | async as filmDetails">
-      <ng-container *ngIf="firebaseMovieReviews$ | async as reviews">
-        <app-comment-section
-          [movieId]="movieId"
-          [movieName]="filmDetails.title"
-          [genreTypes]="filmDetails.genres"
-          [reviews]="reviews">
-        </app-comment-section>
+<ion-grid>
+  <ion-row>
+    <!-- show details about movie -->
+    <ion-col size="12" size-md="6" size-xl="3.5" push-xl="0.25" push="0" class="dividing-border">
+      <ng-container *ngIf="filmDetails$ | async as details">
+        <app-movie-details [movieDetails]="details"></app-movie-details>
       </ng-container>
-    </div>
-  </div>
+    </ion-col>
+
+    <!-- show reviews and comments -->
+    <ion-col size="12" size-md="6" size-xl="7" push-xl="0.5" push="0">
+      <ng-container *ngIf="filmDetails$ | async as filmDetails">
+        <ng-container *ngIf="firebaseMovieReviews$ | async as reviews">
+          <app-comment-section
+            [movieId]="movieId"
+            [movieName]="filmDetails.title"
+            [genreTypes]="filmDetails.genres"
+            [reviews]="reviews">
+          </app-comment-section>
+        </ng-container>
+      </ng-container>
+    </ion-col>
+  </ion-row>
+</ion-grid>

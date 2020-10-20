@@ -1,0 +1,36 @@
+@import "../../../../../theme/custom-variable";
+
+:host{
+  ion-icon{
+    position: absolute;
+    left: 31px;
+    top: -6px;
+    font-size: 28px;
+  }
+
+  .item-information-wrapper{
+    --padding-start: 0;
+    --padding-top: 16px;
+  }
+
+  .space{
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+
+  .highlight{
+    color: #{$gold};
+  }
+
+  .item-information-heading{
+    color: #{$gold};
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  .item-information-data{
+    white-space: pre-wrap;
+  }
+
+
+}

@@ -1,15 +1,15 @@
-<ion-card>
+<ion-card [ngClass]="{'comment-background': !isReview}">
   <ion-card-header>
-    <ion-card-subtitle class="ion-padding-top ion-padding-horizontal">
+    <ion-card-subtitle class="ion-padding-top ion-padding-horizontal" [ngClass]="{'comment-background': !isReview}">
       <ion-label> {{ comment.person.displayName }} </ion-label>
       <ion-label class="ion-float-end" style="display: flex">
-        <ion-text class="ion-margin-end">{{ comment.timestamp | date: 'dd.MM.yyyy HH:mm:ss a'}}</ion-text>
+        <ion-text class="ion-margin-end ion-hide-md-down">{{ comment.timestamp | date: 'dd.MM.yyyy HH:mm:ss a'}}</ion-text>
         <!-- reply on comment -->
         <ng-container *ngIf="authenticatedUser">
           <ion-icon
             *ngIf="isReview"
             color="primary"
-            name="chatbubble-ellipses-outline"
+            name="chatbubble-ellipses"
             class="clickable"
             style="margin-right: 8px"
             matTooltipPosition="right"
@@ -22,7 +22,7 @@
           <ion-icon
             *ngIf="authenticatedUser.uid === comment.person.uid"
             color='warning'
-            name="pencil-outline"
+            name="pencil"
             class="clickable"
             style="margin-right: 8px"
             matTooltipPosition="right"
@@ -35,7 +35,7 @@
           <ion-icon
             *ngIf="authenticatedUser.uid === comment.person.uid"
             color='danger'
-            name="trash-bin-outline"
+            name="trash-bin"
             class="clickable"
             matTooltipPosition="right"
             matTooltip="Delete"
@@ -45,6 +45,9 @@
           </ion-icon>
         </ng-container>
       </ion-label>
+      <div style="width: 100%" class="ion-hide-md-up">
+        <ion-text>{{ comment.timestamp | date: 'dd.MM.yyyy HH:mm:ss a'}}</ion-text>
+      </div>
     </ion-card-subtitle>
   </ion-card-header>
 
@@ -56,11 +59,13 @@
         <!-- like -->
         <div class="ion-margin-end" style="display: inline-flex">
           <ion-text
+            *ngIf="comment.likes && comment.likes.length > 0"
+            class="likes"
             matTooltipPosition="right"
             [matTooltip]="comment.likes.join('\r\n')"
             matTooltipClass="custom-mat-tooltip"
             matTooltipShowDelay="100">
-            {{ comment?.likes.length }}
+            {{ comment.likes.length }}
           </ion-text>
           <ion-icon
             name="thumbs-up-outline"
@@ -79,11 +84,13 @@
         <!-- dislike -->
         <div style="display: flex">
           <ion-text
+            *ngIf="comment.dislikes && comment.dislikes.length > 0"
+            class="likes"
             matTooltipPosition="right"
             [matTooltip]="comment.dislikes.join('\r\n')"
             matTooltipClass="custom-mat-tooltip"
             matTooltipShowDelay="100">
-            {{ comment?.dislikes.length }}
+            {{ comment.dislikes.length }}
           </ion-text>
           <ion-icon
             name="thumbs-down-outline"
