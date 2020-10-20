@@ -3,14 +3,23 @@
 
 :host {
   .review-button {
-    width: 265px;
-    height: 60px;
-    //--background: #{$gold};
-    --background: #{$background-card-review};
+    width: 200px;
+    height: 45px;
+    --background: #{$gold-darker-1};
+    --color: #{$dark-word};
+    //--background: #{$background-card-review};
   }
 
   .dividing-border {
     border-top: 1px solid #666666;
     margin-top: 50px;
+  }
+
+  .review-form-container {
+    width: 80%;
+    margin: auto;
+    @media (max-width: 600px) {
+      width: 95%;
+    }
   }
 }

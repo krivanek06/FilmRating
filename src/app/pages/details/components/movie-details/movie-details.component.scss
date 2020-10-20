@@ -1,36 +1,44 @@
 @import "../../../../../theme/custom-variable";
 
-:host{
-  ion-icon{
+:host {
+  ion-icon {
     position: absolute;
     left: 31px;
     top: -6px;
     font-size: 28px;
   }
 
-  .item-information-wrapper{
+  .item-information-wrapper {
     --padding-start: 0;
     --padding-top: 16px;
   }
 
-  .space{
+  .space {
     padding-top: 1px;
     padding-bottom: 1px;
   }
 
-  .highlight{
+  .highlight {
     color: #{$gold};
   }
 
-  .item-information-heading{
+  .item-information-heading {
     color: #{$gold};
     padding-top: 2px;
     padding-bottom: 2px;
   }
 
-  .item-information-data{
+  .item-information-data {
     white-space: pre-wrap;
+    font-size: 14px;
   }
 
+  .details-container {
+    width: 100%;
+    @media (max-width: 1300px) {
+      width: 90%;
+      margin: auto;
+    }
+  }
 
 }

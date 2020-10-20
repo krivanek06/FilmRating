@@ -2,30 +2,22 @@
 @import "../../../../../../theme/custom-variable";
 
 :host {
-  .like-number {
-    font-size: 17px;
-    margin-right: 6px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
   ion-icon {
-    font-size: 22px;
+    font-size: 18px;
     z-index: 100;
   }
 
   ion-card-content {
-    padding: 12px;
+    padding: 6px;
   }
 
   .comment-background {
-    background: #e88b00;
-    color: #{$dark-word};
+   // background: #3d3d3dbd;
   }
 
   .likes {
     margin-right: 6px;
-    font-size: 18px;
+    font-size: 14px;
   }
 
   ion-card-subtitle {
@@ -42,7 +34,7 @@
 
 ::ng-deep .custom-mat-tooltip {
   background-color: #818181;
-  font-size: 16px;
+  font-size: 14px;
   padding: 5px;
   white-space: pre-line;
 }

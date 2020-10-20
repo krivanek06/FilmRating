@@ -19,6 +19,7 @@ import {NotificationConstructorService} from '../../../../shared/utils/notificat
 import {MovieDetailConstructor} from './utils/CommentConstrctor';
 import {concatAll, concatMap, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {ComponentBaseComponent} from '../../../../shared/components/component-base/component-base.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-comment-section',
@@ -44,6 +45,7 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
   constructor(private authService: AuthService,
               private movieReviewService: MovieReviewService,
               private userManagementService: UserManagementService,
+              private router: Router,
               private ionicDialog: IonicDialogService) {
     super();
   }
@@ -90,8 +92,12 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     }
   }
 
-  toggleShowReview(){
-    this.showReviewForm = !this.showReviewForm;
+  toggleShowReview() {
+    if (!!this.authService.IUser) {
+      this.showReviewForm = !this.showReviewForm;
+    } else {
+      this.router.navigate(['authentication/login']);
+    }
   }
 
   likeOrDislikeReview(review: FirebaseMovieDetailReview, likeComment: boolean) {

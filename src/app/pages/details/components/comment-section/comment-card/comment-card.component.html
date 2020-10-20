@@ -53,7 +53,7 @@
 
   <!-- comment read only format -->
   <ion-card-content *ngIf="!editing">
-    <ion-text class="wrap-white-space "> {{ comment.comment }} </ion-text>
+    <ion-text class="wrap-white-space secondary-text "> {{ comment.comment }} </ion-text>
     <ion-text *ngIf="authenticatedUser">
       <div style="display: flex; float: right">
         <!-- like -->
@@ -69,7 +69,7 @@
           </ion-text>
           <ion-icon
             name="thumbs-up-outline"
-            class="clickable like-icons"
+            class="clickable"
             matTooltipPosition="right"
             matTooltip="Like"
             matTooltipClass="custom-mat-tooltip"
@@ -94,7 +94,7 @@
           </ion-text>
           <ion-icon
             name="thumbs-down-outline"
-            class="clickable like-icons"
+            class="clickable"
             matTooltipPosition="right"
             matTooltip="Dislike"
             matTooltipClass="custom-mat-tooltip"

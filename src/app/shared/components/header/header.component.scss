@@ -58,8 +58,8 @@
   }
 
   .logo-img {
-    width: 150px;
-    height: 55px;
+    width: 120px;
+    height: 35px;
   }
 
   .use-name-container {
@@ -68,13 +68,9 @@
   }
 
   .logo-container {
-    max-width: 170px;
-    min-width: 170px;
+    max-width: 140px;
+    min-width: 140px;
     cursor: pointer;
-  }
-
-  .search-container {
-    margin-left: 16px;
   }
 
   .icon-label {
@@ -83,7 +79,7 @@
   }
 
   .custom-buttons {
-    font-size: 18px;
+    font-size: 16px;
     padding-right: 16px;
   }
 
@@ -116,7 +112,7 @@
 
   @media (max-width: 576px) {
     .custom-buttons {
-      font-size: 14px;
+      font-size: 16px;
       padding-right: 0;
       margin-left: 10px;
     }

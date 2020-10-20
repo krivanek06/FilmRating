@@ -1,8 +1,10 @@
+@import "../../../../theme/custom-variable";
+
 :host{
   .range-header{
     text-align-last: center;
-    color: #eca000;
+    color: #{$gold};
     /* font-weight: bold; */
-    font-size: 20px;
+    font-size: 16px;
   }
 }

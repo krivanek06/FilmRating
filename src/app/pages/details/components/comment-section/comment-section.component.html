@@ -23,7 +23,7 @@
   <!-- no review text -->
   <ng-template #noReview>
     <ion-item>
-      <ion-label  class="wrap-white-space secondary-text">
+      <ion-label class="wrap-white-space secondary-text">
         *No review has been submitted yet. Be the first one and tell us your opinion!
       </ion-label>
     </ion-item>
@@ -31,34 +31,36 @@
 </div>
 
 <!-- select another category options -->
-<div  style="display: grid" [hidden]="!showReviewForm">
-  <ion-item-group>
-    <ion-item>
-      <ion-label>Select more options</ion-label>
-      <ion-select
-        class="custom-options"
-        multiple="true"
-        placeholder="Select categories"
-        (ionChange)="getValuesFromSelector($event)"
-        selectedText=" "
-        [value]="selectedCategories">
-        <ion-select-option *ngFor="let name of genreTypeRatingAll" [value]="name">{{ name }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+<div class="review-form-container">
+  <div style="display: grid" [hidden]="!showReviewForm">
+    <ion-item-group>
+      <ion-item>
+        <ion-label>Select more options</ion-label>
+        <ion-select
+          class="custom-options"
+          multiple="true"
+          placeholder="Select categories"
+          (ionChange)="getValuesFromSelector($event)"
+          selectedText=" "
+          [value]="selectedCategories">
+          <ion-select-option *ngFor="let name of genreTypeRatingAll" [value]="name">{{ name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-    <!-- range selector required & chosen by user -->
-    <app-range-rating *ngFor="let name of selectedCategories" [name]="name"></app-range-rating>
-  </ion-item-group>
+      <!-- range selector required & chosen by user -->
+      <app-range-rating *ngFor="let name of selectedCategories" [name]="name"></app-range-rating>
+    </ion-item-group>
 
-  <!-- review form -->
-  <app-comment-form
-    [mentionPeople]="searchedUsers$| async"
-    (addComment)="addReview($event)"
-    (searchPeopleByUsername)="searchPeopleByUsername($event)">
-  </app-comment-form>
-</div>
+    <!-- review form -->
+    <app-comment-form
+      [mentionPeople]="searchedUsers$| async"
+      (addComment)="addReview($event)"
+      (searchPeopleByUsername)="searchPeopleByUsername($event)">
+    </app-comment-form>
+  </div>
 
-<!-- button to add review -->
-<div class="ion-text-center ion-padding-vertical dividing-border">
-  <ion-button class="review-button clickable" (click)="toggleShowReview()">Add review</ion-button>
+  <!-- button to add review -->
+  <div class="ion-text-center ion-padding-vertical dividing-border">
+    <ion-button class="review-button clickable" (click)="toggleShowReview()">Add review</ion-button>
+  </div>
 </div>

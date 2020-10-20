@@ -5,7 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {Observable} from 'rxjs';
 import {MovieDetails, MovieImages} from '../../../../api/film-data.model';
-import {FirebaseMovieDetailReview, FirebaseMovieDetails} from '../../components/comment-section/models/comment-section.model';
+import {FirebaseMovieDetailReview, FirebaseMovieDetails} from '../comment-section/models/comment-section.model';
 import {IonicDialogService} from '../../../../shared/services/ionic-dialog.service';
 
 

@@ -234,15 +234,21 @@
 /* CUSTOM DARK SCHEME */
 
 :root {
-
   ion-card {
-    padding: 12px;
+    padding: 8px;
     @media (max-width: 800px) {
       padding: 6px;
     }
 
     ion-card-header {
       padding: 2px;
+
+      ion-card-title {
+        font-size: 16px;
+      }
+      ion-card-subtitle{
+        font-size: 13px;
+      }
     }
 
     ion-card-content {
@@ -250,7 +256,7 @@
 
       ion-list {
         ion-item {
-          font-size: 15px;
+          font-size: 1rem;
           --padding-start: 0;
           --padding-end: 0;
           --inner-padding-start: 0;
@@ -258,7 +264,7 @@
           --min-height: 30px;
 
           ion-label {
-            font-size: 15px;
+            font-size: 1rem;
           }
         }
       }

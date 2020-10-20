@@ -13,9 +13,13 @@
   white-space: pre-wrap;
 }
 
+.primary-text {
+  font-size: 14px;
+}
+
 .secondary-text {
   color: #{$secondary-word};
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .positive {
