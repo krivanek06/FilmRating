@@ -1,6 +1,9 @@
-.clickable{
+@import "../../../theme/custom-variable";
+
+.clickable {
   cursor: pointer;
   transition: All 0.4s ease-out;
+
   &:hover {
     transform: scale(0.94);
   }
@@ -10,6 +13,11 @@
   white-space: pre-wrap;
 }
 
+.secondary-text {
+  color: #{$secondary-word};
+  font-size: 14px;
+}
+
 .positive {
   color: green;
 }
@@ -17,3 +25,5 @@
 .negative {
   color: red;
 }
+
+

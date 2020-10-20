@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import {ProfileComponent} from './profile.component';
 import {SharedModule} from '../../shared/shared.module';
 import {RouterModule, Routes} from '@angular/router';
+import { ListedUsersComponent } from './components/listed-users/listed-users.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    ProfileComponent
+    ProfileComponent,
+    ListedUsersComponent
   ],
   imports: [
     SharedModule,

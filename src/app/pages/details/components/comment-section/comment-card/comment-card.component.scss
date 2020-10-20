@@ -15,7 +15,7 @@
   }
 
   ion-card-content {
-    padding: 12px !important;
+    padding: 12px;
   }
 
   .comment-background {
@@ -26,6 +26,16 @@
   .likes {
     margin-right: 6px;
     font-size: 18px;
+  }
+
+  ion-card-subtitle {
+    padding: 0;
+  }
+
+  @media (max-width: 800px) {
+    ion-card-content {
+      padding: 5px;
+    }
   }
 }
 

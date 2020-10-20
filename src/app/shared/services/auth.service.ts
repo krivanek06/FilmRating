@@ -62,7 +62,7 @@ export class AuthService {
         displayName: credential.user.email.split('@')[0],
         uid: credential.user.uid,
         email: credential.user.email,
-        photoUrl: credential.user.photoURL,
+        photoUrl: !!credential.user.photoURL ? credential.user.photoURL : 'https://cdn2.iconfinder.com/data/icons/avatar-profile/434/avatar_contact_starwars_user_default_yoda-512.png',
         notifications: [],
         usersFollowI: [],
         usersFollowMe: [],

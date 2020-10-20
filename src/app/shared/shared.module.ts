@@ -16,6 +16,7 @@ import {RangeRatingComponent} from './components/range-rating/range-rating.compo
 import {MentionModule} from 'angular-mentions';
 import {FilmPosterCardComponent} from './components/film-poster-card/film-poster-card.component';
 import {NumberFormatterPipe} from './pipes/numberFormatter.pipe';
+import {GenericChartCardComponent} from './components/generic-chart-card/generic-chart-card.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {NumberFormatterPipe} from './pipes/numberFormatter.pipe';
     HeaderComponent,
     RangeRatingComponent,
     FilmPosterCardComponent,
-    NumberFormatterPipe
+    NumberFormatterPipe,
+    GenericChartCardComponent
   ],
   imports: [
     CommonModule,
@@ -75,7 +77,8 @@ import {NumberFormatterPipe} from './pipes/numberFormatter.pipe';
     HeaderComponent,
     RangeRatingComponent,
     FilmPosterCardComponent,
-    NumberFormatterPipe
+    NumberFormatterPipe,
+    GenericChartCardComponent
   ]
 })
 export class SharedModule { }

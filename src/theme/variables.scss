@@ -236,14 +236,17 @@
 :root {
 
   ion-card {
-    padding: 2px 8px;
+    padding: 12px;
+    @media (max-width: 800px) {
+      padding: 6px;
+    }
 
     ion-card-header {
       padding: 2px;
     }
 
     ion-card-content {
-      padding: 10px;
+      padding: 0;
 
       ion-list {
         ion-item {
@@ -302,7 +305,7 @@
 
         ion-card-title {
           --color: #{$gold};
-          font-weight: bold;
+          //font-weight: bold;
         }
 
         ion-card-subtitle {

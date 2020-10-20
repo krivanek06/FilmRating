@@ -1,0 +1,7 @@
+@import "../../../../shared/style/main";
+
+:host {
+  .printed-names-container {
+    --padding-start: 0;
+  }
+}
