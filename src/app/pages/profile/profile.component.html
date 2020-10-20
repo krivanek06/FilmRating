@@ -15,7 +15,8 @@
           (removeUser)="removeFollower($event)"
           [users]="user.usersFollowMe"
           [title]="'Users follow me'"
-          [subTitle]="'Following users will get a notification when your rate a movie or comment a review'">
+          [subTitle]="'Following users will get a notification when your rate a movie or comment a review'"
+          [emptyMessage]="'Nobody follows your content right now, seems like you are not interested enough'">
         </app-listed-users>
       </ion-item>
 
@@ -24,7 +25,8 @@
           (removeUser)="removeFollowedPerson($event)"
           [users]="user.usersFollowI"
           [title]="'Users I follow'"
-          [subTitle]="'You will receive a notification from the following users when they write a review or comment on some movie.'">
+          [subTitle]="'You will receive a notification when following users write a review or comment'"
+          [emptyMessage]="'Currently you do not follow any user'">
         </app-listed-users>
       </ion-item>
     </ion-col>
@@ -34,7 +36,8 @@
      <ion-item>
         <ion-label>
           <div class="highlight">Recent activity</div>
-          <div class="ion-padding-vertical wrap-white-space notification-container"  *ngFor="let notification of user.notifications">
+          <div class="ion-padding-vertical wrap-white-space notification-container"
+               *ngFor="let notification of user.notifications | OrderIUserNotification | slice: 0: 8">
             <ion-text>{{ notification.message }}</ion-text>
             <div>
               <ion-text class="secondary-text">{{ notification.timestamp | date: 'dd.MM.yyyy HH:mm:ss a' }}</ion-text>

@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
         .reduce((acc, one: IUserNotification) => acc + 1, 0))
     );
 
-    this.unreadNotifications$.subscribe(console.log)
+    this.unreadNotifications$.subscribe(console.log);
   }
 
   searchForMovie(data: CustomEvent) {
@@ -44,16 +44,20 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  navigateLogin(type: string) {
-    this.router.navigate([`authentication/${type}`]);
-  }
-
   signOut() {
     this.auth.logout();
   }
 
+  redirectToLogin(type: string) {
+    this.router.navigate([`authentication/${type}`]);
+  }
+
   redirectToProfile() {
     this.router.navigate([`menu/profile`]);
+  }
+
+  redirectToDashboard() {
+    this.router.navigate([`menu/dashboard`]);
   }
 
   redirectToDetails(movieId: number) {

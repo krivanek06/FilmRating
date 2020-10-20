@@ -2,7 +2,7 @@
 
   <ion-item class="header-info-container">
     <!-- logo -->
-    <ion-label class="logo-container ion-hide-sm-down">
+    <ion-label class="logo-container ion-hide-sm-down clickable" (click)="redirectToDashboard()">
       <ion-img src="../../../assets/logo.png" alt="app-logo" class="logo-img "></ion-img>
     </ion-label>
 
@@ -30,24 +30,24 @@
 
         </span>
       <!-- user chip -->
-      <ion-chip class="ion-padding" (click)="redirectToProfile()">
+      <ion-chip class="ion-padding clickable" (click)="redirectToProfile()">
         <ion-avatar class="ion-margin-end">
           <ion-img [src]="user?.photoUrl" alt="user image"></ion-img>
         </ion-avatar>
         <ion-label>{{ user.displayName }}</ion-label>
       </ion-chip>
-      <ion-button color='danger' shape="round" fill="outline" class="custom-buttons" (click)="signOut()">
+      <ion-button color='danger' shape="round" fill="outline" class="custom-buttons clickable" (click)="signOut()">
         Logout
       </ion-button>
     </ng-container>
 
     <!-- authentication button -->
     <ng-template #showLoginButton>
-      <ion-button id="loginButton" shape="round" fill="outline" class="custom-buttons" (click)="navigateLogin('login')">
+      <ion-button id="loginButton" shape="round" fill="outline" class="custom-buttons clickable" (click)="redirectToLogin('login')">
         Login
       </ion-button>
-      <ion-button id='registrationButton' class="custom-buttons ion-hide-sm-down"
-                  (click)="navigateLogin('registration')">
+      <ion-button id='registrationButton' class="custom-buttons ion-hide-sm-down clickable"
+                  (click)="redirectToLogin('registration')">
         Register
       </ion-button>
     </ng-template>

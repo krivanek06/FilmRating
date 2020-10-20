@@ -1,24 +1,15 @@
 <ion-grid>
-  <ion-row>
+  <ion-row *ngIf="movieDetails$ | async as details">
     <!-- show details about movie -->
     <ion-col size="12" size-md="6" size-xl="3.5" push-xl="0.25" push="0" class="dividing-border">
-      <ng-container *ngIf="filmDetails$ | async as details">
+      <ng-container >
         <app-movie-details [movieDetails]="details"></app-movie-details>
       </ng-container>
     </ion-col>
 
     <!-- show reviews and comments -->
     <ion-col size="12" size-md="6" size-xl="7" push-xl="0.5" push="0">
-      <ng-container *ngIf="filmDetails$ | async as filmDetails">
-        <ng-container *ngIf="firebaseMovieReviews$ | async as reviews">
-          <app-comment-section
-            [movieId]="movieId"
-            [movieName]="filmDetails.title"
-            [genreTypes]="filmDetails.genres"
-            [reviews]="reviews">
-          </app-comment-section>
-        </ng-container>
-      </ng-container>
+      <app-movie-intro [movieId]="movieId" [movieDetails]="details"></app-movie-intro>
     </ion-col>
   </ion-row>
 </ion-grid>

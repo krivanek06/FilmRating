@@ -40,6 +40,8 @@
     color: #{$default-word};
   }
 
+  min-width: 400px !important;
+
   @media (min-width: 800px) {
     min-width: 550px !important;
   }

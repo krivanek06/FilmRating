@@ -8,9 +8,11 @@ import {IUserPartialData} from '../../../../shared/models/IUser.model';
 })
 export class ListedUsersComponent implements OnInit {
   @Output() removeUser: EventEmitter<IUserPartialData> = new EventEmitter<IUserPartialData>();
+
   @Input() users: IUserPartialData[];
   @Input() title: string;
   @Input() subTitle: string;
+  @Input() emptyMessage: string;
 
   constructor() {
   }

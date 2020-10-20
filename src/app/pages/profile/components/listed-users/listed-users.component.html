@@ -1,10 +1,20 @@
 <app-generic-chart-card
   [title]="title"
   [subTitle]="subTitle">
-  <ion-item *ngFor="let follower of users" class="printed-names-container">
-    <ion-label>
-      {{ follower.displayName  }}
-    </ion-label>
-    <ion-icon name="close-circle" color="danger" (click)="removeItem(follower)" class="clickable"></ion-icon>
-  </ion-item>
+  <ng-container *ngIf="users.length > 0; else empty">
+    <ion-item *ngFor="let follower of users" class="printed-names-container">
+      <ion-label>
+        {{ follower.displayName  }}
+      </ion-label>
+      <ion-icon name="close-circle" color="danger" (click)="removeItem(follower)" class="clickable"></ion-icon>
+    </ion-item>
+  </ng-container>
+
+  <ng-template #empty>
+    <ion-item>
+      <ion-label class="wrap-white-space secondary-text">
+        {{ emptyMessage }}
+      </ion-label>
+    </ion-item>
+  </ng-template>
 </app-generic-chart-card>

@@ -1,24 +1,14 @@
-:host{
-  ion-col{
+:host {
+
+  ion-col {
     padding: 16px;
   }
 
-  .page-container{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  .comment-container{
-    width: 600px;
-  }
-
-  .dividing-border{
+  .dividing-border {
     border-right: 1px solid #666666;
-  }
-
-  @media (max-width: 600px) {
-    .dividing-border{
+    @media (max-width: 767px) {
       border-right: 0;
     }
   }
+
 }

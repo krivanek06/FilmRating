@@ -3,6 +3,7 @@ import {ProfileComponent} from './profile.component';
 import {SharedModule} from '../../shared/shared.module';
 import {RouterModule, Routes} from '@angular/router';
 import { ListedUsersComponent } from './components/listed-users/listed-users.component';
+import {OrderIUserNotificationPipe} from './pipes/OrderIUserNotification.pipe';
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ProfileComponent,
-    ListedUsersComponent
+    ListedUsersComponent,
+    OrderIUserNotificationPipe
   ],
   imports: [
     SharedModule,

@@ -40,6 +40,25 @@ export class IonicDialogService {
     });
   }
 
+  async presentAlertImage(mapUrl: string) {
+    return new Promise(async (resolve) => {
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-alert-class',
+        // header: 'Confirm!',
+        message: `<img src="${mapUrl}" alt="g-maps" style="border-radius: 2px">`,
+        buttons: [
+          {
+            text: '',
+            handler: () => {
+              resolve(true);
+            }
+          }
+        ]
+      });
+      await alert.present();
+    });
+  }
+
 
   async presentToast(header) {
     const toast = await this.toastController.create({

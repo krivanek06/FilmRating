@@ -8,6 +8,7 @@ import {CommentCardComponent} from './components/comment-section/comment-card/co
 import {CommentSortingPipe} from './components/comment-section/pipes/comment-sorting.pipe';
 import { CommentCardsComponent } from './components/comment-section/comment-cards/comment-cards.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
+import { MovieIntroComponent } from './containers/movie-intro/movie-intro.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
     CommentSortingPipe,
     CommentCardsComponent,
     MovieDetailsComponent,
+    MovieIntroComponent,
   ],
   imports: [
     SharedModule,

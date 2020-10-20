@@ -17,6 +17,7 @@ import {MentionModule} from 'angular-mentions';
 import {FilmPosterCardComponent} from './components/film-poster-card/film-poster-card.component';
 import {NumberFormatterPipe} from './pipes/numberFormatter.pipe';
 import {GenericChartCardComponent} from './components/generic-chart-card/generic-chart-card.component';
+import {OrderIUserNotificationPipe} from '../pages/profile/pipes/OrderIUserNotification.pipe';
 
 
 @NgModule({

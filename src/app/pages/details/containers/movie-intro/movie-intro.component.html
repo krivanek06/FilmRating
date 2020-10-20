@@ -1,0 +1,27 @@
+<!-- trailer video -->
+<div class="movie-image-container">
+  <div class="movie-container">
+    <iframe [class.thumbnail]="'thumbnail'" [src]="safeSrc" id="youtube_frame"
+            frameborder="0" webkitallowfullscreen mozallowfullscreen
+            allowfullscreen></iframe>
+  </div>
+
+  <div class="image-container">
+    <ion-img *ngFor="let image of movieImages$ | async" class="movie-image clickable"
+             (click)="showImage(image)"
+             [src]="'https://image.tmdb.org/t/p/w500/' + image.file_path"
+             alt="poster image"></ion-img>
+  </div>
+</div>
+
+<!-- reviews section -->
+<ng-container>
+  <ng-container *ngIf="firebaseMovieReviews$ | async as reviews">
+    <app-comment-section
+      [movieId]="movieId"
+      [movieName]="movieDetails.title"
+      [genreTypes]="movieDetails.genres"
+      [reviews]="reviews">
+    </app-comment-section>
+  </ng-container>
+</ng-container>

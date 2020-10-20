@@ -43,5 +43,9 @@ export class UserManagementService {
     return data.length === 0 ? null : data[0] as unknown as IUser;
   }
 
+  async updateUser(updatedUser: IUser): Promise<any> {
+    return this.angularFirestore.collection('users').doc(updatedUser.uid).set(updatedUser);
+  }
+
 
 }

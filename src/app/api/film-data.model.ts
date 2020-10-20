@@ -112,3 +112,25 @@ export interface PersonDetails {
   imdb_id: string;
   homepage?: string;
 }
+
+
+export interface MovieTrailer {
+  id: string;
+  iso_639_1: string;
+  iso_3166_1: string;
+  key: string;
+  name: string;
+  site: string;
+  size: string;
+  type: string;
+}
+
+export interface MovieImages {
+  aspect_ratio: string;
+  file_path: string;
+  height: string;
+  iso_639_1: string;
+  vote_average: string;
+  vote_count: string;
+  width: string;
+}
