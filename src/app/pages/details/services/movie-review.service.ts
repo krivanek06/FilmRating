@@ -99,7 +99,7 @@ export class MovieReviewService {
     } else {
       // add dislike to the comment
       if (comment.dislikes.includes(user.displayName)) {
-        comment = {...comment, dislikes: comment.likes.filter(name => name !== user.displayName)}; // if it was disliked, remove
+        comment = {...comment, dislikes: comment.dislikes.filter(name => name !== user.displayName)}; // if it was disliked, remove
       } else {
         comment = {
           ...comment,

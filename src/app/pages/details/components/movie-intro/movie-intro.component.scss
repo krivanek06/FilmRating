@@ -59,6 +59,9 @@
   .movie-image {
     width: 175px;
     height: 100px;
+    @media (max-width: 600px) {
+      width: 45%;
+    }
   }
 
 

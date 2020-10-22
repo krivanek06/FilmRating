@@ -5,10 +5,11 @@ import {RouterModule, Routes} from '@angular/router';
 import {CommentFormComponent} from './components/comment-section/comment-form/comment-form.component';
 import {CommentSectionComponent} from './components/comment-section/comment-section.component';
 import {CommentCardComponent} from './components/comment-section/comment-card/comment-card.component';
-import {CommentSortingPipe} from './components/comment-section/pipes/comment-sorting.pipe';
+import {ReviewSortingPipe} from './components/comment-section/pipes/review-sorting.pipe';
 import { CommentCardsComponent } from './components/comment-section/comment-cards/comment-cards.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import { MovieIntroComponent } from './components/movie-intro/movie-intro.component';
+import { CommentSortingPipe } from './components/comment-section/pipes/comment-sorting.pipe';
 
 const routes: Routes = [
   {
@@ -23,10 +24,11 @@ const routes: Routes = [
     CommentFormComponent,
     CommentSectionComponent,
     CommentCardComponent,
-    CommentSortingPipe,
+    ReviewSortingPipe,
     CommentCardsComponent,
     MovieDetailsComponent,
     MovieIntroComponent,
+    CommentSortingPipe,
   ],
   imports: [
     SharedModule,

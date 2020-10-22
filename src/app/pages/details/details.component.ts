@@ -36,9 +36,6 @@ export class DetailsComponent extends ComponentBaseComponent implements OnInit {
 
       // this.firebaseMovieDetails$ = this.movieDetailsService.getMovieDetails(data.params.id);  // our data, currently empty
       this.firebaseMovieReviews$ = this.movieDetailsService.geReviewsForMovie(data.params.id);  // user reviews
-
-
-      this.movieDetails$.subscribe(x => console.log(x));
     });
   }
 }

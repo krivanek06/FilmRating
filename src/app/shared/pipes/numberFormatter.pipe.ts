@@ -7,7 +7,6 @@ export class NumberFormatterPipe implements PipeTransform {
 
     transform(value: number): unknown {
         if (!this.isNumber(value)) {
-            console.log('not number', value);
             return value;
         }
 

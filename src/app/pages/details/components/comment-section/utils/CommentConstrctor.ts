@@ -37,7 +37,7 @@ export class MovieDetailConstructor {
    * if message = 'Ahoj @Tomas123 ako sa mas' , then return ['Tomas123']
    */
   static findAllUsernameInString(message: string): string[] {
-    return message.split(' ')
+    return message.replace(/\s\s+/g, ' ').split(' ')
       .filter(messagePart => messagePart.startsWith('@'))
       .map(res => res.substr(1));
   }

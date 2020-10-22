@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FirebaseMovieDetailComment, FirebaseMovieDetailReview} from '../models/comment-section.model';
-import {IUser} from '../../../../../shared/models/IUser.model';
+import {IUser, IUserPartialData} from '../../../../../shared/models/IUser.model';
 
 @Component({
   selector: 'app-comment-card',
@@ -14,6 +14,7 @@ export class CommentCardComponent implements OnInit {
   @Output() deleteCommentEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Output() replayCommentEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Output() searchPeopleByUsername: EventEmitter<string> = new EventEmitter<string>();
+  @Output() followPersonEmitter: EventEmitter<IUserPartialData> = new EventEmitter<IUserPartialData>();
 
   @Input() comment: FirebaseMovieDetailComment;
   @Input() isReview: boolean;
@@ -59,4 +60,13 @@ export class CommentCardComponent implements OnInit {
   replay() {
     this.replayCommentEmitter.emit();
   }
+
+  followPerson(person: IUserPartialData) {
+    this.followPersonEmitter.emit(person);
+  }
+
+  get alreadyFollowing(): boolean {
+    return !this.authenticatedUser.usersFollowI.find(x => x.uid === this.comment.person.uid);
+  }
+
 }

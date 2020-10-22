@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {GenreTypes} from '../../../../api/film-data.model';
 import {genreTypeRatingAll, requiredGenreTypeRating} from './models/comment-genres.data';
 import {RangeRatingComponent} from '../../../../shared/components/range-rating/range-rating.component';
@@ -10,7 +10,7 @@ import {
   FirebaseMovieDetailComment
 } from './models/comment-section.model';
 import {AuthService} from '../../../../shared/services/auth.service';
-import {IUser} from '../../../../shared/models/IUser.model';
+import {IUser, IUserPartialData} from '../../../../shared/models/IUser.model';
 import {forkJoin, Observable} from 'rxjs';
 import {IonicDialogService} from '../../../../shared/services/ionic-dialog.service';
 import {MovieReviewService} from '../../services/movie-review.service';
@@ -37,7 +37,7 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
   searchedUsers$: Observable<string[]>; // when typing @user then make call to firebase
   selectedCategories: string[] = []; // user may select another categories to rate
   requiredCategories: string[] = []; // user must rate these categories
-  authenticatedUser: IUser;
+  authenticatedUser$: Observable<IUser>;
   showReviewForm = false;
 
   genreTypeRatingAll = genreTypeRatingAll;
@@ -53,7 +53,7 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
   ngOnInit(): void {
     this.applyCustomClassToPopOver();
     this.initRequiredCategorieToRateFilm();
-    this.authenticatedUser = this.authService.IUser;
+    this.authenticatedUser$ = this.authService.getUser();
   }
 
   async addReview(review: string) {
@@ -79,35 +79,6 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     this.toggleShowReview();
   }
 
-  async editReview(editedReview: string, review: FirebaseMovieDetailReview) {
-    this.movieReviewService.editReview(this.movieId, review.id, editedReview);
-    await this.ionicDialog.presentToast(`Review was successfully edited`);
-  }
-
-  async deleteReview(review: FirebaseMovieDetailReview) {
-    const answer = await this.ionicDialog.presentAlertConfirm(`Do you really want to delete this review ?`);
-    if (answer) {
-      await this.movieReviewService.removeReview(this.movieId, review.id);
-      await this.ionicDialog.presentToast('Review was deleted successfully');
-    }
-  }
-
-  toggleShowReview() {
-    if (!!this.authService.IUser) {
-      this.showReviewForm = !this.showReviewForm;
-    } else {
-      this.router.navigate(['authentication/login']);
-    }
-  }
-
-  likeOrDislikeReview(review: FirebaseMovieDetailReview, likeComment: boolean) {
-    this.movieReviewService.likeOrDislikeReview(this.movieId, review, this.authenticatedUser, likeComment);
-  }
-
-  searchPeopleByUsername(usernamePrefix: string) {
-    this.searchedUsers$ = this.userManagementService.getUsernameStartWithPrefix(usernamePrefix);
-  }
-
   async addCommentOnReview(comment: string, review: FirebaseMovieDetailReview) {
     await this.movieReviewService.addCommentForReview(this.movieId, review.id, comment);
     await this.ionicDialog.presentToast('Comment was added successfully');
@@ -121,6 +92,7 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     const promises = MovieDetailConstructor.findAllUsernameInString(comment).map(async name => await this.userManagementService.getIUserByUsername(name));
 
     const mentionedUsersInText = (await Promise.all(promises)).filter(x => !!x);
+
     forkJoin(
       mentionedUsersInText.map(user => this.userManagementService.sendNotification(user.uid, notificationMentionedName)),
       this.authService.IUser.usersFollowMe.map(user => this.userManagementService.sendNotification(user.uid, notificationAddedComment))
@@ -131,10 +103,62 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     await this.movieReviewService.removeCommentFromReview(this.movieId, review.id, data.oldComment);
     await this.movieReviewService.persisCommentForReview(this.movieId, review.id, {...data.oldComment, comment: data.newComment});
     await this.ionicDialog.presentToast('Comment was edited successfully');
+
+    // notify mentioned users in comment
+    const notificationMentionedName = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
+    const promises = MovieDetailConstructor.findAllUsernameInString(data.newComment).map(async name => await this.userManagementService.getIUserByUsername(name));
+
+    const mentionedUsersInText = (await Promise.all(promises)).filter(x => !!x);
+
+    forkJoin(
+      mentionedUsersInText.map(user => this.userManagementService.sendNotification(user.uid, notificationMentionedName))
+    ).pipe(takeUntil(this.destroy$)).subscribe();
+  }
+
+  async editReview(editedReview: string, review: FirebaseMovieDetailReview) {
+    this.movieReviewService.editReview(this.movieId, review.id, editedReview);
+    await this.ionicDialog.presentToast(`Review was successfully edited`);
+
+    // notify mentioned users in editedReview
+    const notificationMentionedName = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
+    const promises = MovieDetailConstructor.findAllUsernameInString(editedReview).map(async name => await this.userManagementService.getIUserByUsername(name));
+
+    const mentionedUsersInText = (await Promise.all(promises)).filter(x => !!x);
+
+    forkJoin(
+      mentionedUsersInText.map(user => this.userManagementService.sendNotification(user.uid, notificationMentionedName))
+    ).pipe(takeUntil(this.destroy$)).subscribe();
+  }
+
+  async deleteReview(review: FirebaseMovieDetailReview) {
+    const answer = await this.ionicDialog.presentAlertConfirm(`Do you really want to delete this review ?`);
+    if (answer) {
+      await this.movieReviewService.removeReview(this.movieId, review.id);
+      await this.ionicDialog.presentToast('Review was deleted successfully');
+    }
+  }
+
+  async toggleShowReview() {
+    if (!!this.authService.IUser) {
+      this.showReviewForm = !this.showReviewForm;
+    } else {
+      const response = await this.ionicDialog.presentAlertConfirm('You have to be authenticated to leave a review. Do you wish to log in ?');
+      if (response) {
+        this.router.navigate(['authentication/login']);
+      }
+    }
+  }
+
+  likeOrDislikeReview(review: FirebaseMovieDetailReview, likeComment: boolean) {
+    this.movieReviewService.likeOrDislikeReview(this.movieId, review, this.authService.IUser, likeComment);
+  }
+
+  searchPeopleByUsername(usernamePrefix: string) {
+    this.searchedUsers$ = this.userManagementService.getUsernameStartWithPrefix(usernamePrefix);
   }
 
   likeOrDislikeComment(comment: FirebaseMovieDetailComment, review: FirebaseMovieDetailReview, likeComment: boolean) {
-    this.movieReviewService.likeOrDislikeCommentOnReview(this.movieId, review.id, comment, this.authenticatedUser, likeComment);
+    this.movieReviewService.likeOrDislikeCommentOnReview(this.movieId, review.id, comment, this.authService.IUser, likeComment);
   }
 
   async deleteComment(comment: FirebaseMovieDetailComment, review: FirebaseMovieDetailReview) {
@@ -142,6 +166,15 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     if (answer) {
       await this.movieReviewService.removeCommentFromReview(this.movieId, review.id, comment);
       await this.ionicDialog.presentToast('Comment was deleted successfully');
+    }
+  }
+
+  async followPerson(person: IUserPartialData) {
+    const response = await this.ionicDialog.presentAlertConfirm(`Do you wish to start following ${person.displayName} ? You will receive a notification each time when ${person.displayName} will write a review or comment.`);
+    if (response) {
+      const user = this.authService.IUser;
+      await this.userManagementService.updateUser({...user, usersFollowI: [...user.usersFollowI, person]});
+      await this.ionicDialog.presentToast(`You successfully started following ${person.displayName}`);
     }
   }
 
@@ -172,4 +205,6 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
       };
     }
   }
+
+
 }

@@ -5,6 +5,10 @@
   .user-account-image {
     width: 155px;
     height: 155px;
+    @media (max-width: 600px) {
+      width: 120px;
+      height: 120px;
+    }
   }
 
   .highlight {
@@ -17,6 +21,10 @@
     display: table;
     max-width: 475px;
     min-width: 475px;
+    @media (max-width: 600px) {
+      max-width: 90%;
+      min-width: 90%;
+    }
   }
 
   .visit-icon {
@@ -26,17 +34,5 @@
 
   .visit-link {
     color: #{$gold-darker-1};
-  }
-
-  @media (max-width: 600px) {
-    .user-account-image {
-      width: 120px;
-      height: 120px;
-    }
-
-    .notification-container {
-      max-width: 325px;
-      min-width: 325px;
-    }
   }
 }

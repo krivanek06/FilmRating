@@ -38,9 +38,15 @@
 
   .alert-message {
     color: #{$default-word};
+    font-size: 14px;
   }
 
-  min-width: 400px !important;
+  .alert-button-role-cancel {
+    //color: #{$default-word};
+    font-weight: normal;
+  }
+
+  min-width: 90% !important;
 
   @media (min-width: 800px) {
     min-width: 550px !important;

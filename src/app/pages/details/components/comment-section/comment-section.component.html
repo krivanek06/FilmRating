@@ -1,13 +1,14 @@
 <!-- display reviews with comments -->
 <div class="ion-padding-vertical" *ngIf="!showReviewForm">
   <ng-container *ngIf="reviews.length > 0; else noReview">
-    <div *ngFor="let review of reviews | commentSorting" class="ion-padding-vertical">
+    <div *ngFor="let review of reviews | reviewSorting" class="ion-padding-vertical">
       <app-comment-cards
         [review]="review"
-        [authenticatedUser]="authenticatedUser"
+        [authenticatedUser]="authenticatedUser$ | async"
         [mentionPeople]="searchedUsers$| async"
         (searchPeopleByUsername)="searchPeopleByUsername($event)"
         (addComment)="addCommentOnReview($event, review)"
+        (followPersonEmitter)="followPerson($event)"
         (editCommentEmitter)="editComment($event, review)"
         (likeCommentEmitter)="likeOrDislikeComment($event, review, true)"
         (dislikeCommentEmitter)="likeOrDislikeComment($event, review, false)"
@@ -50,6 +51,12 @@
       <!-- range selector required & chosen by user -->
       <app-range-rating *ngFor="let name of selectedCategories" [name]="name"></app-range-rating>
     </ion-item-group>
+
+    <div class="ion-text-center ion-padding-vertical">
+      <ion-text *ngIf="showReviewForm" class="secondary-text">
+        *Type <ion-text style="font-weight: bold">@username</ion-text> to mention somebody in your review
+      </ion-text>
+    </div>
 
     <!-- review form -->
     <app-comment-form

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FirebaseMovieDetailComment, FirebaseMovieDetailReview} from '../models/comment-section.model';
-import {IUser} from '../../../../../shared/models/IUser.model';
+import {IUser, IUserPartialData} from '../../../../../shared/models/IUser.model';
 
 @Component({
   selector: 'app-comment-cards',
@@ -18,11 +18,12 @@ export class CommentCardsComponent implements OnInit {
   @Output() addComment: EventEmitter<string> = new EventEmitter<string>();
   @Output() likeCommentEmitter: EventEmitter<FirebaseMovieDetailComment> = new EventEmitter<any>();
   @Output() dislikeCommentEmitter: EventEmitter<FirebaseMovieDetailComment> = new EventEmitter<FirebaseMovieDetailComment>();
-  @Output() editCommentEmitter: EventEmitter<{oldComment: FirebaseMovieDetailComment, newComment: string}> = new EventEmitter<{oldComment: FirebaseMovieDetailComment, newComment: string}>();
+  @Output() editCommentEmitter: EventEmitter<{ oldComment: FirebaseMovieDetailComment, newComment: string }> = new EventEmitter<{ oldComment: FirebaseMovieDetailComment, newComment: string }>();
   @Output() deleteCommentEmitter: EventEmitter<FirebaseMovieDetailComment> = new EventEmitter<FirebaseMovieDetailComment>();
 
-  // search
+  // other
   @Output() searchPeopleByUsername: EventEmitter<string> = new EventEmitter<string>();
+  @Output() followPersonEmitter: EventEmitter<IUserPartialData> = new EventEmitter<IUserPartialData>();
 
   // inputs
   @Input() review: FirebaseMovieDetailReview;
@@ -80,5 +81,9 @@ export class CommentCardsComponent implements OnInit {
 
   likeComment(comment: FirebaseMovieDetailComment) {
     this.likeCommentEmitter.emit(comment);
+  }
+
+  followPerson(person: IUserPartialData) {
+    this.followPersonEmitter.emit(person);
   }
 }

@@ -46,14 +46,11 @@ export class IonicDialogService {
         cssClass: 'my-custom-alert-class',
         // header: 'Confirm!',
         message: `<img src="${mapUrl}" alt="g-maps" style="border-radius: 2px">`,
-        buttons: [
-          {
-            text: '',
-            handler: () => {
-              resolve(true);
-            }
+        buttons: [{
+          text: '', handler: () => {
+            resolve(true);
           }
-        ]
+        }]
       });
       await alert.present();
     });

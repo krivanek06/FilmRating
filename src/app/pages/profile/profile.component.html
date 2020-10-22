@@ -40,7 +40,7 @@
                *ngFor="let notification of user.notifications | OrderIUserNotification | slice: 0: 8">
             <ion-text class="primary-text">{{ notification.message }}</ion-text>
             <div>
-              <ion-text class="secondary-text">{{ notification.timestamp | date: 'dd.MM.yyyy HH:mm:ss a' }}</ion-text>
+              <ion-text class="secondary-text">{{ notification.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }}</ion-text>
               <ion-text class="ion-float-end clickable visit-link" (click)="visitMovie(notification.movieId)">
                 <span>visit</span>
                 <ion-icon name="play" class="visit-icon"></ion-icon>

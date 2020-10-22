@@ -8,18 +8,20 @@
   (editCommentEmitter)="editReview($event)"
   (deleteCommentEmitter)="deleteReview()"
   (likeCommentEmitter)="likeReview()"
+  (followPersonEmitter)="followPerson($event)"
   (replayCommentEmitter)="replayToggle()"
   (dislikeCommentEmitter)="dislikeReview()">
 </app-comment-card>
 
 <!-- review comments -->
-<div class="review-comment" *ngFor="let comment of review.comments">
+<div class="review-comment" *ngFor="let comment of review.comments | commentSorting">
   <div class="ion-float-end" style="width: 80%">
     <app-comment-card
       [comment]="comment"
       [authenticatedUser]="authenticatedUser"
       [mentionPeople]="mentionPeople"
       [isReview]="false"
+      (followPersonEmitter)="followPerson($event)"
       (searchPeopleByUsername)="searchUserByUsername($event)"
       (deleteCommentEmitter)="deleteComment(comment)"
       (editCommentEmitter)="editComment($event, comment)"

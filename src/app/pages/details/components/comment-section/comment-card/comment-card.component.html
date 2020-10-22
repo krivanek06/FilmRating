@@ -1,9 +1,37 @@
 <ion-card [ngClass]="{'comment-background': !isReview}">
   <ion-card-header>
     <ion-card-subtitle class="ion-padding-top ion-padding-horizontal" [ngClass]="{'comment-background': !isReview}">
-      <ion-label> {{ comment.person.displayName }} </ion-label>
-      <ion-label class="ion-float-end" style="display: flex">
-        <ion-text class="ion-margin-end ion-hide-md-down">{{ comment.timestamp | date: 'dd.MM.yyyy HH:mm:ss a'}}</ion-text>
+      <!-- name of user -->
+      <ion-label style="display: flex">
+        <ng-container *ngIf="authenticatedUser.uid !== comment.person.uid">
+          <!-- follow -->
+          <ion-icon *ngIf="alreadyFollowing; else alreadyFollowed"
+                    matTooltipPosition="right"
+                    [matTooltip]="'Follow ' + comment.person.displayName"
+                    matTooltipClass="custom-mat-tooltip"
+                    matTooltipShowDelay="100"
+                    name="person-add"
+                    class="clickable ion-margin-end"
+                    (click)="followPerson(comment.person)">
+          </ion-icon>
+          <!-- already followed -->
+          <ng-template #alreadyFollowed>
+            <ion-icon name="checkmark-circle"
+                      matTooltipPosition="right"
+                      [matTooltip]="'You are already following ' + comment.person.displayName"
+                      matTooltipClass="custom-mat-tooltip"
+                      matTooltipShowDelay="100"
+                      class="ion-margin-end">
+            </ion-icon>
+          </ng-template>
+        </ng-container>
+        <ion-text>{{ comment.person.displayName }}</ion-text>
+
+      </ion-label>
+      <ion-label class="ion-float-end respond-management-button-container">
+        <ion-text class="ion-margin-end ion-hide-md-down">
+          {{ comment.timestamp | date: 'dd.MM.yyyy HH:mm:ss'}}
+        </ion-text>
         <!-- reply on comment -->
         <ng-container *ngIf="authenticatedUser">
           <ion-icon
