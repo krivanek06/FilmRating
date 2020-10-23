@@ -1,9 +1,14 @@
 <ion-grid>
   <ion-row>
-    <ion-col size-xl="2"  size-lg="3" size-md="4"  size="6" *ngFor="let movie of discoveredMovies">
-      <ion-card (click)="showDetails(movie)" class="clickable">
+    <ion-col size-xl="2"  size-lg="3" size-md="3"  size="4" *ngFor="let movie of discoveredMovies">
+      <ion-card (click)="showDetails(movie)" class="clickable" style="height: 100%">
         <ion-card-content>
-          <ion-img [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="poster image"></ion-img>
+          <ion-img
+            [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+            (ionError)="showError($event)"
+            alt="poster image">
+
+          </ion-img>
 
           <div class="myOverlay">
             {{ movie.title }}

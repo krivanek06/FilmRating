@@ -13,6 +13,7 @@ import {
   MovieTrailer
 } from './film-data.model';
 import {find, first, map, take, tap} from 'rxjs/operators';
+import {CategorySort} from '../pages/search/models/filter.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,21 +24,15 @@ export class FilmDataService {
   }
 
 
-  // TODO - used by Simon
-  /**
-   * API - https://developers.themoviedb.org/3/discover/movie-discover
-   * @param genresId - gender id from https://developers.themoviedb.org/3/genres/get-movie-list
-   * @param page - use to sort result
-   */
-  discoverMovies(genresId: number[] = [], page = 1): Observable<DiscoveredMoviesWrapper> {
+  discoverMovies(genreTypes: GenreTypes[] = [], page = 1, sortBy: CategorySort): Observable<DiscoveredMoviesWrapper> {
     const params = new HttpParams()
       .set('api_key', environment.theMovieDbAPI)
-      .set('sort_by', 'popularity.desc')
+      .set('sort_by', sortBy.sortName)
       .set('language', 'en-US')
       .set('include_adult', 'false')
       .set('include_video', 'false')
       .set('page', String(page))
-      .set('with_genres', genresId.join('AND'));
+      .set('with_genres', genreTypes.map(x => x.id).join(','));
     return this.http.get<DiscoveredMoviesWrapper>('https://api.themoviedb.org/3/discover/movie', {params});
   }
 
@@ -81,10 +76,6 @@ export class FilmDataService {
       );
   }
 
-  // TODO - will be used by Eduard
-  /**
-   * API - https://developers.themoviedb.org/3/search/search-movies
-   */
   searchMovieByName(namePrefix: string): Observable<DiscoveredMoviesWrapper> {
     const params = new HttpParams()
       .set('api_key', environment.theMovieDbAPI)
@@ -97,11 +88,7 @@ export class FilmDataService {
     return this.http.get<DiscoveredMoviesWrapper>('https://api.themoviedb.org/3/search/movie', {params});
   }
 
-  // TODO - will be used by Adam
-  /**
-   * API  - https://developers.themoviedb.org/3/movies/get-movie-details
-   * @param movieId - test with 603 (Matrix)
-   */
+
   getMovieDetails(movieId: number): Observable<MovieDetails> {
     const params = new HttpParams()
       .set('api_key', environment.theMovieDbAPI)

@@ -1,4 +1,5 @@
 @import "../../../../../theme/custom-variable";
+@import "../../../../shared/style/main";
 
 :host {
   ion-icon {
@@ -18,9 +19,9 @@
     padding-bottom: 1px;
   }
 
-  .highlight {
+  /*.highlight {
     color: #{$gold};
-  }
+  }*/
 
   .item-information-heading {
     color: #{$gold};

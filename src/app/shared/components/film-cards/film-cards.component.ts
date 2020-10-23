@@ -3,20 +3,25 @@ import {DiscoveredMovie} from '../../../api/film-data.model';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-film-cards',
-  templateUrl: './film-cards.component.html',
-  styleUrls: ['./film-cards.component.scss']
+    selector: 'app-film-cards',
+    templateUrl: './film-cards.component.html',
+    styleUrls: ['./film-cards.component.scss']
 })
 export class FilmCardsComponent implements OnInit {
-  @Input() discoveredMovies: DiscoveredMovie[];
+    @Input() discoveredMovies: DiscoveredMovie[];
 
-  constructor(private route: Router) {
-  }
+    constructor(private route: Router) {
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
-  showDetails(movie: DiscoveredMovie) {
-    this.route.navigate([`menu/details/${movie.id}`]);
-  }
+    showDetails(movie: DiscoveredMovie) {
+        this.route.navigate([`menu/details/${movie.id}`]);
+    }
+
+    showError(event: CustomEvent) {
+        const target = event.target as any;
+        target.src = 'assets/default-img.jpg';
+    }
 }

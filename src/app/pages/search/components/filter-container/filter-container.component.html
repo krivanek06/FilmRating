@@ -1,0 +1,50 @@
+<!-- category filter -->
+<div class="ion-padding-vertical bottom-divider">
+  <ion-label class="highlight">Select movie category</ion-label>
+  <ion-item>
+    <ion-label>Movie category</ion-label>
+    <ion-select
+      class="custom-options"
+      multiple="true"
+      placeholder="Select categories"
+      (ionChange)="getValuesFromSelector($event)"
+      selectedText=" "
+      [value]="selectedGenreTypes">
+      <ion-select-option *ngFor="let data of genreTypes" [value]="data">{{ data.name }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div style="width: 80%; margin: auto">
+    <ion-item *ngFor="let selected of selectedGenreTypes" class="ion-no-padding">
+      <ion-label>{{ selected.name  }}</ion-label>
+      <ion-icon name="close-circle" color="danger" class="clickable"
+                (click)="removeSelectedGender(selected)"></ion-icon>
+    </ion-item>
+  </div>
+</div>
+
+<!-- sort by -->
+<div class="ion-padding-vertical">
+  <ion-label class="highlight">Sort movies by</ion-label>
+  <ion-item>
+    <ion-label>Sort by</ion-label>
+    <ion-select
+      class="custom-options"
+      multiple="false"
+      placeholder="Sort by"
+      (ionChange)="changeSorting($event)"
+      selectedText=" "
+      [value]="sortBy">
+      <ion-select-option *ngFor="let data of categorySort" [value]="data">{{ data.displayName }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div style="width: 80%">
+    <ion-item class="ion-no-padding">
+      <ion-label class="primary-text">
+        <ion-text class="highlight">Sorted by:</ion-text>
+        {{ sortBy.displayName  }}
+      </ion-label>
+    </ion-item>
+  </div>
+</div>

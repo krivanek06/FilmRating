@@ -1,0 +1,33 @@
+@import "../../../../shared/style/main";
+@import "../../../../../theme/custom-variable";
+
+:host {
+
+  .page-change {
+    cursor: pointer;
+    transition: All 0.4s ease-out;
+
+    &:hover {
+      color: #{$gold};
+      transform: scale(0.94);
+    }
+  }
+
+  .next-button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .previous-button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .divider-top {
+    border-top: 1px solid #666666;
+  }
+}
+
+

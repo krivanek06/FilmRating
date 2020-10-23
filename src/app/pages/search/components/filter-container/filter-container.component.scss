@@ -1,0 +1,8 @@
+@import "../../../../shared/style/main";
+@import "../../../../../theme/custom-variable";
+
+:host {
+  .bottom-divider {
+    border-bottom: 1px solid #666666;
+  }
+}

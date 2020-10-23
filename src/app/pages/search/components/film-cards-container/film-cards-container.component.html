@@ -1,0 +1,37 @@
+<!-- result info -->
+<ion-item>
+  <ion-label>
+    <div style="margin-bottom: 5px">
+      <ion-text class="highlight">Total results: </ion-text>
+      <ion-text>{{ discoveredMovies?.total_results }}</ion-text>
+    </div>
+    <div style="margin-bottom: 5px">
+      <ion-text class="highlight">Page: </ion-text>
+      <ion-text>{{ pageNumber }}</ion-text>
+      <ion-text class="highlight"> of </ion-text>
+      <ion-text>{{ discoveredMovies?.total_pages }}</ion-text>
+    </div>
+  </ion-label>
+</ion-item>
+
+<!-- film cards -->
+<div class="ion-padding">
+  <app-film-cards [discoveredMovies]="discoveredMovies?.results | slice: 0: 18"></app-film-cards>
+</div>
+<!-- navigation buttons -->
+<div class="divider-top ion-padding">
+  <ion-item>
+    <ion-label class="ion-text-start">
+      <div class="page-change previous-button" (click)="previous()" *ngIf="pageNumber !== 1">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+        <ion-text style="margin-left: 5px">previous</ion-text>
+      </div>
+    </ion-label>
+    <ion-label class="ion-text-end">
+      <div class="page-change next-button" (click)="next()">
+        <ion-text style="margin-right: 5px">next</ion-text>
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </div>
+    </ion-label>
+  </ion-item>
+</div>

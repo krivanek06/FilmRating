@@ -1,2 +1,40 @@
-SIMON IMPLEMENT ME !!!!!!!!!
+<ion-grid>
+  <ion-row>
+    <!-- filter sm- -->
+    <ion-col size="12"  class="ion-hide-md-up">
+      <div class="ion-padding">
+        <app-filter-container
+          [selectedGenreTypes]="selectedGenreTypes"
+          [sortBy]="sortBy"
+          [genreTypes]="genreTypes$ | async"
+          (removeSelectedGenderType)="removeSelectedGenderType($event)"
+          (sortByEmitter)="changeSorting($event)"
+          (selectedGenreTypesEmitter)="filterByGenreTypes($event)">
+        </app-filter-container>
+      </div>
+    </ion-col>
 
+    <!-- discovered movies -->
+    <ion-col size="12" size-md="7.5" push="0" push-md="0.25">
+      <app-film-cards-container
+        (changePageNumberEmitter)="changePage($event)"
+        [pageNumber]="pageNumber"
+        [discoveredMovies]="discoveredMovies$ | async">
+      </app-film-cards-container>
+    </ion-col>
+
+    <!-- filter sm+ -->
+    <ion-col size="12" size-md="3.5" push="0" push-md="0.75" class="left-divider ion-hide-md-down">
+      <div class="ion-padding">
+        <app-filter-container
+          [selectedGenreTypes]="selectedGenreTypes"
+          [sortBy]="sortBy"
+          [genreTypes]="genreTypes$ | async"
+          (sortByEmitter)="changeSorting($event)"
+          (selectedGenreTypesEmitter)="filterByGenreTypes($event)">
+        </app-filter-container>
+      </div>
+    </ion-col>
+
+  </ion-row>
+</ion-grid>

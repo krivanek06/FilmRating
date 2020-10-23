@@ -32,6 +32,24 @@
     color: #{$default-word};
   }
 
+  .alert-radio-label {
+    color: #{$default-word};
+  }
+
+  .alert-radio-icon {
+    border-color: #{$gold} !important;
+    background-color: #2b2b2b !important;
+  }
+
+  .alert-radio-inner {
+    background-color: #{$gold} !important;
+  }
+
+  [aria-checked=true].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
+    color: #808080 !important;
+  }
+
+
   .alert-button {
     color: #{$gold-darker-1};
   }

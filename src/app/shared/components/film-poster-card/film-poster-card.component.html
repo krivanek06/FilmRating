@@ -1,6 +1,10 @@
 <ion-card>
   <ion-card-content>
-    <ion-img [src]="'https://image.tmdb.org/t/p/w500/' + movieDetails.poster_path" alt="poster image"></ion-img>
+    <ion-img
+      [src]="'https://image.tmdb.org/t/p/w500/' + movieDetails.poster_path"
+      alt="poster image"
+      (ionError)="showError($event)">
+    </ion-img>
 
     <div class="progress-circle-container">
       <circle-progress [percent]="movieDetails.vote_average * 10"></circle-progress>

@@ -16,4 +16,9 @@ export class FilmPosterCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  showError(event: CustomEvent) {
+    const target = event.target as any;
+    target.src = 'assets/default-img.jpg';
+  }
+
 }
