@@ -1,0 +1,19 @@
+:host {
+  .chart-class {
+    // position: absolute;
+    // left: 0;
+    margin-left: -30px;
+    @media (max-width: 600px) {
+      margin-left: 0;
+      transform: scale(1.15);
+    }
+  }
+
+  .chartjs-container {
+    @media (max-width: 600px) {
+      height: 200px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

@@ -16,9 +16,12 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 })
 export class DetailsComponent extends ComponentBaseComponent implements OnInit {
   movieId: string;
-  movieDetails$: Observable<MovieDetails>;
+  movieDetails: MovieDetails;
+  firebaseMovieReviews: FirebaseMovieDetailReview[];
+
+
   firebaseMovieDetails$: Observable<FirebaseMovieDetails>;
-  firebaseMovieReviews$: Observable<FirebaseMovieDetailReview[]>;
+
 
   constructor(private filmDataService: FilmDataService,
               private movieDetailsService: MovieDetailsService,
@@ -32,10 +35,15 @@ export class DetailsComponent extends ComponentBaseComponent implements OnInit {
     ).subscribe((data: any) => {
       this.movieId = data.params.id;
 
-      this.movieDetails$ = this.filmDataService.getMovieDetails(data.params.id);  // api call for movie details
+      this.filmDataService.getMovieDetails(data.params.id).pipe(takeUntil(this.destroy$)).subscribe(res => {
+        this.movieDetails = res;
+      });
+      this.movieDetailsService.geReviewsForMovie(this.movieId).pipe(takeUntil(this.destroy$)).subscribe(res => {
+        this.firebaseMovieReviews = res;
+      });
+
 
       // this.firebaseMovieDetails$ = this.movieDetailsService.getMovieDetails(data.params.id);  // our data, currently empty
-      this.firebaseMovieReviews$ = this.movieDetailsService.geReviewsForMovie(data.params.id);  // user reviews
     });
   }
 }

@@ -16,8 +16,9 @@ import {RangeRatingComponent} from './components/range-rating/range-rating.compo
 import {MentionModule} from 'angular-mentions';
 import {FilmPosterCardComponent} from './components/film-poster-card/film-poster-card.component';
 import {NumberFormatterPipe} from './pipes/numberFormatter.pipe';
-import {GenericChartCardComponent} from './components/generic-chart-card/generic-chart-card.component';
-import {OrderIUserNotificationPipe} from '../pages/profile/pipes/OrderIUserNotification.pipe';
+import {GenericCardComponent} from './components/generic-card/generic-card.component';
+import {FilmRatingChartComponent} from './components/film-rating-chart/film-rating-chart.component';
+import {ChartsModule} from 'ng2-charts';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {OrderIUserNotificationPipe} from '../pages/profile/pipes/OrderIUserNotif
     RangeRatingComponent,
     FilmPosterCardComponent,
     NumberFormatterPipe,
-    GenericChartCardComponent
+    GenericCardComponent,
+    FilmRatingChartComponent
   ],
   imports: [
     CommonModule,
@@ -41,6 +43,7 @@ import {OrderIUserNotificationPipe} from '../pages/profile/pipes/OrderIUserNotif
     AngularFireAuthModule,
     AngularFireStorageModule,
     AppMaterialModule,
+    ChartsModule,
     IonicModule,
     NgCircleProgressModule.forRoot({
       radius: 22,
@@ -79,7 +82,8 @@ import {OrderIUserNotificationPipe} from '../pages/profile/pipes/OrderIUserNotif
     RangeRatingComponent,
     FilmPosterCardComponent,
     NumberFormatterPipe,
-    GenericChartCardComponent
+    GenericCardComponent,
+    FilmRatingChartComponent
   ]
 })
 export class SharedModule { }

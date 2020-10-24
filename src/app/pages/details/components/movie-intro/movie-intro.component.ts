@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FilmDataService} from '../../../../api/film-data.service';
 import {MovieDetailsService} from '../../services/movie-details.service';
 import {ActivatedRoute} from '@angular/router';
@@ -14,13 +14,12 @@ import {IonicDialogService} from '../../../../shared/services/ionic-dialog.servi
   templateUrl: './movie-intro.component.html',
   styleUrls: ['./movie-intro.component.scss']
 })
-export class MovieIntroComponent implements OnInit {
+export class MovieIntroComponent implements OnInit, OnChanges {
   @Input() movieId: string;
   @Input() movieDetails: MovieDetails;
+  @Input() firebaseMovieReviews: FirebaseMovieDetailReview[];
 
   movieImages$: Observable<MovieImages[]>;
-  firebaseMovieReviews$: Observable<FirebaseMovieDetailReview[]>;
-
   safeSrc: SafeResourceUrl;
 
   constructor(private filmDataService: FilmDataService,
@@ -30,16 +29,22 @@ export class MovieIntroComponent implements OnInit {
               private sanitizer: DomSanitizer) {
   }
 
+
   ngOnInit(): void {
-    this.movieImages$ = this.filmDataService.getMovieImages(Number(this.movieId));    // api call for movie images
 
-    this.firebaseMovieReviews$ = this.movieDetailsService.geReviewsForMovie(this.movieId);  // user reviews
+  }
 
-    // load video from youtube based on movie trailer key
-    this.filmDataService.getMovieTrailer(Number(this.movieId)).subscribe(res => {
-      this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${res.key}`);
-    });
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.movieId && changes.movieId.currentValue) {
 
+      this.movieId = changes.movieId.currentValue;
+      this.movieImages$ = this.filmDataService.getMovieImages(Number(this.movieId));    // api call for movie images
+
+      // load video from youtube based on movie trailer key
+      this.filmDataService.getMovieTrailer(Number(this.movieId)).subscribe(res => {
+        this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${res.key}`);
+      });
+    }
   }
 
   async showImage(image: MovieImages) {
