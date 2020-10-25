@@ -3,7 +3,7 @@
     <ion-card-subtitle class="ion-padding-top ion-padding-horizontal" [ngClass]="{'comment-background': !isReview}">
       <!-- name of user -->
       <ion-label style="display: flex">
-        <ng-container *ngIf="authenticatedUser.uid !== comment.person.uid">
+        <ng-container *ngIf="authenticatedUser && authenticatedUser.uid !== comment.person.uid">
           <!-- follow -->
           <ion-icon *ngIf="alreadyFollowing; else alreadyFollowed"
                     matTooltipPosition="right"
