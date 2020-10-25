@@ -38,6 +38,9 @@ export class HeaderComponent implements OnInit {
   }
 
   searchForMovie(data: CustomEvent) {
+    if (!data.detail.value || data.detail.value.length <= 3) {
+      return;
+    }
     this.searchedMovies$ = this.filmDataService.searchMovieByName(data.detail.value);
 
   }
@@ -60,6 +63,7 @@ export class HeaderComponent implements OnInit {
 
   redirectToDetails(movieId: number) {
     this.searchBars.forEach(searchbar => searchbar.value = null);
+    this.searchedMovies$ = undefined;
     this.router.navigate([`menu/details/${movieId}`]);
   }
 
