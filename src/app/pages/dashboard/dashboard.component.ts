@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FilmDataService} from '../../api/film-data.service';
 import {Observable} from 'rxjs';
-import {DiscoveredMovie} from '../../api/film-data.model';
+import {DiscoveredMovie, GenreTypes} from '../../api/film-data.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,8 +9,9 @@ import {DiscoveredMovie} from '../../api/film-data.model';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  filmDataService$: Observable<DiscoveredMovie[]>;
-
+  trendingMovies$: Observable<DiscoveredMovie[]>;
+  upcomingMovies$: Observable<DiscoveredMovie[]>;
+  genreTypes$: Observable<GenreTypes[]>;
   constructor(private filmDataService: FilmDataService) {
   }
 
@@ -20,8 +21,10 @@ export class DashboardComponent implements OnInit {
     // this.filmDataService.getGenresTypes();
     // this.filmDataService.getTrendingMovies();
     // this.filmDataService.getUpcomingMovies();
-    this.filmDataService$ = this.filmDataService.getUpcomingMovies();
-    this.filmDataService$.subscribe(console.log);
+    this.upcomingMovies$ = this.filmDataService.getUpcomingMovies();
+    this.trendingMovies$ = this.filmDataService.getTrendingMovies();
+    this.genreTypes$ = this.filmDataService.getGenresTypes();
+    // this.genreTypes$.subscribe(console.log);
   }
 
 }
