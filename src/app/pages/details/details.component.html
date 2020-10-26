@@ -1,5 +1,5 @@
 <ion-grid>
-  <ion-row *ngIf="movieId">
+  <ion-row *ngIf="movieDetails$ | async as movieDetails">
     <!-- show details about movie -->
     <ion-col size="12" size-md="6" size-xl="3.5" push-xl="0.25" push="0" class="dividing-border">
         <app-movie-details [movieDetails]="movieDetails"

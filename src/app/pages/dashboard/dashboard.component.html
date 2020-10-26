@@ -1,11 +1,11 @@
-<ion-grid>
-<h1>Trending Now</h1>
+<ion-grid class="ion-padding">
+  <h1>Trending Now</h1>
   <ion-row>
-      <app-film-cards
-        [discoveredMovies]="trendingMovies$ | async">
-      </app-film-cards>
+    <app-film-cards
+      [discoveredMovies]="trendingMovies$ | async">
+    </app-film-cards>
   </ion-row>
-<h1>Upcoming films</h1>
+  <h1>Upcoming films</h1>
   <ion-row>
     <app-film-cards
       [discoveredMovies]="upcomingMovies$ | async">

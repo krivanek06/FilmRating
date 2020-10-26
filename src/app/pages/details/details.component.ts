@@ -16,7 +16,7 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 })
 export class DetailsComponent extends ComponentBaseComponent implements OnInit {
   movieId: string;
-  movieDetails: MovieDetails;
+  movieDetails$: Observable<MovieDetails>;
   firebaseMovieReviews: FirebaseMovieDetailReview[];
 
 
@@ -35,9 +35,8 @@ export class DetailsComponent extends ComponentBaseComponent implements OnInit {
     ).subscribe((data: any) => {
       this.movieId = data.params.id;
 
-      this.filmDataService.getMovieDetails(data.params.id).pipe(takeUntil(this.destroy$)).subscribe(res => {
-        this.movieDetails = res;
-      });
+      this.movieDetails$ = this.filmDataService.getMovieDetails(data.params.id);
+
       this.movieDetailsService.geReviewsForMovie(this.movieId).pipe(takeUntil(this.destroy$)).subscribe(res => {
         this.firebaseMovieReviews = res;
       });
