@@ -7,6 +7,7 @@
           <div class="highlight ion-margin-bottom">Account Information</div>
           <div class="primary-text"><span class="ion-hide-sm-down">username:</span> {{ user.displayName }}</div>
           <div class="primary-text"><span class="ion-hide-sm-down">email:</span> {{ user.email }}</div>
+          <div class="primary-text"><span class="ion-hide-sm-down">points:</span> {{ user.points }}</div>
         </ion-label>
       </ion-item>
 
@@ -36,12 +37,14 @@
      <ion-item>
         <ion-label>
           <div class="highlight">Recent activity</div>
-          <div class="ion-padding-vertical wrap-white-space notification-container"
+
+          <div class="ion-padding-vertical wrap-white-space notification-container clickable border-b-on-hover"
+               (click)="visitMovie(notification.movieId)"
                *ngFor="let notification of user.notifications | OrderIUserNotification | slice: 0: 8">
             <ion-text class="primary-text">{{ notification.message }}</ion-text>
             <div>
               <ion-text class="secondary-text">{{ notification.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }}</ion-text>
-              <ion-text class="ion-float-end clickable visit-link" (click)="visitMovie(notification.movieId)">
+              <ion-text class="ion-float-end clickable visit-link ion-hide-sm-up" >
                 <span>visit</span>
                 <ion-icon name="play" class="visit-icon"></ion-icon>
               </ion-text>

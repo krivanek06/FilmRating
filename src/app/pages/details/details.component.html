@@ -1,10 +1,15 @@
+<!-- back button -->
+<ion-buttons slot="start" class="ion-hide-sm-up">
+  <ion-back-button [text]="'Back'" [icon]="'arrow-back'" [defaultHref]="'/menu/search'"></ion-back-button>
+</ion-buttons>
+
 <ion-grid>
   <ion-row *ngIf="movieDetails$ | async as movieDetails">
     <!-- show details about movie -->
     <ion-col size="12" size-md="6" size-xl="3.5" push-xl="0.25" push="0" class="dividing-border">
-        <app-movie-details [movieDetails]="movieDetails"
-                           [firebaseMovieReviews]="firebaseMovieReviews">
-        </app-movie-details>
+      <app-movie-details [movieDetails]="movieDetails"
+                         [firebaseMovieReviews]="firebaseMovieReviews">
+      </app-movie-details>
     </ion-col>
 
     <!-- show reviews and comments -->

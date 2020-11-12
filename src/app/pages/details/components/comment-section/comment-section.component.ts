@@ -65,15 +65,15 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     await this.ionicDialog.presentToast(`Review was successfully added`);
     await this.userManagementService.sendNotification(this.authService.IUser.uid, NotificationConstructorService.constructIAddedReviewAction(this.movieName, this.movieId));
 
-    const notificationMentionedName = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
-    const notificationAddedReview = NotificationConstructorService.constructSomebodyAddedReviewAction(this.authService.IUser.displayName, this.movieName, this.movieId);
-    const promises = MovieDetailConstructor.findAllUsernameInString(review).map(async name => await this.userManagementService.getIUserByUsername(name));
+    const notificationMentionedNameMessage = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
+    const notificationAddedReviewMessage = NotificationConstructorService.constructSomebodyAddedReviewAction(this.authService.IUser.displayName, this.movieName, this.movieId);
+    const promises = MovieDetailConstructor.findAllUsernameInString(review).map(async name => await this.userManagementService.getIUserByDisplayName(name));
 
-    const mentionedUsersInText = (await Promise.all(promises)).filter(x => !!x);
+    const mentionedUsersInText = (await Promise.all(promises)).filter(x => !!x); // @useraname in text
 
     forkJoin(
-      mentionedUsersInText.map(user => this.userManagementService.sendNotification(user.uid, notificationMentionedName)),
-      this.authService.IUser.usersFollowMe.map(user => this.userManagementService.sendNotification(user.uid, notificationAddedReview))
+      mentionedUsersInText.map(user => this.userManagementService.sendNotification(user.uid, notificationMentionedNameMessage)),
+      this.authService.IUser.usersFollowMe.map(user => this.userManagementService.sendNotification(user.uid, notificationAddedReviewMessage))
     ).pipe(takeUntil(this.destroy$)).subscribe();
 
     this.toggleShowReview();
@@ -89,7 +89,7 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     // notify mentioned users in comment or users who follow me
     const notificationMentionedName = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
     const notificationAddedComment = NotificationConstructorService.constructSomebodyIFollowAddedCommentOnReviewAction(this.authService.IUser.displayName, review.person.displayName, this.movieName, this.movieId);
-    const promises = MovieDetailConstructor.findAllUsernameInString(comment).map(async name => await this.userManagementService.getIUserByUsername(name));
+    const promises = MovieDetailConstructor.findAllUsernameInString(comment).map(async name => await this.userManagementService.getIUserByDisplayName(name));
 
     const mentionedUsersInText = (await Promise.all(promises)).filter(x => !!x);
 
@@ -106,7 +106,7 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
 
     // notify mentioned users in comment
     const notificationMentionedName = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
-    const promises = MovieDetailConstructor.findAllUsernameInString(data.newComment).map(async name => await this.userManagementService.getIUserByUsername(name));
+    const promises = MovieDetailConstructor.findAllUsernameInString(data.newComment).map(async name => await this.userManagementService.getIUserByDisplayName(name));
 
     const mentionedUsersInText = (await Promise.all(promises)).filter(x => !!x);
 
@@ -121,7 +121,7 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
 
     // notify mentioned users in editedReview
     const notificationMentionedName = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
-    const promises = MovieDetailConstructor.findAllUsernameInString(editedReview).map(async name => await this.userManagementService.getIUserByUsername(name));
+    const promises = MovieDetailConstructor.findAllUsernameInString(editedReview).map(async name => await this.userManagementService.getIUserByDisplayName(name));
 
     const mentionedUsersInText = (await Promise.all(promises)).filter(x => !!x);
 
@@ -173,7 +173,10 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     const response = await this.ionicDialog.presentAlertConfirm(`Do you wish to start following ${person.displayName} ? You will receive a notification each time when ${person.displayName} will write a review or comment.`);
     if (response) {
       const user = this.authService.IUser;
+      const followedUser = await this.userManagementService.getIUserByDisplayName(person.displayName);
+
       await this.userManagementService.updateUser({...user, usersFollowI: [...user.usersFollowI, person]});
+      await this.userManagementService.updateUser({...followedUser, usersFollowMe: [...followedUser.usersFollowMe, user]});
       await this.ionicDialog.presentToast(`You successfully started following ${person.displayName}`);
     }
   }

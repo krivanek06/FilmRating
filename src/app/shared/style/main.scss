@@ -9,6 +9,13 @@
   }
 }
 
+.border-b-on-hover{
+  transition: All 0.4s ease-out;
+  &:hover {
+    border-bottom: 1px solid #cacaca;
+  }
+}
+
 .wrap-white-space {
   white-space: pre-wrap;
 }

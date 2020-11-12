@@ -35,7 +35,13 @@ export class UserManagementService {
     );
   }
 
-  async getIUserByUsername(username: string): Promise<IUser> {
+  async addPointsToUser(uid: string, points: number) {
+    const userDocument = await this.angularFirestore.collection<IUser>('users').doc(uid).get().toPromise();
+    const user = userDocument.data() as IUser;
+    await this.updateUser({...user, points: user.points + points});
+  }
+
+  async getIUserByDisplayName(username: string): Promise<IUser> {
     const ref = await this.angularFirestore.collection<IUser>('users',
       (r) => r.where('displayName', '==', username).limit(1)
     ).get().toPromise();

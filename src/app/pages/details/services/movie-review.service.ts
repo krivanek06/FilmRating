@@ -9,6 +9,7 @@ import {IUser} from '../../../shared/models/IUser.model';
 import {firestore} from 'firebase';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AuthService} from '../../../shared/services/auth.service';
+import {UserManagementService} from '../../../shared/services/user-management.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class MovieReviewService {
   MOVIE_REVIEW_COLLECTION = 'movie_review';
 
   constructor(private angularFirestore: AngularFirestore,
+              private userManagementService: UserManagementService,
               private authService: AuthService) {
   }
 
@@ -45,7 +47,9 @@ export class MovieReviewService {
       .delete();
   }
 
+
   async likeOrDislikeReview(movieId: string, review: FirebaseMovieDetailReview, user: IUser, likeComment: boolean) {
+    const points = this.determineAddingPoints(review, user, likeComment);
     if (likeComment) {
       if (review.likes.includes(user.displayName)) {
         review = {...review, likes: review.likes.filter(name => name !== user.displayName)}; // if it was liked, remove
@@ -73,6 +77,9 @@ export class MovieReviewService {
       .collection(this.MOVIE_REVIEW_COLLECTION)
       .doc(review.id)
       .update(review);
+
+    // add or subtract points for user
+    this.userManagementService.addPointsToUser(review.person.uid, points);
   }
 
 
@@ -126,5 +133,15 @@ export class MovieReviewService {
       .collection(this.MOVIE_REVIEW_COLLECTION)
       .doc(reviewId)
       .set({comments: firestore.FieldValue.arrayUnion(comment)}, {merge: true});
+  }
+
+  private determineAddingPoints(review: FirebaseMovieDetailReview, user: IUser, likeComment: boolean): number {
+    let points = 0;
+    if (likeComment) {
+      points = review.likes.includes(user.displayName) ? -20 : review.dislikes.includes(user.displayName) ? 40 : 20;
+    } else {
+      points = review.dislikes.includes(user.displayName) ? +20 : review.likes.includes(user.displayName) ? -40 : -20;
+    }
+    return points;
   }
 }

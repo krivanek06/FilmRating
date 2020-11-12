@@ -4,6 +4,11 @@
     padding: 16px;
   }
 
+  ion-back-button {
+    display: block;
+    --color: #949494;
+  }
+
   .dividing-border {
     border-right: 1px solid #666666;
     @media (max-width: 767px) {

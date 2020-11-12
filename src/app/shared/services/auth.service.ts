@@ -66,7 +66,7 @@ export class AuthService {
         notifications: [],
         usersFollowI: [],
         usersFollowMe: [],
-        points: 0
+        points: 100
       };
       await this.firestore.collection('users').doc(credential.user.uid).set(user);
     }

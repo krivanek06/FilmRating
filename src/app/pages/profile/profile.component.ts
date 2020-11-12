@@ -32,11 +32,18 @@ export class ProfileComponent implements OnInit {
   async removeFollower(follower: IUserPartialData) {
     const answer = await this.ionicDialog.presentAlertConfirm(`Do you really want to remove ${follower.displayName} ?`);
     if (answer) {
-      const updatedUser: IUser = {
-        ...this.auth.IUser,
-        usersFollowMe: this.auth.IUser.usersFollowMe.filter(item => item.uid !== follower.uid)
-      };
-      await this.userManagementService.updateUser(updatedUser);
+      // remove myself from my follower
+      const followedUser = await this.userManagementService.getIUserByDisplayName(follower.displayName);
+      this.userManagementService.updateUser({
+        ...followedUser,
+        usersFollowI: followedUser.usersFollowI.filter(u => u.uid !== this.auth.IUser.uid)
+      });
+
+      // delete follower from myself
+      await this.userManagementService.updateUser({
+          ...this.auth.IUser,
+          usersFollowMe: this.auth.IUser.usersFollowMe.filter(item => item.uid !== follower.uid)
+        });
       await this.ionicDialog.presentToast(`${follower.displayName} don't follow you anymore`);
     }
   }
@@ -44,11 +51,18 @@ export class ProfileComponent implements OnInit {
   async removeFollowedPerson(followed: IUserPartialData) {
     const answer = await this.ionicDialog.presentAlertConfirm(`Do you really want to remove ${followed.displayName} ?`);
     if (answer) {
-      const updatedUser: IUser = {
+      // remove myself from my follower
+      const followedUser = await this.userManagementService.getIUserByDisplayName(followed.displayName);
+      this.userManagementService.updateUser({
+        ...followedUser,
+        usersFollowMe: followedUser.usersFollowMe.filter(u => u.uid !== this.auth.IUser.uid)
+      });
+
+      // delete follower from myself
+      await this.userManagementService.updateUser({
         ...this.auth.IUser,
         usersFollowI: this.auth.IUser.usersFollowI.filter(item => item.uid !== followed.uid)
-      };
-      await this.userManagementService.updateUser(updatedUser);
+      });
       await this.ionicDialog.presentToast(`You don't follow ${followed.displayName} anymore`);
     }
   }

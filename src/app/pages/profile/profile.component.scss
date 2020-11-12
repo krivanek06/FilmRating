@@ -14,7 +14,7 @@
   .notification-container {
     display: table;
     max-width: 475px;
-    min-width: 475px;
+    /*min-width: 475px;*/
     @media (max-width: 600px) {
       max-width: 90%;
       min-width: 90%;
@@ -29,4 +29,6 @@
   .visit-link {
     color: #{$gold-darker-1};
   }
+
+
 }
