@@ -5,4 +5,16 @@
   .bottom-divider {
     border-bottom: 1px solid #666666;
   }
+
+  .range-selector-wrapper {
+    --background: #{$background-card-review};
+  }
+
+  .action-button {
+    width: 180px;
+    height: 32px;
+    --background: #{$gold-darker-1};
+    --color: #{$dark-word};
+    //--background: #{$background-card-review};
+  }
 }

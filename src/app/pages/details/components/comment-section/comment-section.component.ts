@@ -1,12 +1,10 @@
 import {ChangeDetectorRef, Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {GenreTypes} from '../../../../api/film-data.model';
+import {DiscoveredMoviePartialData, GenreTypes} from '../../../../api/film-data.model';
 import {genreTypeRatingAll, requiredGenreTypeRating} from './models/comment-genres.data';
 import {RangeRatingComponent} from '../../../../shared/components/range-rating/range-rating.component';
-import {MovieDetailsService} from '../../services/movie-details.service';
 import {
   FirebaseMovieDetailReview,
   FirebaseMovieDetailRating,
-  FirebaseMovieDetails,
   FirebaseMovieDetailComment
 } from './models/comment-section.model';
 import {AuthService} from '../../../../shared/services/auth.service';
@@ -20,6 +18,7 @@ import {MovieDetailConstructor} from './utils/CommentConstrctor';
 import {concatAll, concatMap, mergeMap, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {ComponentBaseComponent} from '../../../../shared/components/component-base/component-base.component';
 import {Router} from '@angular/router';
+import {MovieDetailsService} from '../../../../shared/services/movie-details.service';
 
 @Component({
   selector: 'app-comment-section',
@@ -29,6 +28,7 @@ import {Router} from '@angular/router';
 export class CommentSectionComponent extends ComponentBaseComponent implements OnInit {
   @Input() movieId: string;
   @Input() movieName: string;
+  @Input() partialData: DiscoveredMoviePartialData;
   @Input() genreTypes: GenreTypes[] = [];
   @Input() reviews: FirebaseMovieDetailReview[] = [];
 
@@ -46,6 +46,7 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
               private movieReviewService: MovieReviewService,
               private userManagementService: UserManagementService,
               private router: Router,
+              private movieDetailService: MovieDetailsService,
               private ionicDialog: IonicDialogService) {
     super();
   }
@@ -77,6 +78,8 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     ).pipe(takeUntil(this.destroy$)).subscribe();
 
     this.toggleShowReview();
+
+    this.movieDetailService.updateMovieRatings(this.movieId, ratings, this.partialData);
   }
 
   async addCommentOnReview(comment: string, review: FirebaseMovieDetailReview) {

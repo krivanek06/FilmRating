@@ -1,12 +1,15 @@
 <ion-grid>
   <ion-row>
     <!-- filter sm- -->
-    <ion-col size="12"  class="ion-hide-md-up">
+    <ion-col size="12" class="ion-hide-md-up">
       <div class="ion-padding">
         <app-filter-container
           [selectedGenreTypes]="selectedGenreTypes"
           [sortBy]="sortBy"
           [genreTypes]="genreTypes$ | async"
+          [advanceSearch]="advanceSearchToggle"
+          (advanceSearchEmitter)="advanceSearchEmitter($event)"
+          (advanceSearchToggleEmitter)="advanceSearchToggleEmitter($event)"
           (removeSelectedGenderType)="removeSelectedGenderType($event)"
           (sortByEmitter)="changeSorting($event)"
           (selectedGenreTypesEmitter)="filterByGenreTypes($event)">
@@ -16,11 +19,19 @@
 
     <!-- discovered movies -->
     <ion-col size="12" size-md="7.5" push="0" push-md="0.25">
-      <app-film-cards-container
-        (changePageNumberEmitter)="changePage($event)"
-        [pageNumber]="pageNumber"
-        [discoveredMovies]="discoveredMovies$ | async">
-      </app-film-cards-container>
+      <!-- movie data from API -->
+      <ng-container *ngIf="!advanceSearchToggle">
+        <app-film-cards-container
+          (changePageNumberEmitter)="changePage($event)"
+          [pageNumber]="pageNumber"
+          [discoveredMovies]="discoveredMovies$ | async">
+        </app-film-cards-container>
+      </ng-container>
+
+      <!-- movies from firebase -->
+      <div *ngIf="advanceSearchToggle" class="ion-padding">
+        <app-film-cards [discoveredMovies]="firebaseMovies$ | async | slice: 0: 18"></app-film-cards>
+      </div>
     </ion-col>
 
     <!-- filter sm+ -->
@@ -30,6 +41,9 @@
           [selectedGenreTypes]="selectedGenreTypes"
           [sortBy]="sortBy"
           [genreTypes]="genreTypes$ | async"
+          [advanceSearch]="advanceSearchToggle"
+          (advanceSearchEmitter)="advanceSearchEmitter($event)"
+          (advanceSearchToggleEmitter)="advanceSearchToggleEmitter($event)"
           (removeSelectedGenderType)="removeSelectedGenderType($event)"
           (sortByEmitter)="changeSorting($event)"
           (selectedGenreTypesEmitter)="filterByGenreTypes($event)">

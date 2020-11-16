@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-range-rating',
@@ -6,6 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./range-rating.component.scss']
 })
 export class RangeRatingComponent implements OnInit {
+  @Output() valueEmitter: EventEmitter<number> = new EventEmitter<number>();
   @Input() name: string;
 
   value = 50;
@@ -20,4 +21,8 @@ export class RangeRatingComponent implements OnInit {
     this.value = 50;
   }
 
+  change(change: any) {
+    this.value = change;
+    this.valueEmitter.emit(this.value);
+  }
 }

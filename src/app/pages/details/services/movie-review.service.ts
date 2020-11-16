@@ -10,6 +10,8 @@ import {firestore} from 'firebase';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AuthService} from '../../../shared/services/auth.service';
 import {UserManagementService} from '../../../shared/services/user-management.service';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,23 @@ export class MovieReviewService {
   constructor(private angularFirestore: AngularFirestore,
               private userManagementService: UserManagementService,
               private authService: AuthService) {
+  }
+
+  geReviewsForMovie(movieId: string): Observable<FirebaseMovieDetailReview[]> {
+    return this.angularFirestore
+      .collection(this.MOVIE_DETAILS_COLLECTION)
+      .doc(movieId)
+      .collection<FirebaseMovieDetailReview>(this.MOVIE_REVIEW_COLLECTION)
+      .snapshotChanges()
+      .pipe(
+        map(res => res.map(data => {
+          const review: FirebaseMovieDetailReview = {
+            ...data.payload.doc.data() as FirebaseMovieDetailReview,
+            id: data.payload.doc.id
+          };
+          return review;
+        }))
+      );
   }
 
   async addReviewForMovie(movieId: string, ratings: FirebaseMovieDetailRating[], review: string): Promise<void> {

@@ -39,6 +39,10 @@
   color: #{$gold};
 }
 
+.highlight-reverse {
+  color: #{$secondary-word};
+}
+
 .secondary-text {
   color: #{$secondary-word};
   font-size: 13px;

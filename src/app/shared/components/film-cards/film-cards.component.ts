@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DiscoveredMovie} from '../../../api/film-data.model';
+import {DiscoveredMovie, DiscoveredMoviePartialData} from '../../../api/film-data.model';
 import {Router} from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
     styleUrls: ['./film-cards.component.scss']
 })
 export class FilmCardsComponent implements OnInit {
-    @Input() discoveredMovies: DiscoveredMovie[];
+    @Input() discoveredMovies: DiscoveredMoviePartialData[];
 
     constructor(private route: Router) {
     }
@@ -16,7 +16,7 @@ export class FilmCardsComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    showDetails(movie: DiscoveredMovie) {
+    showDetails(movie: DiscoveredMoviePartialData) {
         this.route.navigate([`menu/details/${movie.id}`]);
     }
 

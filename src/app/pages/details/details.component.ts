@@ -4,10 +4,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {switchMap, takeUntil, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {MovieDetails, MovieImages, MovieTrailer} from '../../api/film-data.model';
-import {MovieDetailsService} from './services/movie-details.service';
-import {FirebaseMovieDetailReview, FirebaseMovieDetails} from './components/comment-section/models/comment-section.model';
+import {FirebaseMovieDetailReview} from './components/comment-section/models/comment-section.model';
 import {ComponentBaseComponent} from '../../shared/components/component-base/component-base.component';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {MovieReviewService} from './services/movie-review.service';
 
 @Component({
   selector: 'app-details',
@@ -20,11 +19,8 @@ export class DetailsComponent extends ComponentBaseComponent implements OnInit {
   firebaseMovieReviews: FirebaseMovieDetailReview[];
 
 
-  firebaseMovieDetails$: Observable<FirebaseMovieDetails>;
-
-
   constructor(private filmDataService: FilmDataService,
-              private movieDetailsService: MovieDetailsService,
+              private movieReviewService: MovieReviewService,
               private route: ActivatedRoute) {
     super();
   }
@@ -37,7 +33,7 @@ export class DetailsComponent extends ComponentBaseComponent implements OnInit {
 
       this.movieDetails$ = this.filmDataService.getMovieDetails(data.params.id);
 
-      this.movieDetailsService.geReviewsForMovie(this.movieId).pipe(takeUntil(this.destroy$)).subscribe(res => {
+      this.movieReviewService.geReviewsForMovie(this.movieId).pipe(takeUntil(this.destroy$)).subscribe(res => {
         this.firebaseMovieReviews = res;
       });
 

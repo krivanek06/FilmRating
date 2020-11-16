@@ -1,11 +1,10 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FilmDataService} from '../../../../api/film-data.service';
-import {MovieDetailsService} from '../../services/movie-details.service';
 import {ActivatedRoute} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {Observable} from 'rxjs';
 import {MovieDetails, MovieImages} from '../../../../api/film-data.model';
-import {FirebaseMovieDetailReview, FirebaseMovieDetails} from '../comment-section/models/comment-section.model';
+import {FirebaseMovieDetailReview} from '../comment-section/models/comment-section.model';
 import {IonicDialogService} from '../../../../shared/services/ionic-dialog.service';
 
 
@@ -23,7 +22,6 @@ export class MovieIntroComponent implements OnInit, OnChanges {
   safeSrc: SafeResourceUrl;
 
   constructor(private filmDataService: FilmDataService,
-              private movieDetailsService: MovieDetailsService,
               private ionicDialogService: IonicDialogService,
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer) {

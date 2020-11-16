@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FilmDataService} from '../../api/film-data.service';
 import {ActivatedRoute} from '@angular/router';
 import {filter, find, map, shareReplay, switchMap, takeUntil} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {DiscoveredMoviesWrapper, GenreTypes, MovieDetails} from '../../api/film-data.model';
+import {DiscoveredMoviePartialData, DiscoveredMoviesWrapper, GenreTypes, MovieDetails} from '../../api/film-data.model';
 import {ComponentBaseComponent} from '../../shared/components/component-base/component-base.component';
 import {CategorySort} from './models/filter.model';
+import {FirebaseMovieDetailRating, FirebaseMovieDetails} from '../details/components/comment-section/models/comment-section.model';
+import {MovieDetailsService} from '../../shared/services/movie-details.service';
 
 @Component({
   selector: 'app-search',
@@ -14,6 +16,7 @@ import {CategorySort} from './models/filter.model';
 })
 export class SearchComponent extends ComponentBaseComponent implements OnInit {
   discoveredMovies$: Observable<DiscoveredMoviesWrapper>;
+  firebaseMovies$: Observable<DiscoveredMoviePartialData[]>;
   genreTypes$: Observable<GenreTypes[]>;
 
   selectedGenreTypes: GenreTypes[] = [];    // user select what type of films want to watch -> action, comedy, etc.
@@ -22,15 +25,15 @@ export class SearchComponent extends ComponentBaseComponent implements OnInit {
     displayName: 'Popularity descending',
     sortName: 'popularity.desc'
   };
+  advanceSearchToggle = false;
 
   constructor(private filmDataService: FilmDataService,
+              private movieDetailService: MovieDetailsService,
               private route: ActivatedRoute) {
     super();
   }
 
   ngOnInit(): void {
-
-
     this.genreTypes$ = this.filmDataService.getGenresTypes().pipe(shareReplay());
     this.getGenreIdFromQueryParam();
     this.searchMovies();
@@ -54,6 +57,20 @@ export class SearchComponent extends ComponentBaseComponent implements OnInit {
   changeSorting(sortName: CategorySort) {
     this.sortBy = sortName;
     this.searchMovies();
+  }
+
+  advanceSearchToggleEmitter(toggle: boolean) {
+    if (toggle === this.advanceSearchToggle) {
+      return;
+    }
+    this.advanceSearchToggle = !this.advanceSearchToggle;
+  }
+
+  advanceSearchEmitter(data: FirebaseMovieDetailRating[]) {
+    console.log('advance search', data);
+    this.firebaseMovies$ = this.movieDetailService.searchMoviesByRatings(data).pipe(
+      map(x => x.map(e => e.movieData))
+    );
   }
 
   private searchMovies() {

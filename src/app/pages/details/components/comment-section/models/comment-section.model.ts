@@ -1,7 +1,10 @@
 import {IUserPartialData} from '../../../../../shared/models/IUser.model';
+import {DiscoveredMovie, DiscoveredMoviePartialData} from '../../../../../api/film-data.model';
 
 export interface FirebaseMovieDetails {
-  id: string;
+  id?: string;
+  averageRatings?: FirebaseMovieDetailRatingAverage[];
+  movieData?: DiscoveredMoviePartialData;
 }
 
 export interface FirebaseMovieDetailComment {
@@ -13,7 +16,7 @@ export interface FirebaseMovieDetailComment {
   dislikes?: string[];
 }
 
-export interface FirebaseMovieDetailReview extends  FirebaseMovieDetailComment{
+export interface FirebaseMovieDetailReview extends FirebaseMovieDetailComment {
   ratings?: FirebaseMovieDetailRating[];
   comments?: FirebaseMovieDetailComment[];
 }
@@ -23,5 +26,13 @@ export interface FirebaseMovieDetailRating {
   type: string;
 }
 
+export interface FirebaseMovieDetailRatingAverage extends FirebaseMovieDetailRating {
+  numberOfUsers: number;
+}
+
+
+export const joinName = (type: string) => {
+  return type.split(' ').join('_');
+};
 
 
