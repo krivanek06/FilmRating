@@ -7,7 +7,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import {RouterModule} from '@angular/router';
-import {AppMaterialModule} from './appMaterial.module';
 import {FilmCardsComponent} from './components/film-cards/film-cards.component';
 import {HeaderComponent} from './components/header/header.component';
 import {NgCircleProgressModule} from 'ng-circle-progress';
@@ -19,6 +18,9 @@ import {NumberFormatterPipe} from './pipes/numberFormatter.pipe';
 import {GenericCardComponent} from './components/generic-card/generic-card.component';
 import {FilmRatingChartComponent} from './components/film-rating-chart/film-rating-chart.component';
 import {ChartsModule} from 'ng2-charts';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import {ChartsModule} from 'ng2-charts';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    AppMaterialModule,
+    MatInputModule,
+    MatTooltipModule,
+    MatFormFieldModule,
     ChartsModule,
     IonicModule,
     NgCircleProgressModule.forRoot({
@@ -75,7 +79,9 @@ import {ChartsModule} from 'ng2-charts';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    AppMaterialModule,
+    MatInputModule,
+    MatTooltipModule,
+    MatFormFieldModule,
     IonicModule,
     FilmCardsComponent,
     HeaderComponent,
