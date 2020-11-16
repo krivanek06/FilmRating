@@ -9,10 +9,11 @@
 
   #registrationButton {
     --background: #{$gold-darker-1};
+    --color: #{$background-dark-1};
   }
 
   ion-header {
-    background: #{$background-dark};
+    background: #{$background-dark-1};
   }
 
   ion-avatar {
@@ -54,7 +55,14 @@
   .search-result-item {
     padding-bottom: 3px;
     padding-top: 3px;
-    background: #{$background};
+    background: #{$background-dark-1};
+    cursor: pointer;
+    transition: All 0.4s ease-out;
+
+    &:hover {
+      background: #{$gold-darker-1};
+      --background: #{$gold-darker-1};
+    }
   }
 
   .logo-img {
@@ -83,6 +91,14 @@
     padding-right: 16px;
   }
 
+  .big-search-bar{
+   // width: 60%;
+    --background: #{$background} !important;
+   /* @media (max-width: 1000px) {
+      width: 100%;
+    }*/
+  }
+
   .dot {
     height: 22px;
     width: 22px;
@@ -97,6 +113,12 @@
     left: 5px;
     /* top: 7px; */
     z-index: 100;
+  }
+
+  ion-chip{
+    @media (max-width: 767px) {
+      float: right;
+    }
   }
 
   @media (max-width: 1000px) {
@@ -127,9 +149,6 @@
       font-size: 23px;
       padding-left: 6px;
       margin-left: 0;
-    }
-    .header-info-container {
-      float: right;
     }
   }
 

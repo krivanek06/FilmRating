@@ -335,12 +335,16 @@
     ion-header {
       ion-toolbar {
         /* --background: linear-gradient(180deg, rgb(1, 18, 49) 0%, rgb(1, 0, 60) 55%, rgb(3, 1, 75) 100%);*/
-        --background: #{$background} !important;
-        --color: #{$default-word} !important;
+        --background: #{$background-dark-1};
+        --color: #{$default-word};
       }
 
       ion-item {
-        --background: #{$background};
+        --background: #{$background-dark-1};
+        background: #{$background-dark-1};
+      }
+      ion-chip{
+       // --background: #{$background};
       }
     }
 
@@ -365,8 +369,8 @@
         }
 
         ion-item {
-          --background: #{$background} !important;
-          --color: #{$default-word} !important;
+          --background: #{$background};
+          --color: #{$default-word};
         }
       }
     }

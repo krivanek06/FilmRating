@@ -3,21 +3,34 @@
   <ion-back-button [text]="'Back'" [icon]="'arrow-back'" [defaultHref]="'/menu/search'"></ion-back-button>
 </ion-buttons>
 
-<ion-grid>
-  <ion-row *ngIf="movieDetails$ | async as movieDetails">
-    <!-- show details about movie -->
-    <ion-col size="12" size-md="6" size-xl="3.5" push-xl="0.25" push="0" class="dividing-border">
-      <app-movie-details [movieDetails]="movieDetails"
-                         [firebaseMovieReviews]="firebaseMovieReviews">
-      </app-movie-details>
-    </ion-col>
+<ng-container *ngIf="movieDetails$ | async as movieDetails">
 
-    <!-- show reviews and comments -->
-    <ion-col size="12" size-md="6" size-xl="7" push-xl="0.5" push="0">
-      <app-movie-intro [movieId]="movieId"
-                       [movieDetails]="movieDetails"
-                       [firebaseMovieReviews]="firebaseMovieReviews">
-      </app-movie-intro>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  <ion-item class="ion-padding-horizontal">
+    <ion-label style="font-size: 23px;">
+      <ion-text class="ion-margin-end highlight">{{ movieDetails?.title }} ({{movieDetails?.release_date | date: 'yyyy'}})</ion-text>
+      <ion-text>  {{ movieDetails?.vote_average }} </ion-text>
+      <ion-icon name="star" [style.color]="'#ff9900'"></ion-icon>
+    </ion-label>
+  </ion-item>
+
+
+
+  <ion-grid>
+    <ion-row>
+      <!-- show details about movie -->
+      <ion-col size="12" size-md="6" size-xl="3.5" push-xl="0.25" push="0" class="dividing-border">
+        <app-movie-details [movieDetails]="movieDetails"
+                           [firebaseMovieReviews]="firebaseMovieReviews">
+        </app-movie-details>
+      </ion-col>
+
+      <!-- show reviews and comments -->
+      <ion-col size="12" size-md="6" size-xl="7" push-xl="0.5" push="0">
+        <app-movie-intro [movieId]="movieId"
+                         [movieDetails]="movieDetails"
+                         [firebaseMovieReviews]="firebaseMovieReviews">
+        </app-movie-intro>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-container>

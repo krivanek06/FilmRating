@@ -10,6 +10,13 @@
     //--background: #{$background-card-review};
   }
 
+  .cancel-button {
+    width: 200px;
+    height: 45px;
+    --background: #{$light-red};
+    --color: #{$dark-word};
+  }
+
   .dividing-border {
     border-top: 1px solid #666666;
     margin-top: 40px;
@@ -21,5 +28,9 @@
     @media (max-width: 600px) {
       width: 95%;
     }
+  }
+
+  .range-selector-wrapper{
+    --background: #{$background-card-review};
   }
 }

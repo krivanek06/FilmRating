@@ -1,14 +1,22 @@
+@import "../../shared/style/main";
+@import "../../../theme/custom-variable";
+
 :host {
-  ion-row {
-    padding: 4px;
+  h2 {
+    color: #{$gold};
   }
-  h1 {
-    color: orange;
+  .section-divider{
+    margin-top: 40px;
   }
   .dashboard-page-container{
-    width: 85%;
+    width: 80%;
     padding: 16px;
     margin: auto;
+    @media (max-width: 1200px) {
+      width: 90%;
+      padding: 6px;
+    }
+
     @media (max-width: 600px) {
       width: 100%;
       padding: 0;
@@ -16,6 +24,13 @@
   }
   #searchButton {
     float: right;
-    --background: #ca7a00;
+    --background: #{$gold-darker-1};
+    --color: #{$dark-word};
+  }
+
+  .main-info-container{
+    display: flex;
+    justify-content: space-between;
+    flex: auto;
   }
 }

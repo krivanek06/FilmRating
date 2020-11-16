@@ -2,54 +2,64 @@
 
   <ion-item class="header-info-container">
     <!-- logo -->
-    <ion-label class="logo-container ion-hide-sm-down clickable" (click)="redirectToDashboard()">
+    <ion-label class="logo-container  clickable" (click)="redirectToDashboard()">
       <ion-img src="../../../assets/logo.png" alt="app-logo" class="logo-img "></ion-img>
     </ion-label>
 
     <!-- search -->
     <ion-label class="search-container ion-hide-sm-down">
       <ion-searchbar
+        class="big-search-bar"
         #mySearchbar
+        [value]="searchMovieValue"
         [debounce]="500"
+        (ionClear)="cancelSearch()"
         (ionChange)="searchForMovie($event)">
       </ion-searchbar>
     </ion-label>
 
 
-    <ng-container *ngIf="user$ | async as user; else showLoginButton">
+    <ion-label *ngIf="user$ | async as user; else showLoginButton">
       <!-- notifications -->
-       <span
-         matTooltipPosition="right"
-         matTooltip="Notifications"
-         matTooltipClass="custom-mat-tooltip"
-         matTooltipShowDelay="100"
-         style="position: relative">
+      <span
+        matTooltipPosition="right"
+        matTooltip="Notifications"
+        matTooltipClass="custom-mat-tooltip"
+        matTooltipShowDelay="100"
+        style="position: relative">
         <span class="dot" *ngIf="unreadNotifications$ | async as unreadNotifications">
           {{ unreadNotifications }}
         </span>
 
         </span>
+
+      <ion-button color='danger' shape="round" fill="outline"
+                  class="custom-buttons clickable ion-hide-md-down ion-float-right"
+                  (click)="signOut()">
+        Logout
+      </ion-button>
       <!-- user chip -->
-      <ion-chip class="ion-padding clickable" (click)="redirectToProfile()">
+      <ion-chip class="ion-padding clickable ion-float-right" (click)="redirectToProfile()">
         <ion-avatar class="ion-margin-end">
           <ion-img [src]="user?.photoUrl" alt="user image"></ion-img>
         </ion-avatar>
         <ion-label>{{ user.displayName }}</ion-label>
       </ion-chip>
-      <ion-button color='danger' shape="round" fill="outline" class="custom-buttons clickable" (click)="signOut()">
-        Logout
-      </ion-button>
-    </ng-container>
+
+    </ion-label>
 
     <!-- authentication button -->
     <ng-template #showLoginButton>
-      <ion-button id="loginButton" shape="round" fill="outline" class="custom-buttons clickable" (click)="redirectToLogin('login')">
-        Login
-      </ion-button>
-      <ion-button id='registrationButton' class="custom-buttons ion-hide-sm-down clickable"
-                  (click)="redirectToLogin('registration')">
-        Register
-      </ion-button>
+      <ion-label>
+        <ion-button id='registrationButton' class="custom-buttons clickable ion-float-right ion-hide-sm-down"
+                    (click)="redirectToLogin('registration')">
+          Register
+        </ion-button>
+        <ion-button id="loginButton" shape="round" fill="outline" class="custom-buttons clickable ion-float-right"
+                    (click)="redirectToLogin('login')">
+          Login
+        </ion-button>
+      </ion-label>
     </ng-template>
   </ion-item>
 
@@ -57,7 +67,9 @@
     <ion-label>
       <ion-searchbar
         #mySearchbar
+        [value]="searchMovieValue"
         [debounce]="500"
+        (ionClear)="cancelSearch()"
         (ionChange)="searchForMovie($event)">
       </ion-searchbar>
     </ion-label>
@@ -67,14 +79,15 @@
   <ng-container *ngIf="searchedMovies$ | async as searchedMovies">
     <ion-item *ngFor="let movie of searchedMovies.results | slice:0:5;"
               (click)="redirectToDetails(movie.id)"
-              class="search-result-item clickable">
-        <ion-label class="poster-image-container">
-          <ion-img [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="poster image" class="poster-image"></ion-img>
-        </ion-label>
-        <ion-label class="ion-padding-horizontal">
-          <div>{{ movie.title }}</div>
-          <div>{{ movie.release_date | date: 'dd.MM.yyyy'}}</div>
-        </ion-label>
+              class="search-result-item">
+      <ion-label class="poster-image-container">
+        <ion-img [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="poster image"
+                 class="poster-image"></ion-img>
+      </ion-label>
+      <ion-label class="ion-padding-horizontal">
+        <div>{{ movie.title }}</div>
+        <div>{{ movie.release_date | date: 'dd.MM.yyyy'}}</div>
+      </ion-label>
     </ion-item>
   </ng-container>
 
