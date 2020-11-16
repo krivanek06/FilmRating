@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FilmDataService} from '../../api/film-data.service';
 import {ActivatedRoute} from '@angular/router';
-import {switchMap, takeUntil} from 'rxjs/operators';
+import {filter, find, map, shareReplay, switchMap, takeUntil} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {DiscoveredMoviesWrapper, GenreTypes, MovieDetails} from '../../api/film-data.model';
 import {ComponentBaseComponent} from '../../shared/components/component-base/component-base.component';
@@ -29,11 +29,11 @@ export class SearchComponent extends ComponentBaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+    this.genreTypes$ = this.filmDataService.getGenresTypes().pipe(shareReplay());
     this.getGenreIdFromQueryParam();
-
     this.searchMovies();
-
-    this.genreTypes$ = this.filmDataService.getGenresTypes();
   }
 
   changePage(pageNumber: number) {
@@ -60,13 +60,19 @@ export class SearchComponent extends ComponentBaseComponent implements OnInit {
     this.discoveredMovies$ = this.filmDataService.discoverMovies(this.selectedGenreTypes, this.pageNumber, this.sortBy);
   }
 
-  // TODO after chosing category from dashboard -> should apper in queryparam
+
   private getGenreIdFromQueryParam() {
     this.route.queryParamMap.pipe(
+      map(data => Number(data.get('genreID'))),
+      filter(x => !!x),
+      switchMap(id => this.genreTypes$.pipe(
+        map(type => type.find(e => e.id === id))
+      )),
       takeUntil(this.destroy$)
-    ).subscribe(data => {
-      const genresId = data.get('genresId');
-      console.log(genresId);
+    ).subscribe(x => {
+      this.selectedGenreTypes = [...this.selectedGenreTypes, x];
+      this.searchMovies();
     });
+
   }
 }

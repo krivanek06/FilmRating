@@ -30,6 +30,7 @@
           [selectedGenreTypes]="selectedGenreTypes"
           [sortBy]="sortBy"
           [genreTypes]="genreTypes$ | async"
+          (removeSelectedGenderType)="removeSelectedGenderType($event)"
           (sortByEmitter)="changeSorting($event)"
           (selectedGenreTypesEmitter)="filterByGenreTypes($event)">
         </app-filter-container>

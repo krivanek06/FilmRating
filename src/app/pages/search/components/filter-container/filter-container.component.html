@@ -16,7 +16,7 @@
 
   <div style="width: 80%; margin: auto">
     <ion-item *ngFor="let selected of selectedGenreTypes" class="ion-no-padding">
-      <ion-label>{{ selected.name  }}</ion-label>
+      <ion-label class="secondary-text">{{ selected.name  }}</ion-label>
       <ion-icon name="close-circle" color="danger" class="clickable"
                 (click)="removeSelectedGender(selected)"></ion-icon>
     </ion-item>
@@ -42,8 +42,8 @@
   <div style="width: 80%">
     <ion-item class="ion-no-padding">
       <ion-label class="primary-text">
-        <ion-text class="highlight">Sorted by:</ion-text>
-        {{ sortBy.displayName  }}
+        <ion-text class="highlight" style="margin-right: 5px">Sorted by:</ion-text>
+        <ion-text class="secondary-text">{{ sortBy.displayName  }}</ion-text>
       </ion-label>
     </ion-item>
   </div>
