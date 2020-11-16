@@ -1,7 +1,5 @@
-<div>
-  <ul class="genres">
-    <li *ngFor="let genre of genreTypes">
-      <button (click)="redirectToSearch(genre.id)" class="badge">{{genre.name}}</button>
-    </li>
-  </ul>
+<div class="category-container">
+  <div *ngFor="let genre of genreTypes" class="ion-padding">
+    <div (click)="redirectToSearch(genre.id)" class="highlight-on-hover">{{genre.name}}</div>
+  </div>
 </div>

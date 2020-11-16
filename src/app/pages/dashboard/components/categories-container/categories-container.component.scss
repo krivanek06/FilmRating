@@ -1,13 +1,9 @@
+@import "../../../../shared/style/main";
+
+
 :host {
-  li {
-    display: inline;
-    padding: 10px;
-    font-size: medium;
-    align-items: center;
-  }
-  button{
-    font-size: medium;
-    background: #222222;
-    color: white;
+  .category-container{
+    display: flex;
+    flex-flow: wrap;
   }
 }

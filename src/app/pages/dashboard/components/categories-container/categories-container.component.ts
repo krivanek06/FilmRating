@@ -15,7 +15,6 @@ export class CategoriesContainerComponent implements OnInit {
   }
 
   redirectToSearch(genreID: number) {
-    console.log(genreID);
-    this.router.navigate([`menu/search?genresId=${genreID}`]);
+    this.router.navigate([`menu/search`], {queryParams: {genreID}});
   }
 }

@@ -16,6 +16,17 @@
   }
 }
 
+.highlight-on-hover{
+  cursor: pointer;
+  transition: All 0.4s ease-out;
+
+  &:hover {
+    transform: scale(0.94);
+    color: #{$gold};
+  }
+}
+
+
 .wrap-white-space {
   white-space: pre-wrap;
 }
