@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GenreTypes} from '../../../../api/film-data.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-categories-container',
@@ -8,9 +9,13 @@ import {GenreTypes} from '../../../../api/film-data.model';
 })
 export class CategoriesContainerComponent implements OnInit {
   @Input() genreTypes: GenreTypes[] = [];
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  redirectToSearch(genreID: number) {
+    console.log(genreID);
+    this.router.navigate([`menu/search?genresId=${genreID}`]);
+  }
 }

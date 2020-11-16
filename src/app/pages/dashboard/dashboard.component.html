@@ -1,4 +1,8 @@
 <div class="dashboard-page-container">
+  <ion-button id='searchButton' class="custom-buttons clickable"
+              (click)="redirectToSearch()">
+    Search Menu
+  </ion-button>
   <ion-grid>
     <h1>Trending Now</h1>
     <ion-row>
@@ -12,6 +16,7 @@
         [discoveredMovies]="upcomingMovies$ | async">
       </app-film-cards>
     </ion-row>
+    <h1>Categories</h1>
     <ion-row>
       <app-categories-container
         [genreTypes]="genreTypes$ | async">

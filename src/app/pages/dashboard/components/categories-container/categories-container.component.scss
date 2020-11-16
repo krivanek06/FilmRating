@@ -1,17 +1,13 @@
 :host {
-  ion-row {
-    padding: 4px;
-  }
-  h1 {
-    color: orange;
-  }
   li {
     display: inline;
     padding: 10px;
-  }
-  .next-button {
-    display: flex;
-    justify-content: flex-end;
+    font-size: medium;
     align-items: center;
+  }
+  button{
+    font-size: medium;
+    background: #222222;
+    color: white;
   }
 }

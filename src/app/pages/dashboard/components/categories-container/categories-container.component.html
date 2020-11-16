@@ -1,8 +1,7 @@
 <div>
-  <h1>Categories</h1>
   <ul class="genres">
     <li *ngFor="let genre of genreTypes">
-      <span class="badge">{{genre.name}}</span>
+      <button (click)="redirectToSearch(genre.id)" class="badge">{{genre.name}}</button>
     </li>
   </ul>
 </div>
