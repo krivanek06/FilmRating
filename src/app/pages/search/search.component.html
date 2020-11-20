@@ -30,7 +30,17 @@
 
       <!-- movies from firebase -->
       <div *ngIf="advanceSearchToggle" class="ion-padding">
-        <app-film-cards [discoveredMovies]="firebaseMovies$ | async | slice: 0: 18"></app-film-cards>
+        <ng-container *ngIf="firebaseMovies$ | async as firebaseMovies">
+          <app-film-cards *ngIf="firebaseMovies && firebaseMovies.length !== 0; else noResult"
+            [discoveredMovies]="firebaseMovies | slice: 0: 18">
+          </app-film-cards>
+        </ng-container>
+
+        <ng-template #noResult>
+          <div class="secondary-text">
+            no result has been found
+          </div>
+        </ng-template>
       </div>
     </ion-col>
 

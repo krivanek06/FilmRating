@@ -23,6 +23,7 @@ export const requiredGenreTypeRating = {
 
 
 export const genreTypeRatingAll = [
+  'Overall rating',
   'Level of action',
   'Level of adventure',
   'Animation quality',
@@ -33,5 +34,7 @@ export const genreTypeRatingAll = [
   'Production quality',
   'Level of fear',
   'Quality of songs',
-  'Level of mystery'
+  'Level of mystery',
+  'Entertainment',
+  'Story'
 ];

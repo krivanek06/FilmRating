@@ -20,26 +20,26 @@
 
 
     <ion-label *ngIf="user$ | async as user; else showLoginButton">
-      <!-- notifications -->
-      <span
-        matTooltipPosition="right"
-        matTooltip="Notifications"
-        matTooltipClass="custom-mat-tooltip"
-        matTooltipShowDelay="100"
-        style="position: relative">
-        <span class="dot" *ngIf="unreadNotifications$ | async as unreadNotifications">
-          {{ unreadNotifications }}
-        </span>
-
-        </span>
-
       <ion-button color='danger' shape="round" fill="outline"
                   class="custom-buttons clickable ion-hide-md-down ion-float-right"
                   (click)="signOut()">
         Logout
       </ion-button>
+
+
       <!-- user chip -->
       <ion-chip class="ion-padding clickable ion-float-right" (click)="redirectToProfile()">
+        <!-- notifications -->
+        <span matTooltipPosition="right"
+              matTooltip="Notifications"
+              matTooltipClass="custom-mat-tooltip"
+              matTooltipShowDelay="100"
+              style="position: relative">
+            <span class="dot" *ngIf="unreadNotifications$ | async as unreadNotifications">
+              {{ unreadNotifications }}
+            </span>
+        </span>
+        <!-- image -->
         <ion-avatar class="ion-margin-end">
           <ion-img [src]="user?.photoUrl" alt="user image"></ion-img>
         </ion-avatar>

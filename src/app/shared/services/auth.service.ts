@@ -77,7 +77,7 @@ export class AuthService {
   private getUserFromFirestore(uid: string) {
     this.firestore.collection<IUser>('users').doc(uid).valueChanges()
       .subscribe((savedUser: IUser) => {
-        console.log('savedUser', savedUser);
+        // console.log('savedUser', savedUser);
         localStorage.setItem(this.USER_KEY, JSON.stringify(savedUser));
         this.userSubject$.next(savedUser);
       });

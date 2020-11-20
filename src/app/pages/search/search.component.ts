@@ -1,12 +1,16 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FilmDataService} from '../../api/film-data.service';
 import {ActivatedRoute} from '@angular/router';
-import {filter, find, map, shareReplay, switchMap, takeUntil} from 'rxjs/operators';
+import {filter, find, flatMap, map, shareReplay, switchMap, takeUntil, tap, toArray} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {DiscoveredMoviePartialData, DiscoveredMoviesWrapper, GenreTypes, MovieDetails} from '../../api/film-data.model';
 import {ComponentBaseComponent} from '../../shared/components/component-base/component-base.component';
 import {CategorySort} from './models/filter.model';
-import {FirebaseMovieDetailRating, FirebaseMovieDetails} from '../details/components/comment-section/models/comment-section.model';
+import {
+  FirebaseMovieDetailRating,
+  FirebaseMovieDetails,
+  joinName
+} from '../details/components/comment-section/models/comment-section.model';
 import {MovieDetailsService} from '../../shared/services/movie-details.service';
 
 @Component({
@@ -67,9 +71,19 @@ export class SearchComponent extends ComponentBaseComponent implements OnInit {
   }
 
   advanceSearchEmitter(data: FirebaseMovieDetailRating[]) {
-    console.log('advance search', data);
+    data = data.map(d => {
+      return {type: joinName(d.type), rate: d.rate};
+    });
+    // console.log('advance search', data);
+
     this.firebaseMovies$ = this.movieDetailService.searchMoviesByRatings(data).pipe(
-      map(x => x.map(e => e.movieData))
+      flatMap(x => x),
+      filter(x => {
+        const a = data.map(e => x[e.type] > e.rate).includes(false);
+        return !a;
+      }),
+      map(x => x.movieData),
+      toArray()
     );
   }
 

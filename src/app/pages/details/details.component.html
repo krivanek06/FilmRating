@@ -1,12 +1,12 @@
 <!-- back button -->
-<ion-buttons slot="start" class="ion-hide-sm-up">
+<ion-buttons slot="start" class="ion-hide-sm-up ion-margin-bottom">
   <ion-back-button [text]="'Back'" [icon]="'arrow-back'" [defaultHref]="'/menu/search'"></ion-back-button>
 </ion-buttons>
 
 <ng-container *ngIf="movieDetails$ | async as movieDetails">
 
-  <ion-item class="ion-padding-horizontal">
-    <ion-label style="font-size: 23px;">
+  <ion-item class="ion-padding-horizontal" style="display: contents;">
+    <ion-label style="font-size: 23px; white-space: pre-wrap;">
       <ion-text class="ion-margin-end highlight">{{ movieDetails?.title }} ({{movieDetails?.release_date | date: 'yyyy'}})</ion-text>
       <ion-text>  {{ movieDetails?.vote_average }} </ion-text>
       <ion-icon name="star" [style.color]="'#ff9900'"></ion-icon>
@@ -15,7 +15,7 @@
 
 
 
-  <ion-grid>
+  <ion-grid class="ion-margin-top">
     <ion-row>
       <!-- show details about movie -->
       <ion-col size="12" size-md="6" size-xl="3.5" push-xl="0.25" push="0" class="dividing-border">

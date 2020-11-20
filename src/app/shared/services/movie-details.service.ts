@@ -9,6 +9,7 @@ import {
 import {DiscoveredMovie, DiscoveredMoviePartialData} from '../../api/film-data.model';
 import {CollectionReference} from '@angular/fire/firestore/interfaces';
 import {Query, QueryFn} from '@angular/fire/firestore';
+import {filter, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -31,12 +32,15 @@ export class MovieDetailsService {
       .collection(this.MOVIE_DETAILS_COLLECTION, ref => {
         let query: Query = ref;
 
-        ratings.forEach(rating => {
+        if (ratings.length > 0) {
+          query = query.where(ratings[0].type, '>=', ratings[0].rate);
+        }
+        /*ratings.forEach(rating => {
           query = query.where(joinName(rating.type), '>=', rating.rate);
-        });
+        });*/
 
         return query;
-      }).valueChanges() as Observable<FirebaseMovieDetails[]>;
+      }).get().pipe(map(r => r.docs.map(x => x.data()))) as Observable<FirebaseMovieDetails[]>;
   }
 
   async updateMovieRatings(movieId: string, ratings: FirebaseMovieDetailRating[], movieData: DiscoveredMoviePartialData): Promise<void> {
