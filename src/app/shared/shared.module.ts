@@ -21,6 +21,7 @@ import {ChartsModule} from 'ng2-charts';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {MatInputModule} from '@angular/material/input';
     FilmPosterCardComponent,
     NumberFormatterPipe,
     GenericCardComponent,
-    FilmRatingChartComponent
+    FilmRatingChartComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -89,7 +91,8 @@ import {MatInputModule} from '@angular/material/input';
     FilmPosterCardComponent,
     NumberFormatterPipe,
     GenericCardComponent,
-    FilmRatingChartComponent
+    FilmRatingChartComponent,
+    FooterComponent
   ]
 })
 export class SharedModule { }
