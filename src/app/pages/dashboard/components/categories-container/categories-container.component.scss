@@ -2,8 +2,15 @@
 
 
 :host {
-  .category-container{
-    display: flex;
-    flex-flow: wrap;
+  .box-item{
+    transition: All 0.4s ease-out;
+    text-align: center;
+    &:hover {
+      border-radius: 10px;
+      color: #{$gold};
+      -webkit-box-shadow: 1px 3px 12px 1px rgba(0,0,0,0.75);
+      -moz-box-shadow: 1px 3px 12px 1px rgba(0,0,0,0.75);
+      box-shadow: 1px 3px 12px 1px rgba(0,0,0,0.75);
+    }
   }
 }

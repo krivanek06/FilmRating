@@ -1,21 +1,22 @@
 <ion-text class="highlight-reverse" style="font-size: 21px;">
-  Filter
+  Filter by
 </ion-text>
 
 <!-- advance search -->
-<ion-item class="ion-margin-vertical">
-  <ion-checkbox [name]="'Advance filter'"
-                class="ion-margin-end"
-                (ionChange)="toggleAdvanceSearch($event)">
-  </ion-checkbox>
-  <ion-label>Advance search</ion-label>
-</ion-item>
+<ion-segment (ionChange)="toggleAdvanceSearch($event)" value="Genres" class="ion-margin-vertical">
+  <ion-segment-button value="Genres">
+    <ion-label>Genres</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="Rating">
+    <ion-label>Rating</ion-label>
+  </ion-segment-button>
+</ion-segment>
 
 <div [hidden]="advanceSearch">
   <!-- category filter -->
   <div class="ion-padding-vertical bottom-divider">
     <ion-label class="highlight">Select movie category</ion-label>
-    <ion-item>
+    <ion-item class="range-selector-wrapper">
       <ion-label>Movie category</ion-label>
       <ion-select
         class="custom-options"
@@ -40,7 +41,7 @@
   <!-- sort by -->
   <div class="ion-padding-vertical">
     <ion-label class="highlight">Sort movies by</ion-label>
-    <ion-item>
+    <ion-item class="range-selector-wrapper">
       <ion-label>Sort by</ion-label>
       <ion-select
         class="custom-options"
@@ -68,7 +69,7 @@
 <div [hidden]="!advanceSearch">
   <!-- range selector -->
   <ion-item class="range-selector-wrapper">
-    <ion-label>Select categories</ion-label>
+    <ion-label>Select rating</ion-label>
     <ion-select
       class="custom-options"
       multiple="true"
@@ -99,7 +100,7 @@
   <!-- filter button -->
   <div style="display: flex; margin-top: 20px;">
     <ion-button class="action-button" style="margin: auto" (click)="filterBasedOnRangeSelector()">
-      Filter
+      Search
     </ion-button>
   </div>
 

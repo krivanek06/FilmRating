@@ -15,14 +15,12 @@
 </div>
 
 <!-- reviews section -->
-<ng-container>
-  <ng-container *ngIf="firebaseMovieReviews && movieDetails">
-    <app-comment-section
-      [movieId]="movieId"
-      [movieName]="movieDetails.title"
-      [partialData]="movieDetails"
-      [genreTypes]="movieDetails.genres"
-      [reviews]="firebaseMovieReviews">
-    </app-comment-section>
-  </ng-container>
+<ng-container *ngIf="firebaseMovieReviews && movieDetails">
+  <app-comment-section
+    [movieId]="movieId"
+    [movieName]="movieDetails.title"
+    [partialData]="movieDetails"
+    [genreTypes]="movieDetails.genres"
+    [reviews]="firebaseMovieReviews">
+  </app-comment-section>
 </ng-container>

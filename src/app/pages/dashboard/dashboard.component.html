@@ -6,7 +6,7 @@
       <div class="main-info-container">
         <h2>Trending Now</h2>
         <ion-button id='searchButton' class="custom-buttons clickable" (click)="redirectToSearch()">
-          Advance search
+          Filter >>>
         </ion-button>
       </div>
       <app-film-cards
@@ -22,7 +22,7 @@
     </ion-row>
 
     <ion-row class="section-divider">
-      <h2>Categories</h2>
+      <h2>Genres</h2>
       <app-categories-container
         [genreTypes]="genreTypes$ | async">
       </app-categories-container>

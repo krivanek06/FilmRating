@@ -1,5 +1,10 @@
-<div class="category-container ion-padding-horizontal">
-  <div *ngFor="let genre of genreTypes" class="ion-padding">
-    <div (click)="redirectToSearch(genre.id)" class="highlight-on-hover">{{genre.name}}</div>
-  </div>
-</div>
+<ion-grid>
+  <ion-row>
+    <ion-col *ngFor="let genre of genreTypes | slice:0:18"
+             (click)="redirectToSearch(genre.id)"
+             class="ion-padding clickable box-item ion-text-wrap"
+             size="4" size-md="2">
+      {{genre.name}}
+    </ion-col>
+  </ion-row>
+</ion-grid>

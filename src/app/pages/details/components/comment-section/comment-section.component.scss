@@ -10,6 +10,13 @@
     //--background: #{$background-card-review};
   }
 
+  .small-button{
+    width: 165px;
+    height: 35px;
+    --background: #{$gold-darker-1};
+    --color: #{$dark-word};
+  }
+
   .cancel-button {
     width: 200px;
     height: 45px;
@@ -32,5 +39,12 @@
 
   .range-selector-wrapper{
     --background: #{$background-card-review};
+  }
+
+  .section-header{
+    margin-top: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }

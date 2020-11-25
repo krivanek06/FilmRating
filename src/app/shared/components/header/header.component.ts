@@ -33,8 +33,6 @@ export class HeaderComponent implements OnInit {
 
         this.checkUnreadNotification();
 
-        of(this.searchMovieValue).subscribe(console.log);
-
     }
 
     searchForMovie(data: CustomEvent) {

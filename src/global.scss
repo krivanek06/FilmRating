@@ -77,4 +77,8 @@
   --color: #{$dark-word};
 }
 
-
+ion-segment-button {
+  --color: #{$secondary-word};
+  --color-checked: #{$gold};
+  --color-focused: #{$gold};
+}
