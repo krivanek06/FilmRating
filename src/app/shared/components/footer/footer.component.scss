@@ -1,7 +1,13 @@
 @import "../../../shared/style/main";
-p{
-  color: darkorange;
-  text-align: right;
-  background: #{$background-dark-1};
+
+:host{
+  p{
+    padding-top: 4px;
+    padding-right: 16px;
+    color: darkorange;
+    text-align: right;
+    background: #{$background-dark-1};
+  }
+
 }
 
