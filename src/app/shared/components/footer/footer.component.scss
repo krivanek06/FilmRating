@@ -1,6 +1,7 @@
+@import "../../../shared/style/main";
 p{
-  color: white;
-  //text-align: center;
-  height: 25px;
+  color: darkorange;
+  text-align: right;
+  background: #{$background-dark-1};
 }
 
