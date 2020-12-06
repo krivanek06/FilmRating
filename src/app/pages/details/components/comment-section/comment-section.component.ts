@@ -64,6 +64,15 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     this.rangeSelectors.forEach(x => x.clearValue());
     await this.movieReviewService.addReviewForMovie(this.movieId, ratings, review);
     await this.ionicDialog.presentToast(`Review was successfully added`);
+
+    this.toggleShowReview();
+
+    this.movieDetailService.updateMovieRatings(this.movieId, ratings, this.partialData);
+
+    if (!this.authService.IUser) {
+      return;
+    }
+
     await this.userManagementService.sendNotification(this.authService.IUser.uid, NotificationConstructorService.constructIAddedReviewAction(this.movieName, this.movieId));
 
     const notificationMentionedNameMessage = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
@@ -76,15 +85,14 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
       mentionedUsersInText.map(user => this.userManagementService.sendNotification(user.uid, notificationMentionedNameMessage)),
       this.authService.IUser.usersFollowMe.map(user => this.userManagementService.sendNotification(user.uid, notificationAddedReviewMessage))
     ).pipe(takeUntil(this.destroy$)).subscribe();
-
-    this.toggleShowReview();
-
-    this.movieDetailService.updateMovieRatings(this.movieId, ratings, this.partialData);
   }
 
   async addCommentOnReview(comment: string, review: FirebaseMovieDetailReview) {
     await this.movieReviewService.addCommentForReview(this.movieId, review.id, comment);
     await this.ionicDialog.presentToast('Comment was added successfully');
+    if (!this.authService.IUser) {
+      return;
+    }
     await this.userManagementService.sendNotification(this.authService.IUser.uid, NotificationConstructorService.constructIAddedCommentOnReviewAction(review.person.displayName, this.movieName, this.movieId));
     await this.userManagementService.sendNotification(review.person.uid, NotificationConstructorService.constructSomebodyAddedCommentOnReviewAction(this.authService.IUser.displayName, this.movieName, this.movieId));
 
@@ -107,6 +115,10 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
     await this.movieReviewService.persisCommentForReview(this.movieId, review.id, {...data.oldComment, comment: data.newComment});
     await this.ionicDialog.presentToast('Comment was edited successfully');
 
+    if (!this.authService.IUser) {
+      return;
+    }
+
     // notify mentioned users in comment
     const notificationMentionedName = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
     const promises = MovieDetailConstructor.findAllUsernameInString(data.newComment).map(async name => await this.userManagementService.getIUserByDisplayName(name));
@@ -121,6 +133,10 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
   async editReview(editedReview: string, review: FirebaseMovieDetailReview) {
     this.movieReviewService.editReview(this.movieId, review.id, editedReview);
     await this.ionicDialog.presentToast(`Review was successfully edited`);
+
+    if (!this.authService.IUser) {
+      return;
+    }
 
     // notify mentioned users in editedReview
     const notificationMentionedName = NotificationConstructorService.constructSomebodyMentionedMeInCommentAction(this.authService.IUser.displayName, this.movieName, this.movieId);
@@ -142,14 +158,16 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
   }
 
   async toggleShowReview() {
+    this.showReviewForm = !this.showReviewForm;
+    /*
     if (!!this.authService.IUser) {
-      this.showReviewForm = !this.showReviewForm;
-    } else {
-      const response = await this.ionicDialog.presentAlertConfirm('You have to be authenticated to leave a review. Do you wish to log in ?');
-      if (response) {
-        this.router.navigate(['authentication/login']);
-      }
-    }
+       this.showReviewForm = !this.showReviewForm;
+     } else {
+       const response = await this.ionicDialog.presentAlertConfirm('You have to be authenticated to leave a review. Do you wish to log in ?');
+       if (response) {
+         this.router.navigate(['authentication/login']);
+       }
+     } */
   }
 
   likeOrDislikeReview(review: FirebaseMovieDetailReview, likeComment: boolean) {
@@ -157,6 +175,9 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
   }
 
   searchPeopleByUsername(usernamePrefix: string) {
+    if (!this.authService.IUser) {
+      return;
+    }
     this.searchedUsers$ = this.userManagementService.getUsernameStartWithPrefix(usernamePrefix);
   }
 

@@ -3,7 +3,9 @@
     <ion-card-subtitle class="ion-padding-top ion-padding-horizontal" [ngClass]="{'comment-background': !isReview}">
       <!-- name of user -->
       <ion-label style="display: flex">
-        <ng-container *ngIf="authenticatedUser && authenticatedUser.uid !== comment.person.uid">
+        <ng-container *ngIf="authenticatedUser &&
+        authenticatedUser.uid !== comment.person.uid &&
+        comment.person.displayName !== 'ANONYMOUS' ">
           <!-- follow -->
           <ion-icon *ngIf="alreadyFollowing; else alreadyFollowed"
                     matTooltipPosition="right"
@@ -33,7 +35,7 @@
           {{ comment.timestamp | date: 'dd.MM.yyyy HH:mm:ss'}}
         </ion-text>
         <!-- reply on comment -->
-        <ng-container *ngIf="authenticatedUser">
+        <ng-container *ngIf="authenticatedUser && comment.person.displayName !== 'ANONYMOUS' ">
           <ion-icon
             *ngIf="isReview"
             color="primary"

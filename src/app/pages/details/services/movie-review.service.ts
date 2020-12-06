@@ -98,7 +98,9 @@ export class MovieReviewService {
       .update(review);
 
     // add or subtract points for user
-    this.userManagementService.addPointsToUser(review.person.uid, points);
+    if (!!review.person.uid) {
+      this.userManagementService.addPointsToUser(review.person.uid, points);
+    }
   }
 
 

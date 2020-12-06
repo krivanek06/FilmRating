@@ -11,24 +11,26 @@
 <!-- display reviews with comments -->
 <div class="ion-padding-vertical" *ngIf="!showReviewForm">
   <ng-container *ngIf="reviews.length > 0; else noReview">
-    <div *ngFor="let review of reviews | reviewSorting" class="ion-padding-vertical">
-      <app-comment-cards
-        [review]="review"
-        [authenticatedUser]="authenticatedUser$ | async"
-        [mentionPeople]="searchedUsers$| async"
-        (searchPeopleByUsername)="searchPeopleByUsername($event)"
-        (addComment)="addCommentOnReview($event, review)"
-        (followPersonEmitter)="followPerson($event)"
-        (editCommentEmitter)="editComment($event, review)"
-        (likeCommentEmitter)="likeOrDislikeComment($event, review, true)"
-        (dislikeCommentEmitter)="likeOrDislikeComment($event, review, false)"
-        (deleteCommentEmitter)="deleteComment($event, review)"
-        (editReviewEmitter)="editReview($event, review)"
-        (deleteReviewEmitter)="deleteReview(review)"
-        (likeReviewEmitter)="likeOrDislikeReview(review, true)"
-        (dislikeReviewEmitter)="likeOrDislikeReview(review, false)">
-      </app-comment-cards>
-    </div>
+    <ng-container *ngFor="let review of reviews | reviewSorting">
+      <div *ngIf="review.comment" class="ion-padding-vertical">
+        <app-comment-cards
+          [review]="review"
+          [authenticatedUser]="authenticatedUser$ | async"
+          [mentionPeople]="searchedUsers$| async"
+          (searchPeopleByUsername)="searchPeopleByUsername($event)"
+          (addComment)="addCommentOnReview($event, review)"
+          (followPersonEmitter)="followPerson($event)"
+          (editCommentEmitter)="editComment($event, review)"
+          (likeCommentEmitter)="likeOrDislikeComment($event, review, true)"
+          (dislikeCommentEmitter)="likeOrDislikeComment($event, review, false)"
+          (deleteCommentEmitter)="deleteComment($event, review)"
+          (editReviewEmitter)="editReview($event, review)"
+          (deleteReviewEmitter)="deleteReview(review)"
+          (likeReviewEmitter)="likeOrDislikeReview(review, true)"
+          (dislikeReviewEmitter)="likeOrDislikeReview(review, false)">
+        </app-comment-cards>
+      </div>
+    </ng-container>
   </ng-container>
 
   <!-- no review text -->
@@ -64,10 +66,21 @@
     </ion-item-group>
 
     <div class="ion-text-center ion-padding-vertical">
-      <ion-text *ngIf="showReviewForm" class="secondary-text">
-        *If you with to mention somebody in your review type
-        <ion-text style="font-weight: bold">@username</ion-text>
-      </ion-text>
+      <ng-container *ngIf="authenticatedUser$ | async as user; else showLoginText">
+        <!-- logged in -->
+        <ion-text *ngIf="showReviewForm" class="secondary-text">
+          *If you wish to mention somebody in your review, then type
+          <ion-text style="font-weight: bold">@username</ion-text>
+        </ion-text>
+      </ng-container>
+
+      <!-- ANONYMOUS -->
+      <ng-template #showLoginText>
+        <ion-text *ngIf="showReviewForm" class="secondary-text">
+          *If you are not logged in, you will leave your review as
+          <ion-text style="font-weight: bold">ANONYMOUS</ion-text>
+        </ion-text>
+      </ng-template>
     </div>
 
     <!-- review form -->
@@ -80,8 +93,8 @@
 
   <!-- button to add review -->
   <div class="ion-text-center ion-padding-vertical dividing-border">
-    <ion-button *ngIf="!showReviewForm" class="review-button clickable" (click)="toggleShowReview()">Add review
-    </ion-button>
+    <!--<ion-button *ngIf="!showReviewForm" class="review-button clickable" (click)="toggleShowReview()">Add review
+    </ion-button> -->
     <ion-button *ngIf="showReviewForm" class="cancel-button clickable" (click)="toggleShowReview()">Cancel</ion-button>
   </div>
 </div>

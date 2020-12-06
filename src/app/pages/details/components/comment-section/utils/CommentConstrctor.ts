@@ -6,8 +6,8 @@ export class MovieDetailConstructor {
     const review: FirebaseMovieDetailReview = {
       comment,
       person: {
-        uid: user.uid,
-        displayName: user.displayName
+        uid: user ? user.uid : null,
+        displayName: user ? user.displayName : 'ANONYMOUS'
       },
       ratings,
       timestamp: new Date().getTime(),
@@ -20,11 +20,11 @@ export class MovieDetailConstructor {
 
   static ConstructComment(user: IUser, comment: string): FirebaseMovieDetailComment {
     const constructedComment: FirebaseMovieDetailComment = {
-      id: `${Date.now()}_${user.uid}`,
+      id: user.uid ?  `${Date.now()}_${user.uid}` : `${Date.now()}_ANONYMOUS`,
       comment,
       person: {
-        uid: user.uid,
-        displayName: user.displayName
+        uid: user ? user.uid : null,
+        displayName: user ? user.displayName : 'ANONYMOUS'
       },
       timestamp: new Date().getTime(),
       likes: [],
