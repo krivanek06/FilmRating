@@ -24,6 +24,7 @@ export interface FirebaseMovieDetailReview extends FirebaseMovieDetailComment {
 export interface FirebaseMovieDetailRating {
   rate: number;
   type: string;
+  reverse?: boolean;
 }
 
 export interface FirebaseMovieDetailRatingAverage extends FirebaseMovieDetailRating {

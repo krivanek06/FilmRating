@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {
   FirebaseMovieDetailRating,
   FirebaseMovieDetailRatingAverage,
@@ -10,14 +10,22 @@ import {DiscoveredMovie, DiscoveredMoviePartialData} from '../../api/film-data.m
 import {CollectionReference} from '@angular/fire/firestore/interfaces';
 import {Query, QueryFn} from '@angular/fire/firestore';
 import {filter, map} from 'rxjs/operators';
+import {FriendSorting} from '../models/IUser.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieDetailsService {
+  private firebaseMovies$: BehaviorSubject<FirebaseMovieDetails[]> = new BehaviorSubject<FirebaseMovieDetails[]>([]);
+  sortByFriendCash: FriendSorting[] = [];
   MOVIE_DETAILS_COLLECTION = 'movie_details';
 
   constructor(private angularFirestore: AngularFirestore) {
+    this.angularFirestore.collection(this.MOVIE_DETAILS_COLLECTION).get()
+      .pipe(map(r => r.docs.map(x => x.data()))).subscribe(res => {
+      console.log('netowrk call');
+      this.firebaseMovies$.next(res);
+    });
   }
 
   getMovieDetails(movieId: string): Observable<FirebaseMovieDetails> {
@@ -28,20 +36,17 @@ export class MovieDetailsService {
   }
 
   searchMoviesByRatings(ratings: FirebaseMovieDetailRating[]): Observable<FirebaseMovieDetails[]> {
-    return this.angularFirestore
-      .collection(this.MOVIE_DETAILS_COLLECTION, ref => {
-        let query: Query = ref;
-
-        if (ratings.length > 0) {
-          query = query.where(ratings[0].type, '>=', ratings[0].rate);
-        }
-        /*ratings.forEach(rating => {
-          query = query.where(joinName(rating.type), '>=', rating.rate);
-        });*/
-
-        return query;
-      }).get().pipe(map(r => r.docs.map(x => x.data()))) as Observable<FirebaseMovieDetails[]>;
+    return this.firebaseMovies$.asObservable();
   }
+
+  get searchMovies(): FirebaseMovieDetails[] {
+    return this.firebaseMovies$.getValue();
+  }
+
+  set searchMovies(movies: FirebaseMovieDetails[]) {
+    this.firebaseMovies$.next(movies);
+  }
+
 
   async updateMovieRatings(movieId: string, ratings: FirebaseMovieDetailRating[], movieData: DiscoveredMoviePartialData): Promise<void> {
     // load old average data
@@ -72,6 +77,9 @@ export class MovieDetailsService {
         vote_average: movieData.vote_average
       }
     };
+
+    const filteredMovies = this.searchMovies.filter(x => x.movieData.id !== movieData.id);
+    this.searchMovies = [updatedDetails, ...filteredMovies];
 
     // add average ratings as attributes for future filtering
     updatedAverageRatings.forEach(x => {

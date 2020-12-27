@@ -3,7 +3,7 @@ export interface IUserPartialData {
   displayName: string;
 }
 
-export interface IUser extends IUserPartialData{
+export interface IUser extends IUserPartialData {
   email: string;
   photoUrl: string;
   points: number;
@@ -29,6 +29,11 @@ export interface IUserNotification {
   timestamp: number;
   type: IUserNotificationType;
   movieId?: string;
+}
+
+export interface FriendSorting {
+  value: number;
+  friendUID: string;
 }
 
 export enum IUserNotificationType {

@@ -90,18 +90,74 @@
   </ion-item-group>
 
   <!-- range selector names & values -->
-  <ion-item *ngFor="let item of selectedCategories">
-    <ion-label>
-      <ion-text style="margin-right: 6px;"> {{ item.type }}:</ion-text>
-      <ion-text class="highlight-reverse"> {{ item.rate }} </ion-text>
-    </ion-label>
-  </ion-item>
+  <ion-item-group *ngFor="let item of selectedCategories" class="selected-category-print">
+    <ion-item>
+      <ion-label>
+        <ion-text style="margin-right: 6px;"> {{ item.type }}:</ion-text>
+        <ion-text class="highlight-reverse"> {{ item.rate }} </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-item
+      matTooltipPosition="left"
+      matTooltip="If reverse is applied, filter movies which have lower rating than picked"
+      matTooltipClass="custom-mat-tooltip"
+      matTooltipShowDelay="100">
+      <ion-checkbox class="alert-checkbox-icon ion-margin-end"
+                    [checked]="item.reverse"
+                    (ionChange)="selectedCategoryReverse(item)">
+      </ion-checkbox>
+      <ion-label>Reverse</ion-label>
+    </ion-item>
+  </ion-item-group>
 
-  <!-- filter button -->
-  <div style="display: flex; margin-top: 20px;">
-    <ion-button class="action-button" style="margin: auto" (click)="filterBasedOnRangeSelector()">
-      Search
-    </ion-button>
+
+  <!-- SORT  -->
+  <div class="sort-container">
+    <ion-text class="highlight-reverse" style="font-size: 18px;">
+      Sort by
+    </ion-text>
+
+    <!-- sort by movie
+    <form [formGroup]="sortingFrom">
+      <ion-text class="secondary-text">Sort movies which have similar ranting as one you will enter</ion-text>
+      <ion-item class="range-selector-wrapper ion-margin-top">
+        <ion-label position="floating" placeholder="Sort movies which have similar rating as ">Movie name</ion-label>
+        <ion-input formControlName="sortingMovieName"></ion-input>
+      </ion-item>
+
+      <ion-item-group class="ion-padding">
+        <ion-item *ngFor="let pickMovie of sortingBySimilarMovies"
+                  (click)="sortByMovie(pickMovie)"
+                  class="clickable ion-margin-top pickedMovie-hover"
+                  [ngClass]="{'pickedMovie' : pickMovie.movieData.title === sortingMovieName.value}">
+          <ion-img [src]="'https://image.tmdb.org/t/p/w500/' + pickMovie.movieData.poster_path"></ion-img>
+          <ion-label>{{ pickMovie.movieData.title }}</ion-label>
+        </ion-item>
+      </ion-item-group>
+    </form> -->
+
+    <!-- Sort by friends -->
+    <p class="secondary-text">Sort movies based on what movies your friends like</p>
+    <ion-item class="range-selector-wrapper ion-margin-top">
+      <ion-label>Sort by friends</ion-label>
+      <ion-select
+        class="custom-options"
+        multiple="false"
+        placeholder="Select categories"
+        (ionChange)="sortByFriend($event)"
+        selectedText=" "
+        [value]="selectedCategoryNames">
+        <ng-container *ngIf="user$ | async as user">
+          <ion-select-option *ngFor="let name of user.usersFollowI"
+                             [value]="name">{{ name.displayName }}
+          </ion-select-option>
+        </ng-container>
+      </ion-select>
+    </ion-item>
+
+
   </div>
+  <!-- SORT END -->
+
 
 </div>

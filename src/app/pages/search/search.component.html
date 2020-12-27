@@ -30,7 +30,7 @@
 
       <!-- movies from firebase -->
       <div *ngIf="advanceSearchToggle" class="ion-padding">
-        <ng-container *ngIf="firebaseMovies$ | async as firebaseMovies">
+        <ng-container *ngIf="firebaseMovies as firebaseMovies">
           <app-film-cards *ngIf="firebaseMovies && firebaseMovies.length !== 0; else noResult"
             [discoveredMovies]="firebaseMovies | slice: 0: 18">
           </app-film-cards>
@@ -52,6 +52,8 @@
           [sortBy]="sortBy"
           [genreTypes]="genreTypes$ | async"
           [advanceSearch]="advanceSearchToggle"
+          (sortByFriendEmitter)="sortByFriend($event)"
+          (sortByMovieEmitter)="sortByMovie($event)"
           (advanceSearchEmitter)="advanceSearchEmitter($event)"
           (advanceSearchToggleEmitter)="advanceSearchToggleEmitter($event)"
           (removeSelectedGenderType)="removeSelectedGenderType($event)"

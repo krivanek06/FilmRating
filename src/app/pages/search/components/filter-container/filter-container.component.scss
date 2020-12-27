@@ -17,4 +17,41 @@
     --color: #{$dark-word};
     //--background: #{$background-card-review};
   }
+
+  .selected-category-print {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .sort-container {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #8b8b8b;
+  }
+
+  .pickedMovie {
+    background: #{$background-dark-1};
+    padding: 4px;
+    border-radius: 10px;
+  }
+
+  .pickedMovie-hover {
+    transition: All 0.4s ease-out;
+
+    &:hover {
+      background: #{$background-dark-1};
+    }
+  }
+
+  ion-img {
+    height: 50px;
+    width: 50px;
+  }
+}
+
+::ng-deep .custom-mat-tooltip {
+  background-color: #818181;
+  font-size: 14px;
+  padding: 5px;
+  white-space: pre-line;
 }

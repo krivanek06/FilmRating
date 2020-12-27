@@ -159,15 +159,6 @@ export class CommentSectionComponent extends ComponentBaseComponent implements O
 
   async toggleShowReview() {
     this.showReviewForm = !this.showReviewForm;
-    /*
-    if (!!this.authService.IUser) {
-       this.showReviewForm = !this.showReviewForm;
-     } else {
-       const response = await this.ionicDialog.presentAlertConfirm('You have to be authenticated to leave a review. Do you wish to log in ?');
-       if (response) {
-         this.router.navigate(['authentication/login']);
-       }
-     } */
   }
 
   likeOrDislikeReview(review: FirebaseMovieDetailReview, likeComment: boolean) {
