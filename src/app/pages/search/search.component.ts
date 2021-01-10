@@ -91,10 +91,10 @@ export class SearchComponent extends ComponentBaseComponent implements OnInit {
 
     // check prefix when sorting
     sortByMovie(movieDetails: FirebaseMovieDetails) {
-        const movie = this.firebaseMovies.find(x => x.title === movieDetails.movieData.title);
-        this.sortByVote(movie.vote_average);
+        const movie = this.movieDetailService.searchMovies.find(x => x.movieData.title.toLowerCase() === movieDetails.movieData.title.toLowerCase());
+        this.sortByVote(movie.movieData.vote_average);
         const similarName = this.firebaseMovies.filter(x => x.title.startsWith(movieDetails.movieData.title.substring(0, 6)));
-        const distinct = this.firebaseMovies.filter(x => x.title !== movie.title && !similarName.includes(x));
+        const distinct = this.firebaseMovies.filter(x => x.title !== movie.movieData.title && !similarName.includes(x));
         this.firebaseMovies = [...similarName, ...distinct];
     }
 
