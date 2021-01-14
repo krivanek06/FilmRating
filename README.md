@@ -7,7 +7,7 @@ Technologies used: angular v9, ionic v5 and firebase.
 
 Project was realized in 2020.
 
-![Dashboard](src/assets/dashboard_desktop.jpg)
-![Search](src/assets/search_desktop.jpg)
-![Movie details](src/assets/details_desktop.jpg)
+![Dashboard](src/assets/dashboard_desktop.png)
+![Search](src/assets/search_desktop.png)
+![Movie details](src/assets/details_desktop.png)
 
