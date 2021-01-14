@@ -106,9 +106,19 @@
                     [checked]="item.reverse"
                     (ionChange)="selectedCategoryReverse(item)">
       </ion-checkbox>
-      <ion-label>Reverse</ion-label>
+      <ion-label style="display: flex;align-items: center;">
+        <ion-text style="margin-right: 5px">Reverse</ion-text>
+        <ion-icon name="git-compare-outline"></ion-icon>
+      </ion-label>
     </ion-item>
   </ion-item-group>
+
+  <!-- what is reverse -->
+  <ion-list class="ion-padding-start">
+    <ion-text class="secondary-text">
+      *If you want to sort movies which have lower rating than selected one, click on <b>Reverse</b>
+    </ion-text>
+  </ion-list>
 
 
   <!-- SORT  -->
